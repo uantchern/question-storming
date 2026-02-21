@@ -63,12 +63,12 @@ function SessionSetup({ onStart, initialScenario }) {
                         />
                         <span className="toggle-content">
                             <Zap size={16} className={isParadox ? 'active-icon' : ''} />
-                            <span>Paradox Mode</span>
+                            <span>Roll the dice for a 13</span>
                         </span>
                     </label>
                     <p className="toggle-hint">
                         {isParadox
-                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic."
+                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic. Calculated probability: 1 in 13."
                             : "Standard brainstorming session."}
                     </p>
                 </div>

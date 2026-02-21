@@ -61,7 +61,7 @@ function HistoryView({ onBack }) {
                                     </span>
                                     {item.is_paradox && (
                                         <span className="history-badge paradox">
-                                            <Zap size={12} /> Paradox
+                                            <Zap size={12} /> 13-Dice
                                         </span>
                                     )}
                                 </div>

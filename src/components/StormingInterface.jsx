@@ -18,7 +18,7 @@ const PRO_TIPS = [
     "Short questions are often the most powerful. Keep it punchy.",
     "Try starting with 'If...', 'Why...', or 'How...'",
     "The 12-minute mark (730s) is when your brain starts to break into new patterns.",
-    "Paradox Mode is designed to break logic. Don't fight it—flow with it."
+    "Roll the dice for a 13 is designed to break logic. Don't fight it—flow with it."
 ];
 
 function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp, initialQuestions, onUpdateQuestions }) {
@@ -141,7 +141,7 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
                                 setInput(e.target.value);
                                 if (error) setError('');
                             }}
-                            placeholder={isParadoxMode ? "Fracture reality with a question..." : "Type your question..."}
+                            placeholder={isParadoxMode ? "Roll the dice for a 13: Fracture reality..." : "Type your question..."}
                             autoFocus
                             autoComplete="off"
                         />

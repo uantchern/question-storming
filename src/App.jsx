@@ -26,7 +26,7 @@ const HelpModal = ({ onClose }) => (
                     <p>When the storm begins, focus entries on <strong>Questions Only</strong>. Don't answer them yet. The goal is volume and speed. Use "?" to trigger the engine.</p>
                 </section>
                 <section>
-                    <h3><div className="help-step">3</div> Paradox Mode</h3>
+                    <h3><div className="help-step">3</div> Roll the dice for a 13</h3>
                     <p>Feeling stuck? This mode injects reality-defying constraints that force you to view your challenge from impossible angles, shattering stagnant assumptions.</p>
                     <div className="help-examples">
                         <strong>Examples of Constraints:</strong>
@@ -140,7 +140,7 @@ function App() {
             <header className="app-header">
                 <div className="brand" style={{ cursor: 'pointer' }} onClick={handleReset}>
                     <Layout className="brand-icon" />
-                    <h1>Question Storming {session.isParadoxMode && <span className="paradox-label">PARADOX</span>}</h1>
+                    <h1>Question Storming {session.isParadoxMode && <span className="paradox-label">ROLL THE DICE FOR A 13</span>}</h1>
                 </div>
                 <div className="header-actions">
                     <button className="icon-btn" onClick={() => setShowHelp(true)} title="Information Guide">
