@@ -166,6 +166,41 @@
             box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
         }
 
+        .setup-fields {
+            display: grid;
+            grid-template-columns: 1fr 140px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .duration-input {
+            height: 100%;
+            min-height: 120px;
+            text-align: center;
+            font-size: 2rem !important;
+            font-weight: 800;
+            color: var(--accent-color) !important;
+            background-color: var(--surface-color) !important;
+            border: 2px solid var(--border-color) !important;
+            border-radius: 12px;
+        }
+
+        .duration-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background-color: #24344d;
+        }
+
+        @media (max-width: 640px) {
+            .setup-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .duration-input {
+                min-height: 60px;
+            }
+        }
+
         button.primary-btn {
             background-color: var(--accent-color);
             color: #fff;
@@ -549,11 +584,12 @@
         // --- Components ---
         function SessionSetup({ onStart, initialScenario }) {
             const [scenario, setScenario] = useState(initialScenario || '');
+            const [duration, setDuration] = useState(730);
 
             const handleSubmit = (e) => {
                 e.preventDefault();
                 if (scenario.trim()) {
-                    onStart(scenario.trim());
+                    onStart(scenario.trim(), duration);
                 }
             };
 
@@ -565,16 +601,32 @@
                     </div>
 
                     <form onSubmit={handleSubmit} className="input-group">
-                        <label htmlFor="scenario">Challenge Scenario</label>
-                        <textarea
-                            id="scenario"
-                            value={scenario}
-                            onChange={(e) => setScenario(e.target.value)}
-                            placeholder="e.g., Key Word Sign is not widely known"
-                            rows={4}
-                            autoFocus
-                            required
-                        />
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', gap: '1rem' }}>
+                            <div className="input-group">
+                                <label htmlFor="scenario">Challenge Scenario</label>
+                                <textarea
+                                    id="scenario"
+                                    value={scenario}
+                                    onChange={(e) => setScenario(e.target.value)}
+                                    placeholder="e.g., Key Word Sign is not widely known"
+                                    rows={4}
+                                    autoFocus
+                                    required
+                                />
+                            </div>
+                            <div className="input-group">
+                                <label htmlFor="duration">Timer (s)</label>
+                                <input
+                                    id="duration"
+                                    type="number"
+                                    value={duration}
+                                    onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
+                                    min="10"
+                                    max="3600"
+                                    style={{ height: '100%', minHeight: '120px', textAlign: 'center', fontSize: '1.5rem', background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'white', borderRadius: '12px' }}
+                                />
+                            </div>
+                        </div>
                         <button
                             type="submit"
                             className="primary-btn"
@@ -582,17 +634,15 @@
                             style={{ marginTop: '1rem' }}
                         >
                             <PlayIcon size={20} />
-                            Start Storming (60 sec)
+                            Start Storming ({duration}s)
                         </button>
                     </form>
                 </div>
             );
         }
 
-        const DURATION = 730; // 730 seconds (~12 minutes)
-
-        function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuestions }) {
-            const [timeLeft, setTimeLeft] = useState(DURATION);
+        function StormingInterface({ scenario, duration, onTimeUp, initialQuestions, onUpdateQuestions }) {
+            const [timeLeft, setTimeLeft] = useState(duration || 730);
             const [input, setInput] = useState('');
             const [error, setError] = useState('');
             const endOfListRef = useRef(null);
@@ -824,18 +874,17 @@
                         return JSON.parse(saved);
                     } catch (e) { }
                 }
-                return { phase: 'SETUP', scenario: '', questions: [] };
+                return { phase: 'SETUP', scenario: '', questions: [], duration: 730 };
             });
-
             useEffect(() => {
                 localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
             }, [session]);
 
-            const handleStartStorm = (scenario) => setSession({ phase: 'STORMING', scenario, questions: [] });
+            const handleStartStorm = (scenario, duration) => setSession({ phase: 'STORMING', scenario, questions: [], duration });
             const handleTimerEnd = (questions) => setSession((prev) => ({ ...prev, phase: 'REVIEW', questions }));
             const handleReset = () => {
                 if (confirm("Are you sure you want to reset the session? All your questions will be lost.")) {
-                    setSession({ phase: 'SETUP', scenario: '', questions: [] });
+                    setSession({ phase: 'SETUP', scenario: '', questions: [], duration: 730 });
                 }
             };
 
@@ -858,6 +907,7 @@
                         {session.phase === 'STORMING' && (
                             <StormingInterface
                                 scenario={session.scenario}
+                                duration={session.duration}
                                 initialQuestions={session.questions}
                                 onTimeUp={handleTimerEnd}
                                 onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}

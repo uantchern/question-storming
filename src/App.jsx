@@ -18,13 +18,19 @@ function App() {
                 scenario: '',
                 questions: [],
                 isParadoxMode: false,
+                duration: 730,
             };
         }
 
         const saved = localStorage.getItem(APP_STATE_KEY);
         if (saved) {
             try {
-                return JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                // Ensure duration is set if it was missing from old saved state
+                if (parsed && parsed.duration === undefined) {
+                    parsed.duration = 730;
+                }
+                return parsed;
             } catch (e) {
                 console.error("Failed to parse saved session", e);
             }
@@ -34,6 +40,7 @@ function App() {
             scenario: '',
             questions: [],
             isParadoxMode: false,
+            duration: 730,
         };
     });
 
@@ -70,8 +77,8 @@ function App() {
         }
     };
 
-    const handleStartStorm = (scenario, isParadoxMode) => {
-        setSession({ phase: 'STORMING', scenario, questions: [], isParadoxMode });
+    const handleStartStorm = (scenario, isParadoxMode, duration) => {
+        setSession({ phase: 'STORMING', scenario, questions: [], isParadoxMode, duration });
     };
 
     const handleTimerEnd = (questions) => {
@@ -82,7 +89,7 @@ function App() {
     };
 
     const handleReset = () => {
-        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false });
+        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, duration: 730 });
     };
 
     const openHistory = () => {
@@ -117,6 +124,7 @@ function App() {
                     <StormingInterface
                         scenario={session.scenario}
                         isParadoxMode={session.isParadoxMode}
+                        initialDuration={session.duration}
                         initialQuestions={session.questions}
                         onTimeUp={handleTimerEnd}
                         onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}

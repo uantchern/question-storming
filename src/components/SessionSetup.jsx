@@ -4,11 +4,12 @@ import { Play, Zap, Brain } from 'lucide-react';
 function SessionSetup({ onStart, initialScenario }) {
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
+    const [duration, setDuration] = useState(730);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (scenario.trim()) {
-            onStart(scenario.trim(), isParadox);
+            onStart(scenario.trim(), isParadox, duration);
         }
     };
 
@@ -20,16 +21,32 @@ function SessionSetup({ onStart, initialScenario }) {
             </div>
 
             <form onSubmit={handleSubmit} className="input-group">
-                <label htmlFor="scenario">Challenge Scenario</label>
-                <textarea
-                    id="scenario"
-                    value={scenario}
-                    onChange={(e) => setScenario(e.target.value)}
-                    placeholder="e.g., Key Word Sign is not widely known"
-                    rows={4}
-                    autoFocus
-                    required
-                />
+                <div className="setup-fields">
+                    <div className="input-group">
+                        <label htmlFor="scenario">Challenge Scenario</label>
+                        <textarea
+                            id="scenario"
+                            value={scenario}
+                            onChange={(e) => setScenario(e.target.value)}
+                            placeholder="e.g., Key Word Sign is not widely known"
+                            rows={4}
+                            autoFocus
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="duration">Timer (s)</label>
+                        <input
+                            id="duration"
+                            type="number"
+                            className="duration-input"
+                            value={duration}
+                            onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
+                            min="10"
+                            max="3600"
+                        />
+                    </div>
+                </div>
 
                 <div className="toggle-container">
                     <label className="paradox-toggle">

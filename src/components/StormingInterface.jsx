@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, AlertCircle, Clock } from 'lucide-react';
 
-const DURATION = 730; // 730 seconds (~12 minutes)
-
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
     "Structural Defiance: Describe this solution in a room with five 90-degree corners.",
@@ -14,8 +12,8 @@ const PARADOX_CONSTRAINTS = [
     "Sisyphus Oasis: Deliver water to a thirst that is exactly P=0. The cup is a lens, the map is a trap."
 ];
 
-function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
-    const [timeLeft, setTimeLeft] = useState(DURATION);
+function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp, initialQuestions, onUpdateQuestions }) {
+    const [timeLeft, setTimeLeft] = useState(initialDuration || 730);
     const [input, setInput] = useState('');
     const [error, setError] = useState('');
     const [constraintIndex, setConstraintIndex] = useState(0);

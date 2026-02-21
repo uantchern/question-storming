@@ -149,6 +149,41 @@ textarea:focus {
   box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
 }
 
+.setup-fields {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.duration-input {
+  height: 100%;
+  min-height: 120px;
+  text-align: center;
+  font-size: 2rem !important;
+  font-weight: 800;
+  color: var(--accent-color) !important;
+  background-color: var(--surface-color);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.duration-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background-color: #24344d;
+}
+
+@media (max-width: 640px) {
+  .setup-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .duration-input {
+    min-height: 60px;
+  }
+}
+
 button.primary-btn {
   background-color: var(--accent-color);
   color: #fff;
