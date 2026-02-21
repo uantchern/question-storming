@@ -22,7 +22,7 @@ function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
         const others = localQuestions.filter(q => !q.starred);
 
         let content = `Challenge: ${scenario}\n`;
-        if (isParadoxMode) content += `Session Type: Paradox/Singularity\n`;
+        if (isParadoxMode) content += `Session Type: Roll the dice for a 13\n`;
         content += `\n--- TOP 3 QUESTIONS ---\n`;
         starred.forEach((q, i) => content += `${i + 1}. ${q.text}\n`);
 
@@ -43,7 +43,7 @@ function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
 
         let text = `*Question Storming Results*\n\n`;
         text += `*Challenge:* ${scenario}\n`;
-        if (isParadoxMode) text += `*Mode:* (Paradox Singularity)\n`;
+        if (isParadoxMode) text += `*Mode:* (Roll the dice for a 13)\n`;
         text += `\n*Top Questions:*\n`;
 
         if (starred.length === 0) {

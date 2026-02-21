@@ -68,7 +68,7 @@ function SessionSetup({ onStart, initialScenario }) {
                     </label>
                     <p className="toggle-hint">
                         {isParadox
-                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic. Calculated probability: 1 in 13."
+                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic."
                             : "Standard brainstorming session."}
                     </p>
                 </div>
@@ -80,7 +80,7 @@ function SessionSetup({ onStart, initialScenario }) {
                     style={{ marginTop: '1rem' }}
                 >
                     <Play size={20} />
-                    Start {isParadox ? 'Singularity' : 'Storming'}
+                    Start {isParadox ? "Let's Q-Storm!" : 'Storming'}
                 </button>
             </form>
         </div>

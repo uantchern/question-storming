@@ -27,7 +27,7 @@ const HelpModal = ({ onClose }) => (
                 </section>
                 <section>
                     <h3><div className="help-step">3</div> Roll the dice for a 13</h3>
-                    <p>Feeling stuck? This mode injects reality-defying constraints that force you to view your challenge from impossible angles, shattering stagnant assumptions.</p>
+                    <p>Feeling stuck? This mode injects reality-defying constraints every 20 seconds. This automated rotation forces you to view your challenge from impossible angles, shattering stagnant assumptions by attaching a specific 'Fracture' to every question entry.</p>
                     <div className="help-examples">
                         <strong>Examples of Constraints:</strong>
                         <ul>
@@ -43,6 +43,9 @@ const HelpModal = ({ onClose }) => (
                 </section>
                 <div className="help-footer">
                     <p>Question Storming (or Q-Storming) is based on the philosophy that often the right question is more valuable than the first answer.</p>
+                    <p style={{ marginTop: '0.5rem', fontSize: '0.8rem', opacity: 0.8 }}>
+                        "Roll the dice for a 13" methodology by <a href="https://www.failonpurpose.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)' }}>Fail On Purpose</a>.
+                    </p>
                 </div>
             </div>
         </div>
