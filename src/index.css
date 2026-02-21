@@ -505,8 +505,187 @@ button:disabled {
   justify-content: center;
 }
 
-.download-btn:hover {
-  background-color: var(--surface-hover);
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-btn {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+  border-color: var(--accent-color);
+}
+
+/* History Styles */
+.history-container {
+  padding: 1rem 0;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.history-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.back-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.back-btn:hover {
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+.history-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.history-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-color);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-meta {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.history-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.history-badge.paradox {
+  background: var(--accent-color);
+  color: #000;
+}
+
+.history-count {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.history-scenario {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.history-preview {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.preview-item {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more-indicator {
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-muted);
+}
+
+.muted-icon {
+  opacity: 0.2;
+  margin-bottom: 1.5rem;
+}
+
+/* Paradox History Variant */
+.paradox-history {
+  border-left: 4px solid #ff00ff;
+}
+
+.paradox-theme .history-card:hover {
+  border-color: #ff00ff;
+}
+
+.paradox-theme .history-badge.paradox {
+  background: #ff00ff;
+  color: #000;
+}
+
+.paradox-theme .history-count {
+  color: #ff00ff;
+}
+
+.paradox-theme .more-indicator {
+  color: #ff00ff;
 }
 
 /* Paradox Mode Styles */
