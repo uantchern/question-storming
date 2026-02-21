@@ -3,13 +3,24 @@ import { Send, AlertCircle, Clock } from 'lucide-react';
 
 const DURATION = 4 * 60; // 4 minutes in seconds
 
-function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuestions }) {
+const PARADOX_CONSTRAINTS = [
+    "Casualty Shift: How would this succeed if the effect happened before the cause?",
+    "Structural Defiance: Describe this solution in a room with five 90-degree corners.",
+    "Biological Anarchy: What if humans could breathe nitrogen instead of oxygen?",
+    "Logical Singularity: Formulate a question that is simultaneously true and false.",
+    "Static Momentum: Imagine a solution that moves at light speed while standing still.",
+    "The Infinite Sieve: How do you solve this using an uncountable number of steps?",
+    "Entropy Reversal: What if heat moved from cold to hot in this scenario?"
+];
+
+function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
     const [timeLeft, setTimeLeft] = useState(DURATION);
     const [input, setInput] = useState('');
     const [error, setError] = useState('');
+    const [constraintIndex, setConstraintIndex] = useState(0);
     const endOfListRef = useRef(null);
 
-    // Timer logic
+    // Timer logic and Constraint rotation
     useEffect(() => {
         if (timeLeft <= 0) {
             onTimeUp(initialQuestions);
@@ -20,8 +31,19 @@ function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuest
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
-        return () => clearInterval(timerId);
-    }, [timeLeft, onTimeUp, initialQuestions]);
+        // Rotate constraints every 20 seconds in Paradox Mode
+        let constraintId;
+        if (isParadoxMode) {
+            constraintId = setInterval(() => {
+                setConstraintIndex(prev => (prev + 1) % PARADOX_CONSTRAINTS.length);
+            }, 20000);
+        }
+
+        return () => {
+            clearInterval(timerId);
+            if (constraintId) clearInterval(constraintId);
+        };
+    }, [timeLeft, onTimeUp, initialQuestions, isParadoxMode]);
 
     // Scroll to bottom on new question
     useEffect(() => {
@@ -42,7 +64,7 @@ function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuest
         if (trimmed.endsWith('?')) return true;
 
         // OR start with Wh- word or How
-        const questionWords = ['who', 'what', 'where', 'when', 'why', 'how'];
+        const questionWords = ['who', 'what', 'where', 'when', 'why', 'how', 'if', 'could', 'would', 'should'];
         const lower = trimmed.toLowerCase();
 
         return questionWords.some(word => lower.startsWith(word));
@@ -55,7 +77,7 @@ function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuest
         if (!trimmed) return;
 
         if (!validateQuestion(trimmed)) {
-            setError('Must end with "?" or start with a question word (Who, What, Where, etc.)');
+            setError('Must end with "?" or start with a question word (Who, What, If, etc.)');
             return;
         }
 
@@ -71,7 +93,16 @@ function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuest
     };
 
     return (
-        <div className="storming-container fade-in">
+        <div className={`storming-container fade-in ${isParadoxMode ? 'paradox-active' : ''}`}>
+            {isParadoxMode && (
+                <div className="paradox-overlay">
+                    <div className="paradox-glitch-text">
+                        <AlertCircle size={18} />
+                        <span>CONSTRAINT: {PARADOX_CONSTRAINTS[constraintIndex]}</span>
+                    </div>
+                </div>
+            )}
+
             <div className="storming-header">
                 <div className="scenario-display">
                     <div className="scenario-label">Challenge</div>
@@ -93,7 +124,7 @@ function StormingInterface({ scenario, onTimeUp, initialQuestions, onUpdateQuest
                                 setInput(e.target.value);
                                 if (error) setError('');
                             }}
-                            placeholder="Type your question..."
+                            placeholder={isParadoxMode ? "Fracture reality with a question..." : "Type your question..."}
                             autoFocus
                             autoComplete="off"
                         />

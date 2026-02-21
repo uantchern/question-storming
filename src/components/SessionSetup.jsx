@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Play } from 'lucide-react';
+import { Play, Zap, Brain } from 'lucide-react';
 
 function SessionSetup({ onStart, initialScenario }) {
     const [scenario, setScenario] = useState(initialScenario || '');
+    const [isParadox, setIsParadox] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (scenario.trim()) {
-            onStart(scenario.trim());
+            onStart(scenario.trim(), isParadox);
         }
     };
 
@@ -29,14 +30,34 @@ function SessionSetup({ onStart, initialScenario }) {
                     autoFocus
                     required
                 />
+
+                <div className="toggle-container">
+                    <label className="paradox-toggle">
+                        <input
+                            type="checkbox"
+                            checked={isParadox}
+                            onChange={(e) => setIsParadox(e.target.checked)}
+                        />
+                        <span className="toggle-content">
+                            <Zap size={16} className={isParadox ? 'active-icon' : ''} />
+                            <span>Paradox Mode (Experimental)</span>
+                        </span>
+                    </label>
+                    <p className="toggle-hint">
+                        {isParadox
+                            ? "Reality-defying constraints will be injected to shatter your assumptions."
+                            : "Standard brainstorming session."}
+                    </p>
+                </div>
+
                 <button
                     type="submit"
-                    className="primary-btn"
+                    className={`primary-btn ${isParadox ? 'paradox-btn' : ''}`}
                     disabled={!scenario.trim()}
                     style={{ marginTop: '1rem' }}
                 >
                     <Play size={20} />
-                    Start Storming (4 min)
+                    Start {isParadox ? 'Singularity' : 'Storming'}
                 </button>
             </form>
         </div>
