@@ -24,6 +24,15 @@ function App() {
         };
     });
 
+    // Apply theme to body
+    useEffect(() => {
+        if (session.isParadoxMode) {
+            document.body.classList.add('paradox-theme');
+        } else {
+            document.body.classList.remove('paradox-theme');
+        }
+    }, [session.isParadoxMode]);
+
     // Persist to local storage
     useEffect(() => {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
@@ -38,9 +47,7 @@ function App() {
     };
 
     const handleReset = () => {
-        if (confirm("Are you sure you want to reset the session? All your questions will be lost.")) {
-            setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false });
-        }
+        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false });
     };
 
     return (

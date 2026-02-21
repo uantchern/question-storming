@@ -43,7 +43,7 @@ function ReviewMode({ scenario, questions, isParadoxMode }) {
 
         let text = `*Question Storming Results*\n\n`;
         text += `*Challenge:* ${scenario}\n`;
-        if (isParadoxMode) text += `*Mode:* 🌀 Paradox Singularity\n`;
+        if (isParadoxMode) text += `*Mode:* (Paradox Singularity)\n`;
         text += `\n*Top Questions:*\n`;
 
         if (starred.length === 0) {
