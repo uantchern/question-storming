@@ -74,6 +74,7 @@ function App() {
                     <ReviewMode
                         scenario={session.scenario}
                         questions={session.questions}
+                        isParadoxMode={session.isParadoxMode}
                     />
                 )}
             </main>

@@ -459,6 +459,33 @@ button:disabled {
 .review-footer {
   margin-top: 3rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.whatsapp-btn {
+  background-color: #25D366;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+  justify-content: center;
+}
+
+.whatsapp-btn:hover {
+  background-color: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
 }
 
 .download-btn {
@@ -473,10 +500,22 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+  justify-content: center;
 }
 
 .download-btn:hover {
   background-color: var(--surface-hover);
+}
+
+/* Paradox Mode Styles */
+.paradox-theme .whatsapp-btn {
+  box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
+}
+
+.paradox-theme .whatsapp-btn:hover {
+  box-shadow: 0 0 25px rgba(37, 211, 102, 0.6);
 }
 
 /* Paradox Mode Styles */
