@@ -10,6 +10,17 @@ const APP_STATE_KEY = 'questionStormingState';
 
 function App() {
     const [session, setSession] = useState(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('reset')) {
+            localStorage.removeItem(APP_STATE_KEY);
+            return {
+                phase: 'SETUP',
+                scenario: '',
+                questions: [],
+                isParadoxMode: false,
+            };
+        }
+
         const saved = localStorage.getItem(APP_STATE_KEY);
         if (saved) {
             try {
