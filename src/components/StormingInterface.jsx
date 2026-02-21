@@ -29,7 +29,7 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
     const [tipIndex, setTipIndex] = useState(0);
     const endOfListRef = useRef(null);
 
-    // Timer logic and Constraint rotation
+    // Timer logic
     useEffect(() => {
         if (timeLeft <= 0) {
             onTimeUp(initialQuestions);
@@ -40,25 +40,28 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
-        // Rotate constraints every 20 seconds in Paradox Mode
-        let constraintId;
-        if (isParadoxMode) {
-            constraintId = setInterval(() => {
-                setConstraintIndex(prev => (prev + 1) % PARADOX_CONSTRAINTS.length);
-            }, 20000);
-        }
+        return () => clearInterval(timerId);
+    }, [timeLeft, onTimeUp, initialQuestions]);
 
-        // Rotate tips every 15 seconds
+    // Constraint rotation (every 20s)
+    useEffect(() => {
+        if (!isParadoxMode) return;
+
+        const constraintId = setInterval(() => {
+            setConstraintIndex(prev => (prev + 1) % PARADOX_CONSTRAINTS.length);
+        }, 20000);
+
+        return () => clearInterval(constraintId);
+    }, [isParadoxMode]);
+
+    // Tip rotation (every 15s)
+    useEffect(() => {
         const tipInterval = setInterval(() => {
             setTipIndex(prev => (prev + 1) % PRO_TIPS.length);
         }, 15000);
 
-        return () => {
-            clearInterval(timerId);
-            if (constraintId) clearInterval(constraintId);
-            clearInterval(tipInterval);
-        };
-    }, [timeLeft, onTimeUp, initialQuestions, isParadoxMode]);
+        return () => clearInterval(tipInterval);
+    }, []);
 
 
     // Scroll to bottom on new question
