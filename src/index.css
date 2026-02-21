@@ -1212,6 +1212,43 @@ button:disabled {
   color: var(--text-muted);
 }
 
+.help-examples {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.help-examples strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.help-examples ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.help-examples li {
+  margin-bottom: 0.4rem;
+  color: var(--text-muted);
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.help-examples li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+}
+
 /* Toolticks / Info Icons */
 .field-label {
   display: flex;

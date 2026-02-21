@@ -28,6 +28,14 @@ const HelpModal = ({ onClose }) => (
                 <section>
                     <h3><div className="help-step">3</div> Paradox Mode</h3>
                     <p>Feeling stuck? This mode injects reality-defying constraints that force you to view your challenge from impossible angles, shattering stagnant assumptions.</p>
+                    <div className="help-examples">
+                        <strong>Examples of Constraints:</strong>
+                        <ul>
+                            <li><em>"What if the effect happened before the cause?"</em> (Time Paradox)</li>
+                            <li><em>"Solve this in a room with five 90-degree corners."</em> (Geometrically Impossible)</li>
+                            <li><em>"What if heat moved from cold to hot?"</em> (Entropy Reversal)</li>
+                        </ul>
+                    </div>
                 </section>
                 <section>
                     <h3><div className="help-step">4</div> Review & Audit</h3>

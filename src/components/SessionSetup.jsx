@@ -68,7 +68,7 @@ function SessionSetup({ onStart, initialScenario }) {
                     </label>
                     <p className="toggle-hint">
                         {isParadox
-                            ? "Reality-defying constraints will be injected to shatter your assumptions."
+                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic."
                             : "Standard brainstorming session."}
                     </p>
                 </div>
