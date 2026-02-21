@@ -277,6 +277,95 @@
             flex: 1.5;
         }
 
+        /* Paradox Theme */
+        .app-container.paradox-theme {
+            --bg-color: #0d001a;
+            --accent-color: #ff00ff;
+            --accent-hover: #cc00cc;
+            --border-color: #330066;
+            --surface-color: #1a0033;
+        }
+
+        .paradox-label {
+            font-size: 0.6rem;
+            background: #ff00ff;
+            color: black;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: 900;
+        }
+
+        .paradox-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 0, 255, 0.05);
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .paradox-overlay {
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: 90%;
+            pointer-events: none;
+        }
+
+        .paradox-glitch-text {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+
+        .audit-constraint {
+            font-size: 0.7rem;
+            font-style: italic;
+            color: #ff00ff;
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+
+        .paradox-summary-section h3 {
+            color: #ff00ff !important;
+            border-color: rgba(255, 0, 255, 0.3) !important;
+        }
+
+        .paradox-insight-card {
+            background: rgba(255, 0, 255, 0.05);
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .paradox-insight-card p {
+            font-size: 1.1rem;
+            color: #ff00ff;
+            margin-bottom: 1rem;
+        }
+
+        .interference-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255, 0, 255, 0.6);
+        }
+
         button.primary-btn {
             background-color: var(--accent-color);
             color: #fff;
@@ -662,19 +751,20 @@
         const FileTextIcon = ({ size }) => (
             <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
         );
-        const ArrowLeftIcon = ({ size }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        const ZapIcon = ({ size, className }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
         );
 
         // --- Components ---
         function SessionSetup({ onStart, initialScenario }) {
             const [scenario, setScenario] = useState(initialScenario || '');
             const [duration, setDuration] = useState(730);
+            const [isParadox, setIsParadox] = useState(false);
 
             const handleSubmit = (e) => {
                 e.preventDefault();
                 if (scenario.trim()) {
-                    onStart(scenario.trim(), duration);
+                    onStart(scenario.trim(), duration, isParadox);
                 }
             };
 
@@ -686,7 +776,7 @@
                     </div>
 
                     <form onSubmit={handleSubmit} className="input-group">
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', gap: '1rem' }}>
+                        <div className="setup-fields">
                             <div className="input-group">
                                 <label htmlFor="scenario">Challenge Scenario</label>
                                 <textarea
@@ -708,28 +798,51 @@
                                     onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
                                     min="10"
                                     max="3600"
-                                    style={{ height: '100%', minHeight: '120px', textAlign: 'center', fontSize: '1.5rem', background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'white', borderRadius: '12px' }}
+                                    className="duration-input"
                                 />
                             </div>
                         </div>
+
+                        <div className="paradox-toggle-container">
+                            <input
+                                type="checkbox"
+                                id="paradox-check"
+                                checked={isParadox}
+                                onChange={(e) => setIsParadox(e.target.checked)}
+                            />
+                            <label htmlFor="paradox-check" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                                <ZapIcon size={18} className={isParadox ? 'active-icon' : ''} />
+                                <span>Paradox Mode (Reality Interference)</span>
+                            </label>
+                        </div>
+
                         <button
                             type="submit"
                             className="primary-btn"
                             disabled={!scenario.trim()}
-                            style={{ marginTop: '1rem' }}
                         >
                             <PlayIcon size={20} />
-                            Start Storming ({duration}s)
+                            Start Storming {isParadox ? 'Singularity' : ''} ({duration}s)
                         </button>
                     </form>
                 </div>
             );
         }
 
-        function StormingInterface({ scenario, duration, onTimeUp, initialQuestions, onUpdateQuestions }) {
+        const PARADOX_CONSTRAINTS = [
+            "Casualty Shift: How would this succeed if the effect happened before the cause?",
+            "Structural Defiance: Describe this solution in a room with five 90-degree corners.",
+            "Biological Anarchy: What if humans could breathe nitrogen instead of oxygen?",
+            "Logical Singularity: Formulate a question that is simultaneously true and false.",
+            "Static Momentum: Imagine a solution that moves at light speed while standing still.",
+            "Sisyphus Oasis: Deliver water to a thirst that is exactly P=0. The cup is a lens, the map is a trap."
+        ];
+
+        function StormingInterface({ scenario, duration, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
             const [timeLeft, setTimeLeft] = useState(duration || 730);
             const [input, setInput] = useState('');
             const [error, setError] = useState('');
+            const [constraintIndex, setConstraintIndex] = useState(0);
             const endOfListRef = useRef(null);
 
             useEffect(() => {
@@ -738,12 +851,20 @@
                     return;
                 }
 
-                const timerId = setInterval(() => {
-                    setTimeLeft(prev => prev - 1);
-                }, 1000);
+                const timerId = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
 
-                return () => clearInterval(timerId);
-            }, [timeLeft, onTimeUp, initialQuestions]);
+                let constraintId;
+                if (isParadoxMode) {
+                    constraintId = setInterval(() => {
+                        setConstraintIndex(prev => (prev + 1) % PARADOX_CONSTRAINTS.length);
+                    }, 20000);
+                }
+
+                return () => {
+                    clearInterval(timerId);
+                    if (constraintId) clearInterval(constraintId);
+                };
+            }, [timeLeft, onTimeUp, initialQuestions, isParadoxMode]);
 
             useEffect(() => {
                 endOfListRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -781,7 +902,8 @@
                 const newQuestion = {
                     id: Date.now().toString(),
                     text: trimmed,
-                    starred: false
+                    starred: false,
+                    paradoxConstraint: isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null
                 };
 
                 onUpdateQuestions([...initialQuestions, newQuestion]);
@@ -790,7 +912,15 @@
             };
 
             return (
-                <div className="storming-container fade-in">
+                <div className={`storming-container fade-in ${isParadoxMode ? 'paradox-active' : ''}`}>
+                    {isParadoxMode && (
+                        <div className="paradox-overlay">
+                            <div className="paradox-glitch-text">
+                                <AlertCircleIcon size={14} />
+                                <span>CONSTRAINT: {PARADOX_CONSTRAINTS[constraintIndex]}</span>
+                            </div>
+                        </div>
+                    )}
                     <div className="storming-header">
                         <div className="scenario-display">
                             <div className="scenario-label">Challenge</div>
@@ -812,7 +942,7 @@
                                         setInput(e.target.value);
                                         if (error) setError('');
                                     }}
-                                    placeholder="Type your question..."
+                                    placeholder={isParadoxMode ? "Fracture reality..." : "Type your question..."}
                                     autoFocus
                                     autoComplete="off"
                                 />
@@ -842,7 +972,7 @@
             );
         }
 
-        function ReviewMode({ scenario, questions, onGoToAnalysis }) {
+        function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
             const [localQuestions, setLocalQuestions] = useState(questions);
             const starredCount = localQuestions.filter(q => q.starred).length;
 
@@ -881,6 +1011,7 @@
 
                 let text = `*Question Storming Results*\n\n`;
                 text += `*Challenge:* ${scenario}\n\n`;
+                if (isParadoxMode) text += `*Mode:* Paradox Singularity\n\n`;
                 text += `*Top 3 Questions:*\n`;
 
                 if (starred.length === 0) {
@@ -955,16 +1086,16 @@
         }
 
         function SessionAnalysis({ session, onBack }) {
-            const { scenario, questions, duration } = session;
+            const { scenario, questions, duration, isParadoxMode } = session;
             const starredQuestions = questions.filter(q => q.starred);
             const totalQuestions = questions.length;
             const qpm = (totalQuestions / (duration / 60 || 1)).toFixed(1);
 
             const handleDownloadReport = () => {
-                let report = `QUESTION STORMING AUDIT REPORT\n==========================\nChallenge: ${scenario}\nTotal Questions: ${totalQuestions}\nStorm Density: ${qpm} q/min\n\nTOP OUTCOMES:\n`;
+                let report = `QUESTION STORMING AUDIT REPORT\n==========================\nChallenge: ${scenario}\nMode: ${isParadoxMode ? 'PARADOX' : 'Standard'}\nTotal Questions: ${totalQuestions}\nStorm Density: ${qpm} q/min\n\nTOP OUTCOMES:\n`;
                 starredQuestions.forEach((q, i) => report += `${i + 1}. ${q.text}\n`);
                 report += `\nFULL AUDIT TRAIL:\n`;
-                questions.forEach((q, i) => report += `[${i + 1}] ${q.text}${q.starred ? ' (STARRED)' : ''}\n`);
+                questions.forEach((q, i) => report += `[${i + 1}] ${q.text}${q.paradoxConstraint ? ` (Interference: ${q.paradoxConstraint})` : ''}${q.starred ? ' (STARRED)' : ''}\n`);
 
                 const blob = new Blob([report], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
@@ -988,13 +1119,34 @@
                             <div className="metric-box"><span className="metric-value">{qpm}</span><span className="metric-label">Q / Min</span></div>
                             <div className="metric-box"><span className="metric-value">{starredQuestions.length}</span><span className="metric-label">Starred</span></div>
                         </div>
-                        <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Audit Trail</h3>
+
+                        {isParadoxMode && (
+                            <div className="report-section paradox-summary-section">
+                                <h3 style={{ color: '#ff00ff' }}>Paradox Summary</h3>
+                                <div className="paradox-insight-card">
+                                    <p>Reality fractured {questions.filter(q => q.paradoxConstraint).length} times.</p>
+                                    <div className="interference-stats">
+                                        <span>Intensity: High</span>
+                                        <span>Stability: Unstable</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '0.5rem', margin: '1rem 0' }}>Audit Trail</h3>
                         <div className="audit-trail-list">
                             {questions.map((q, i) => (
-                                <div key={q.id} className="audit-item">
-                                    <span className="audit-index">{String(i + 1).padStart(2, '0')}</span>
-                                    <span style={{ flex: 1 }}>{q.text}</span>
-                                    {q.starred && <span className="audit-star-tag">STARRED</span>}
+                                <div key={q.id} className="audit-item" style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                                        <span className="audit-index">{String(i + 1).padStart(2, '0')}</span>
+                                        <span style={{ flex: 1 }}>{q.text}</span>
+                                        {q.starred && <span className="audit-star-tag">STARRED</span>}
+                                    </div>
+                                    {q.paradoxConstraint && (
+                                        <div className="audit-constraint" style={{ marginLeft: '3rem' }}>
+                                            Anomaly: {q.paradoxConstraint}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -1013,27 +1165,27 @@
                         return JSON.parse(saved);
                     } catch (e) { }
                 }
-                return { phase: 'SETUP', scenario: '', questions: [], duration: 730 };
+                return { phase: 'SETUP', scenario: '', questions: [], duration: 730, isParadoxMode: false };
             });
             useEffect(() => {
                 localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
             }, [session]);
 
-            const handleStartStorm = (scenario, duration) => setSession({ phase: 'STORMING', scenario, questions: [], duration });
+            const handleStartStorm = (scenario, duration, isParadoxMode) => setSession({ phase: 'STORMING', scenario, questions: [], duration, isParadoxMode });
             const handleTimerEnd = (questions) => setSession((prev) => ({ ...prev, phase: 'REVIEW', questions }));
             const handleReset = () => {
                 if (confirm("Are you sure you want to reset the session? All your questions will be lost.")) {
-                    setSession({ phase: 'SETUP', scenario: '', questions: [], duration: 730 });
+                    setSession({ phase: 'SETUP', scenario: '', questions: [], duration: 730, isParadoxMode: false });
                 }
             };
             const handleGoToAnalysis = (questions) => setSession((prev) => ({ ...prev, phase: 'ANALYSIS', questions }));
 
             return (
-                <div className="app-container">
+                <div className={`app-container ${session.isParadoxMode ? 'paradox-theme' : ''}`}>
                     <header className="app-header">
-                        <div className="brand">
+                        <div className="brand" onClick={handleReset} style={{ cursor: 'pointer' }}>
                             <LayoutIcon className="brand-icon" />
-                            <h1>Question Storming</h1>
+                            <h1>Question Storming {session.isParadoxMode && <span className="paradox-label">PARADOX</span>}</h1>
                         </div>
                         {session.phase !== 'SETUP' && (
                             <button className="reset-btn" onClick={handleReset}>New Session</button>
@@ -1048,6 +1200,7 @@
                             <StormingInterface
                                 scenario={session.scenario}
                                 duration={session.duration}
+                                isParadoxMode={session.isParadoxMode}
                                 initialQuestions={session.questions}
                                 onTimeUp={handleTimerEnd}
                                 onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
@@ -1057,6 +1210,7 @@
                             <ReviewMode
                                 scenario={session.scenario}
                                 questions={session.questions}
+                                isParadoxMode={session.isParadoxMode}
                                 onGoToAnalysis={handleGoToAnalysis}
                             />
                         )}

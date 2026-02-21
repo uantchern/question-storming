@@ -83,7 +83,8 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
         const newQuestion = {
             id: Date.now().toString(),
             text: trimmed,
-            starred: false
+            starred: false,
+            paradoxConstraint: isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null
         };
 
         onUpdateQuestions([...initialQuestions, newQuestion]);

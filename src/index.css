@@ -883,6 +883,23 @@ button:disabled {
   width: 2rem;
 }
 
+.audit-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.audit-constraint {
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #ff00ff;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
 .audit-text {
   flex: 1;
 }
@@ -894,6 +911,37 @@ button:disabled {
   color: #000;
   padding: 2px 6px;
   border-radius: 4px;
+}
+
+.paradox-summary-section h3 {
+  color: #ff00ff !important;
+  border-color: rgba(255, 0, 255, 0.3) !important;
+}
+
+.paradox-insight-card {
+  background: rgba(255, 0, 255, 0.05);
+  border: 1px solid rgba(255, 0, 255, 0.2);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
+}
+
+.paradox-insight-card p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #ff00ff;
+}
+
+.interference-stats {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 0, 255, 0.6);
 }
 
 @media (max-width: 768px) {
