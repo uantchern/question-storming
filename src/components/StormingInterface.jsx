@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, AlertCircle, Clock } from 'lucide-react';
 
-const DURATION = 4 * 60; // 4 minutes in seconds
+const DURATION = 730; // 730 seconds (~12 minutes)
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
