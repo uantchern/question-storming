@@ -10,7 +10,8 @@ const PARADOX_CONSTRAINTS = [
     "Logical Singularity: Formulate a question that is simultaneously true and false.",
     "Static Momentum: Imagine a solution that moves at light speed while standing still.",
     "The Infinite Sieve: How do you solve this using an uncountable number of steps?",
-    "Entropy Reversal: What if heat moved from cold to hot in this scenario?"
+    "Entropy Reversal: What if heat moved from cold to hot in this scenario?",
+    "Sisyphus Oasis: Deliver water to a thirst that is exactly P=0. The cup is a lens, the map is a trap."
 ];
 
 function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
