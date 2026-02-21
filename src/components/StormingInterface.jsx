@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, AlertCircle, Clock } from 'lucide-react';
+import { Send, AlertCircle, Clock, Brain } from 'lucide-react';
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
@@ -12,11 +12,21 @@ const PARADOX_CONSTRAINTS = [
     "Sisyphus Oasis: Deliver water to a thirst that is exactly P=0. The cup is a lens, the map is a trap."
 ];
 
+const PRO_TIPS = [
+    "Volume first: The more questions you generate, the better the final selection.",
+    "Don't pause to answer. Reflection comes during the Review phase.",
+    "Short questions are often the most powerful. Keep it punchy.",
+    "Try starting with 'If...', 'Why...', or 'How...'",
+    "The 12-minute mark (730s) is when your brain starts to break into new patterns.",
+    "Paradox Mode is designed to break logic. Don't fight it—flow with it."
+];
+
 function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp, initialQuestions, onUpdateQuestions }) {
     const [timeLeft, setTimeLeft] = useState(initialDuration || 730);
     const [input, setInput] = useState('');
     const [error, setError] = useState('');
     const [constraintIndex, setConstraintIndex] = useState(0);
+    const [tipIndex, setTipIndex] = useState(0);
     const endOfListRef = useRef(null);
 
     // Timer logic and Constraint rotation
@@ -38,11 +48,18 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
             }, 20000);
         }
 
+        // Rotate tips every 15 seconds
+        const tipInterval = setInterval(() => {
+            setTipIndex(prev => (prev + 1) % PRO_TIPS.length);
+        }, 15000);
+
         return () => {
             clearInterval(timerId);
             if (constraintId) clearInterval(constraintId);
+            clearInterval(tipInterval);
         };
     }, [timeLeft, onTimeUp, initialQuestions, isParadoxMode]);
+
 
     // Scroll to bottom on new question
     useEffect(() => {
@@ -139,6 +156,13 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
                         <Send size={20} />
                     </button>
                 </form>
+
+                <div className="pro-tip-container">
+                    <Brain size={14} className="tip-icon" />
+                    <span key={tipIndex} className="pro-tip-text fade-in-out">
+                        Pro-Tip: {PRO_TIPS[tipIndex]}
+                    </span>
+                </div>
             </div>
 
             <div className="questions-list">

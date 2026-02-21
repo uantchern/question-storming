@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, Zap, Brain } from 'lucide-react';
+import { Play, Zap, Brain, HelpCircle } from 'lucide-react';
 
 function SessionSetup({ onStart, initialScenario }) {
     const [scenario, setScenario] = useState(initialScenario || '');
@@ -23,7 +23,10 @@ function SessionSetup({ onStart, initialScenario }) {
             <form onSubmit={handleSubmit} className="input-group">
                 <div className="setup-fields">
                     <div className="input-group">
-                        <label htmlFor="scenario">Challenge Scenario</label>
+                        <label htmlFor="scenario" className="field-label">
+                            Challenge Scenario
+                            <HelpCircle size={14} className="info-icon" title="Clearly describe the problem or goal you want to explore with questions." />
+                        </label>
                         <textarea
                             id="scenario"
                             value={scenario}
@@ -35,7 +38,10 @@ function SessionSetup({ onStart, initialScenario }) {
                         />
                     </div>
                     <div className="input-group">
-                        <label htmlFor="duration">Timer (s)</label>
+                        <label htmlFor="duration" className="field-label">
+                            Timer (s)
+                            <HelpCircle size={14} className="info-icon" title="Set the duration for your storming session. Standard is 730s (approx 12 mins)." />
+                        </label>
                         <input
                             id="duration"
                             type="number"
@@ -57,7 +63,7 @@ function SessionSetup({ onStart, initialScenario }) {
                         />
                         <span className="toggle-content">
                             <Zap size={16} className={isParadox ? 'active-icon' : ''} />
-                            <span>Paradox Mode (Experimental)</span>
+                            <span>Paradox Mode</span>
                         </span>
                     </label>
                     <p className="toggle-hint">
@@ -82,3 +88,4 @@ function SessionSetup({ onStart, initialScenario }) {
 }
 
 export default SessionSetup;
+

@@ -4,12 +4,45 @@ import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import HistoryView from './components/HistoryView';
 import SessionAnalysis from './components/SessionAnalysis';
-import { Layout, History, ClipboardCheck } from 'lucide-react';
-import { supabase } from './supabaseClient';
+import { Layout, History, ClipboardCheck, HelpCircle, X, ExternalLink } from 'lucide-react';
+import { sql } from './db';
 
 const APP_STATE_KEY = 'questionStormingState';
 
+const HelpModal = ({ onClose }) => (
+    <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-content help-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+                <h2>Question Storming Guide</h2>
+                <button className="close-btn" onClick={onClose}><X size={20} /></button>
+            </div>
+            <div className="modal-body">
+                <section>
+                    <h3><div className="help-step">1</div> Setup</h3>
+                    <p>Enter a challenge or problem statement. The clearer the challenge, the better the questions will be. You can adjust the timer if you need more or less pressure.</p>
+                </section>
+                <section>
+                    <h3><div className="help-step">2</div> Question Storming</h3>
+                    <p>When the storm begins, focus entries on <strong>Questions Only</strong>. Don't answer them yet. The goal is volume and speed. Use "?" to trigger the engine.</p>
+                </section>
+                <section>
+                    <h3><div className="help-step">3</div> Paradox Mode</h3>
+                    <p>Feeling stuck? This mode injects reality-defying constraints that force you to view your challenge from impossible angles, shattering stagnant assumptions.</p>
+                </section>
+                <section>
+                    <h3><div className="help-step">4</div> Review & Audit</h3>
+                    <p>After the session, star the most impactful questions. Use the Audit Report to see statistical insights and export your session trail.</p>
+                </section>
+                <div className="help-footer">
+                    <p>Question Storming (or Q-Storming) is based on the philosophy that often the right question is more valuable than the first answer.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 function App() {
+    const [showHelp, setShowHelp] = useState(false);
     const [session, setSession] = useState(() => {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('reset')) {
@@ -61,20 +94,13 @@ function App() {
 
     const saveSessionToDb = async (sessionData) => {
         try {
-            const { error } = await supabase
-                .from('storm_sessions')
-                .insert([
-                    {
-                        scenario: sessionData.scenario,
-                        is_paradox: sessionData.isParadoxMode,
-                        questions: sessionData.questions,
-                        created_at: new Date().toISOString()
-                    }
-                ]);
-            if (error) throw error;
-            console.log("Session saved to database successfully");
+            await sql`
+                INSERT INTO storm_sessions (scenario, is_paradox, questions, created_at)
+                VALUES (${sessionData.scenario}, ${sessionData.isParadoxMode}, ${JSON.stringify(sessionData.questions)}, ${new Date().toISOString()})
+            `;
+            console.log("Session saved to Neon successfully");
         } catch (error) {
-            console.error("Error saving session to database:", error.message);
+            console.error("Error saving session to Neon:", error.message);
         }
     };
 
@@ -109,6 +135,9 @@ function App() {
                     <h1>Question Storming {session.isParadoxMode && <span className="paradox-label">PARADOX</span>}</h1>
                 </div>
                 <div className="header-actions">
+                    <button className="icon-btn" onClick={() => setShowHelp(true)} title="Information Guide">
+                        <HelpCircle size={20} />
+                    </button>
                     {session.phase === 'SETUP' && (
                         <button className="icon-btn" onClick={openHistory} title="View History">
                             <History size={20} />
@@ -156,8 +185,11 @@ function App() {
                     <HistoryView onBack={handleReset} />
                 )}
             </main>
+
+            {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
         </div>
     );
 }
 
 export default App;
+

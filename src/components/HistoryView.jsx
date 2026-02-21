@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { sql } from '../db';
 import { ArrowLeft, Brain, Zap, Trash2, Calendar } from 'lucide-react';
 
 function HistoryView({ onBack }) {
@@ -13,12 +13,7 @@ function HistoryView({ onBack }) {
     const fetchHistory = async () => {
         setLoading(true);
         try {
-            const { data, error } = await supabase
-                .from('storm_sessions')
-                .select('*')
-                .order('created_at', { ascending: false });
-
-            if (error) throw error;
+            const data = await sql`SELECT * FROM storm_sessions ORDER BY created_at DESC LIMIT 50`;
             setHistory(data || []);
         } catch (error) {
             console.error('Error fetching history:', error.message);
