@@ -723,6 +723,189 @@ button:disabled {
   color: #ff00ff;
 }
 
+/* Session Analysis & Audit Report */
+.analysis-container {
+  padding: 1rem 0;
+}
+
+.analysis-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.report-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.report-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent-color);
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 0.5rem 1.5rem;
+  border-bottom-left-radius: 12px;
+  letter-spacing: 0.1em;
+}
+
+.report-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.report-meta {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  color: var(--text-muted);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.metric-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.report-section {
+  margin-bottom: 4rem;
+}
+
+.report-section h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.analysis-starred-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.analysis-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.analysis-card.starred {
+  border-color: var(--accent-color);
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.analysis-num {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: var(--accent-color);
+  opacity: 0.5;
+}
+
+.analysis-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.audit-trail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.audit-item {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  align-items: center;
+}
+
+.audit-item:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.audit-index {
+  color: var(--text-muted);
+  width: 2rem;
+}
+
+.audit-text {
+  flex: 1;
+}
+
+.audit-star-tag {
+  font-size: 0.6rem;
+  font-weight: 900;
+  background: var(--accent-color);
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-card {
+    padding: 1.5rem;
+  }
+}
+
 /* Paradox Mode Styles */
 .paradox-theme .whatsapp-btn {
   box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);

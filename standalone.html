@@ -201,6 +201,82 @@
             }
         }
 
+        .audit-trail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .audit-item {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            align-items: center;
+        }
+
+        .audit-item:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .audit-index {
+            color: var(--text-muted);
+            width: 2rem;
+        }
+
+        .audit-star-tag {
+            font-size: 0.6rem;
+            font-weight: 900;
+            background: var(--accent-color);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .report-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+
+        .audit-btn {
+            background: var(--accent-color);
+            color: black !important;
+            font-weight: 700;
+            flex: 1.5;
+        }
+
         button.primary-btn {
             background-color: var(--accent-color);
             color: #fff;
@@ -577,8 +653,17 @@
         const DownloadIcon = ({ size }) => (
             <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
         );
-        const MessageCircleIcon = ({ size }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        const ClipboardCheckIcon = ({ size }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 8 3 3-3 3"></path><path d="m8 12 3-3 3 3"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
+        );
+        const BarChartIcon = ({ size }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+        );
+        const FileTextIcon = ({ size }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+        );
+        const ArrowLeftIcon = ({ size }) => (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         );
 
         // --- Components ---
@@ -757,7 +842,7 @@
             );
         }
 
-        function ReviewMode({ scenario, questions }) {
+        function ReviewMode({ scenario, questions, onGoToAnalysis }) {
             const [localQuestions, setLocalQuestions] = useState(questions);
             const starredCount = localQuestions.filter(q => q.starred).length;
 
@@ -848,16 +933,70 @@
                     </div>
 
                     <div className="review-footer">
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                            <button onClick={handleWhatsAppShare} className="whatsapp-btn">
-                                <MessageCircleIcon size={18} />
-                                Share Results to WhatsApp
+                        <div style={{ display: 'flex', gap: '0.75rem', width: '100%' }}>
+                            <button onClick={handleWhatsAppShare} className="whatsapp-btn" style={{ flex: 1 }}>
+                                WhatsApp
                             </button>
+                            <button onClick={handleDownload} className="download-btn" style={{ flex: 1 }}>
+                                Export
+                            </button>
+                            <button
+                                onClick={() => onGoToAnalysis(localQuestions)}
+                                className="primary-btn audit-btn"
+                                style={{ flex: 1.5 }}
+                            >
+                                <ClipboardCheckIcon size={18} />
+                                Audit Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
 
-                            <button onClick={handleDownload} className="download-btn">
-                                <DownloadIcon size={18} />
-                                Export as Text File
-                            </button>
+        function SessionAnalysis({ session, onBack }) {
+            const { scenario, questions, duration } = session;
+            const starredQuestions = questions.filter(q => q.starred);
+            const totalQuestions = questions.length;
+            const qpm = (totalQuestions / (duration / 60 || 1)).toFixed(1);
+
+            const handleDownloadReport = () => {
+                let report = `QUESTION STORMING AUDIT REPORT\n==========================\nChallenge: ${scenario}\nTotal Questions: ${totalQuestions}\nStorm Density: ${qpm} q/min\n\nTOP OUTCOMES:\n`;
+                starredQuestions.forEach((q, i) => report += `${i + 1}. ${q.text}\n`);
+                report += `\nFULL AUDIT TRAIL:\n`;
+                questions.forEach((q, i) => report += `[${i + 1}] ${q.text}${q.starred ? ' (STARRED)' : ''}\n`);
+
+                const blob = new Blob([report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const link = document.body.appendChild(document.createElement('a'));
+                link.href = url;
+                link.download = `audit_report_${Date.now()}.txt`;
+                link.click();
+                link.remove();
+            };
+
+            return (
+                <div className="analysis-container fade-in">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', alignItems: 'center' }}>
+                        <button onClick={onBack} className="back-btn"><ArrowLeftIcon size={16} /> Back</button>
+                        <button onClick={handleDownloadReport} className="primary-btn"><FileTextIcon size={16} /> Export Audit</button>
+                    </div>
+                    <div className="report-card">
+                        <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{scenario}</h2>
+                        <div className="metrics-grid">
+                            <div className="metric-box"><span className="metric-value">{totalQuestions}</span><span className="metric-label">Questions</span></div>
+                            <div className="metric-box"><span className="metric-value">{qpm}</span><span className="metric-label">Q / Min</span></div>
+                            <div className="metric-box"><span className="metric-value">{starredQuestions.length}</span><span className="metric-label">Starred</span></div>
+                        </div>
+                        <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Audit Trail</h3>
+                        <div className="audit-trail-list">
+                            {questions.map((q, i) => (
+                                <div key={q.id} className="audit-item">
+                                    <span className="audit-index">{String(i + 1).padStart(2, '0')}</span>
+                                    <span style={{ flex: 1 }}>{q.text}</span>
+                                    {q.starred && <span className="audit-star-tag">STARRED</span>}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -887,6 +1026,7 @@
                     setSession({ phase: 'SETUP', scenario: '', questions: [], duration: 730 });
                 }
             };
+            const handleGoToAnalysis = (questions) => setSession((prev) => ({ ...prev, phase: 'ANALYSIS', questions }));
 
             return (
                 <div className="app-container">
@@ -914,7 +1054,17 @@
                             />
                         )}
                         {session.phase === 'REVIEW' && (
-                            <ReviewMode scenario={session.scenario} questions={session.questions} />
+                            <ReviewMode
+                                scenario={session.scenario}
+                                questions={session.questions}
+                                onGoToAnalysis={handleGoToAnalysis}
+                            />
+                        )}
+                        {session.phase === 'ANALYSIS' && (
+                            <SessionAnalysis
+                                session={session}
+                                onBack={() => setSession(prev => ({ ...prev, phase: 'REVIEW' }))}
+                            />
                         )}
                     </main>
                 </div>

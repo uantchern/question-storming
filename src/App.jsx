@@ -3,7 +3,8 @@ import SessionSetup from './components/SessionSetup';
 import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import HistoryView from './components/HistoryView';
-import { Layout, History } from 'lucide-react';
+import SessionAnalysis from './components/SessionAnalysis';
+import { Layout, History, ClipboardCheck } from 'lucide-react';
 import { supabase } from './supabaseClient';
 
 const APP_STATE_KEY = 'questionStormingState';
@@ -96,6 +97,10 @@ function App() {
         setSession(prev => ({ ...prev, phase: 'HISTORY' }));
     };
 
+    const handleGoToAnalysis = (updatedQuestions) => {
+        setSession(prev => ({ ...prev, phase: 'ANALYSIS', questions: updatedQuestions }));
+    };
+
     return (
         <div className={`app-container ${session.isParadoxMode ? 'paradox-theme' : ''}`}>
             <header className="app-header">
@@ -136,6 +141,14 @@ function App() {
                         scenario={session.scenario}
                         questions={session.questions}
                         isParadoxMode={session.isParadoxMode}
+                        onGoToAnalysis={handleGoToAnalysis}
+                    />
+                )}
+
+                {session.phase === 'ANALYSIS' && (
+                    <SessionAnalysis
+                        session={session}
+                        onBack={() => setSession(prev => ({ ...prev, phase: 'REVIEW' }))}
                     />
                 )}
 

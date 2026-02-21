@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Star, Download, MessageCircle } from 'lucide-react';
+import { Star, Download, MessageCircle, ClipboardCheck } from 'lucide-react';
 
-function ReviewMode({ scenario, questions, isParadoxMode }) {
+function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
     const [localQuestions, setLocalQuestions] = useState(questions);
 
     const starredCount = localQuestions.filter(q => q.starred).length;
@@ -96,14 +96,24 @@ function ReviewMode({ scenario, questions, isParadoxMode }) {
             </div>
 
             <div className="review-footer">
-                <button onClick={handleWhatsAppShare} className="whatsapp-btn">
-                    <MessageCircle size={18} />
-                    Share to WhatsApp
-                </button>
-                <button onClick={handleDownload} className="download-btn">
-                    <Download size={18} />
-                    Export Results
-                </button>
+                <div className="action-row" style={{ display: 'flex', gap: '0.75rem', width: '100%' }}>
+                    <button onClick={handleWhatsAppShare} className="whatsapp-btn">
+                        <MessageCircle size={18} />
+                        WhatsApp
+                    </button>
+                    <button onClick={handleDownload} className="download-btn">
+                        <Download size={18} />
+                        Export
+                    </button>
+                    <button
+                        onClick={() => onGoToAnalysis(localQuestions)}
+                        className="primary-btn audit-btn"
+                        style={{ flex: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                    >
+                        <ClipboardCheck size={20} />
+                        Generate Audit Report
+                    </button>
+                </div>
             </div>
         </div>
     );
