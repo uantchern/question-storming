@@ -24,6 +24,18 @@ function HistoryView({ onBack }) {
         }
     };
 
+    const handleDelete = async (id, e) => {
+        e.stopPropagation();
+        if (!window.confirm('Are you sure you want to delete this session?')) return;
+
+        try {
+            await sql`DELETE FROM storm_sessions WHERE id = ${id}`;
+            setHistory(prev => prev.filter(item => item.id !== id));
+        } catch (error) {
+            console.error('Error deleting session:', error.message);
+            alert('Failed to delete session');
+        }
+    };
 
     const toggleExpand = (id) => {
         setExpandedIds(prev => ({
@@ -146,6 +158,13 @@ function HistoryView({ onBack }) {
                                         style={{ width: '32px', height: '32px', border: 'none', background: 'transparent' }}
                                     >
                                         <Mail size={16} />
+                                    </button>
+                                    <button
+                                        className="history-delete-btn"
+                                        onClick={(e) => handleDelete(item.id, e)}
+                                        title="Delete Session"
+                                    >
+                                        <Trash2 size={16} />
                                     </button>
                                 </div>
                             </div>
