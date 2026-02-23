@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { sql } from '../db';
-import { ArrowLeft, Brain, Zap, Trash2, Calendar } from 'lucide-react';
+import { ArrowLeft, Brain, Zap, Trash2, Calendar, Mail } from 'lucide-react';
 
 function HistoryView({ onBack }) {
     const [history, setHistory] = useState([]);

@@ -1,4 +1,4 @@
-import { ArrowLeft, Clock, BarChart3, ListChecks, Zap, Download, FileText, Brain } from 'lucide-react';
+import { ArrowLeft, Clock, BarChart3, ListChecks, Zap, Download, FileText, Brain, Mail } from 'lucide-react';
 
 function SessionAnalysis({ session, onBack }) {
     const { scenario, questions, isParadoxMode, duration, created_at } = session;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star, Download, MessageCircle, ClipboardCheck } from 'lucide-react';
+import { Star, Download, MessageCircle, ClipboardCheck, Mail } from 'lucide-react';
 
 function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
     const [localQuestions, setLocalQuestions] = useState(questions);
