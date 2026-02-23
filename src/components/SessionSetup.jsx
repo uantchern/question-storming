@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Play, Zap, Brain, HelpCircle } from 'lucide-react';
 
-function SessionSetup({ onStart, initialScenario }) {
+function SessionSetup({ onStart, initialScenario, initialUserName }) {
+    const [userName, setUserName] = useState(initialUserName || '');
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
     const [duration, setDuration] = useState(730);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (scenario.trim()) {
-            onStart(scenario.trim(), isParadox, duration);
+        if (scenario.trim() && userName.trim()) {
+            onStart(scenario.trim(), isParadox, duration, userName.trim());
         }
     };
 
@@ -22,10 +23,37 @@ function SessionSetup({ onStart, initialScenario }) {
 
             <form onSubmit={handleSubmit} className="input-group">
                 <div className="setup-fields">
+                    <div className="input-group" style={{ gridColumn: '1 / -1' }}>
+                        <label htmlFor="userName" className="field-label">
+                            Your Name
+                            <span className="tooltip-container" data-tooltip="Enter your name to log this session.">
+                                <HelpCircle size={14} className="info-icon" />
+                            </span>
+                        </label>
+                        <input
+                            id="userName"
+                            type="text"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="e.g., Alice"
+                            style={{
+                                padding: '1rem',
+                                background: 'var(--surface-color)',
+                                border: '2px solid var(--border-color)',
+                                borderRadius: '12px',
+                                color: 'white',
+                                fontSize: '1rem',
+                                width: '100%'
+                            }}
+                            required
+                        />
+                    </div>
                     <div className="input-group">
                         <label htmlFor="scenario" className="field-label">
                             Challenge Scenario
-                            <HelpCircle size={14} className="info-icon" title="Clearly describe the problem or goal you want to explore with questions." />
+                            <span className="tooltip-container" data-tooltip="Clearly describe the problem or goal you want to explore with questions.">
+                                <HelpCircle size={14} className="info-icon" />
+                            </span>
                         </label>
                         <textarea
                             id="scenario"
@@ -40,7 +68,9 @@ function SessionSetup({ onStart, initialScenario }) {
                     <div className="input-group">
                         <label htmlFor="duration" className="field-label">
                             Timer (s)
-                            <HelpCircle size={14} className="info-icon" title="Set the duration for your storming session. Standard is 730s (approx 12 mins)." />
+                            <span className="tooltip-container" data-tooltip="Set the duration for your storming session. Standard is 730s (approx 12 mins).">
+                                <HelpCircle size={14} className="info-icon" />
+                            </span>
                         </label>
                         <input
                             id="duration"
@@ -76,7 +106,7 @@ function SessionSetup({ onStart, initialScenario }) {
                 <button
                     type="submit"
                     className={`primary-btn ${isParadox ? 'paradox-btn' : ''}`}
-                    disabled={!scenario.trim()}
+                    disabled={!scenario.trim() || !userName.trim()}
                     style={{ marginTop: '1rem' }}
                 >
                     <Play size={20} />

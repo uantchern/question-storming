@@ -61,6 +61,7 @@ function App() {
             return {
                 phase: 'SETUP',
                 scenario: '',
+                userName: '',
                 questions: [],
                 isParadoxMode: false,
                 duration: 730,
@@ -83,6 +84,7 @@ function App() {
         return {
             phase: 'SETUP', // SETUP, STORMING, REVIEW, HISTORY
             scenario: '',
+            userName: '',
             questions: [],
             isParadoxMode: false,
             duration: 730,
@@ -105,18 +107,21 @@ function App() {
 
     const saveSessionToDb = async (sessionData) => {
         try {
-            await sql`
+            const dbScenario = sessionData.userName ? `[${sessionData.userName}] ${sessionData.scenario}` : sessionData.scenario;
+            const res = await sql`
                 INSERT INTO storm_sessions (scenario, is_paradox, questions, created_at)
-                VALUES (${sessionData.scenario}, ${sessionData.isParadoxMode}, ${JSON.stringify(sessionData.questions)}, ${new Date().toISOString()})
+                VALUES (${dbScenario}, ${sessionData.isParadoxMode}, ${JSON.stringify(sessionData.questions)}, ${new Date().toISOString()})
+                RETURNING id
             `;
-            console.log("Session saved to Neon successfully");
+            console.log("Session saved to Neon successfully with ID:", res[0].id);
+            setSession(prev => ({ ...prev, dbId: res[0].id }));
         } catch (error) {
             console.error("Error saving session to Neon:", error.message);
         }
     };
 
-    const handleStartStorm = (scenario, isParadoxMode, duration) => {
-        setSession({ phase: 'STORMING', scenario, questions: [], isParadoxMode, duration });
+    const handleStartStorm = (scenario, isParadoxMode, duration, userName) => {
+        setSession({ phase: 'STORMING', scenario, userName, questions: [], isParadoxMode, duration });
     };
 
     const handleTimerEnd = (questions) => {
@@ -126,8 +131,18 @@ function App() {
         saveSessionToDb(updatedSession);
     };
 
-    const handleReset = () => {
-        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, duration: 730 });
+    const handleReset = async () => {
+        if ((session.phase === 'REVIEW' || session.phase === 'ANALYSIS') && session.dbId) {
+            if (window.confirm("Would you like to delete your most recent storming session history before exiting?")) {
+                try {
+                    await sql`DELETE FROM storm_sessions WHERE id = ${session.dbId}`;
+                    console.log("Deleted recent session from history");
+                } catch (e) {
+                    console.error("Failed to delete recent session", e);
+                }
+            }
+        }
+        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: prev.userName || '', questions: [], isParadoxMode: false, duration: 730 }));
     };
 
     const openHistory = () => {
@@ -162,7 +177,7 @@ function App() {
 
             <main className="main-content">
                 {session.phase === 'SETUP' && (
-                    <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} />
+                    <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} initialUserName={session.userName} />
                 )}
 
                 {session.phase === 'STORMING' && (
