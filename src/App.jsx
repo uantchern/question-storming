@@ -2,10 +2,8 @@ import { useState, useEffect } from 'react';
 import SessionSetup from './components/SessionSetup';
 import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
-import HistoryView from './components/HistoryView';
 import SessionAnalysis from './components/SessionAnalysis';
-import { Layout, History, ClipboardCheck, HelpCircle, X, ExternalLink } from 'lucide-react';
-import { sql } from './db';
+import { Layout, ClipboardCheck, HelpCircle, X, ExternalLink } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState';
 
@@ -107,21 +105,6 @@ function App() {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
     }, [session]);
 
-    const saveSessionToDb = async (sessionData) => {
-        try {
-            const dbScenario = sessionData.userName ? `[${sessionData.userName}] ${sessionData.scenario}` : sessionData.scenario;
-            const res = await sql`
-                INSERT INTO storm_sessions (scenario, is_paradox, questions, created_at)
-                VALUES (${dbScenario}, ${sessionData.isParadoxMode}, ${JSON.stringify(sessionData.questions)}, ${new Date().toISOString()})
-                RETURNING id
-            `;
-            console.log("Session saved to Neon successfully with ID:", res[0].id);
-            setSession(prev => ({ ...prev, dbId: res[0].id }));
-        } catch (error) {
-            console.error("Error saving session to Neon:", error.message);
-        }
-    };
-
     const handleStartStorm = (scenario, isParadoxMode, userName) => {
         const initialQuestions = [
             { id: Date.now().toString() + '-1', text: "Why is this challenge the most critical one to solve right now?", starred: false, paradoxConstraint: null },
@@ -132,26 +115,11 @@ function App() {
     };
 
     const handleTimerEnd = (questions) => {
-        saveSessionToDb({ ...session, phase: 'HISTORY', questions });
         setSession({ phase: 'SETUP', scenario: '', userName: session.userName || '', questions: [], isParadoxMode: false, targetCount: 10 });
     };
 
     const handleReset = async () => {
-        if ((session.phase === 'REVIEW' || session.phase === 'ANALYSIS') && session.dbId) {
-            if (window.confirm("Would you like to delete your most recent storming session history before exiting?")) {
-                try {
-                    await sql`DELETE FROM storm_sessions WHERE id = ${session.dbId}`;
-                    console.log("Deleted recent session from history");
-                } catch (e) {
-                    console.error("Failed to delete recent session", e);
-                }
-            }
-        }
         setSession(prev => ({ phase: 'SETUP', scenario: '', userName: prev.userName || '', questions: [], isParadoxMode: false, targetCount: 10 }));
-    };
-
-    const openHistory = () => {
-        setSession(prev => ({ ...prev, phase: 'HISTORY' }));
     };
 
     const handleGoToAnalysis = (updatedQuestions) => {
@@ -169,11 +137,6 @@ function App() {
                     <button className="icon-btn" onClick={() => setShowHelp(true)} title="Information Guide">
                         <HelpCircle size={20} />
                     </button>
-                    {session.phase === 'SETUP' && (
-                        <button className="icon-btn" onClick={openHistory} title="View History">
-                            <History size={20} />
-                        </button>
-                    )}
                     {session.phase !== 'SETUP' && session.phase !== 'STORMING' && (
                         <button className="reset-btn" onClick={handleReset}>New Session</button>
                     )}
@@ -193,12 +156,6 @@ function App() {
                         onTimeUp={handleTimerEnd}
                         onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
                     />
-                )}
-
-
-
-                {session.phase === 'HISTORY' && (
-                    <HistoryView onBack={handleReset} />
                 )}
             </main>
 
