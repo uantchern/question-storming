@@ -64,15 +64,17 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
             <form onSubmit={handleSubmit} className="input-group">
                 <div className="setup-fields">
                     <div className="input-group" style={{ gridColumn: '1 / -1' }}>
-                        <label htmlFor="userName" className="field-label">
+                        <label htmlFor="storm-user-ident" className="field-label">
                             Your Name
                             <span className="tooltip-container" data-tooltip="Enter your name to log this session.">
                                 <HelpCircle size={14} className="info-icon" />
                             </span>
                         </label>
                         <input
-                            id="userName"
+                            id="storm-user-ident"
+                            name="storm-user-ident"
                             type="text"
+                            autoComplete="off"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             placeholder="e.g., Alice"
