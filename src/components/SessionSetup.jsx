@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Play, Zap, Brain, HelpCircle } from 'lucide-react';
+import { Play, Zap, Brain } from 'lucide-react';
 
 const PRESET_CHALLENGES = [
     "How can we reach out to more donors?",
@@ -66,9 +66,6 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                     <div className="input-group" style={{ gridColumn: '1 / -1' }}>
                         <label htmlFor="storm-user-ident" className="field-label">
                             Your Name
-                            <span className="tooltip-container" data-tooltip="Enter your name to log this session.">
-                                <HelpCircle size={14} className="info-icon" />
-                            </span>
                         </label>
                         <input
                             id="storm-user-ident"
@@ -93,9 +90,6 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                     <div className="input-group">
                         <label htmlFor="scenario" className="field-label">
                             Challenge Scenario
-                            <span className="tooltip-container" data-tooltip="Clearly describe the problem or goal you want to explore with questions.">
-                                <HelpCircle size={14} className="info-icon" />
-                            </span>
                         </label>
                         <textarea
                             id="scenario"
