@@ -132,9 +132,6 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     <div className="scenario-label">Challenge</div>
                     <div className="scenario-text">{scenario}</div>
                 </div>
-                <div className="timer-display">
-                    {initialQuestions.length} Questions
-                </div>
             </div>
 
             {!isFinished ? (
@@ -159,7 +156,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
             )}
 
             <div className="questions-list">
-                {initialQuestions.map((q, i) => (
+                {initialQuestions.slice(-3).map((q, i) => (
                     <div
                         key={q.id}
                         className={`question-card ${selectedId === q.id ? 'selected' : ''}`}

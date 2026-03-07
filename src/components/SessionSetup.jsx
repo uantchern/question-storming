@@ -1,6 +1,19 @@
 import { useState } from 'react';
 import { Play, Zap, Brain, HelpCircle } from 'lucide-react';
 
+const PRESET_CHALLENGES = [
+    "How can we reach out to more donors?",
+    "How can we attract more volunteers?",
+    "What is the biggest inefficiency in our operations?",
+    "How do we diversify our funding sources?",
+    "How can we improve board engagement?",
+    "How do we effectively measure and report our impact?",
+    "How can we retain our staff and prevent burnout?",
+    "How do we increase our digital presence and awareness?",
+    "How can we build strategic partnerships with corporates?",
+    "How do we ensure long-term financial sustainability?"
+];
+
 function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const [userName, setUserName] = useState(initialUserName || '');
     const [scenario, setScenario] = useState(initialScenario || '');
@@ -94,6 +107,45 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                         )}
                     </div>
 
+                    <div className="input-group" style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
+                        <label className="field-label" style={{ marginBottom: '1rem', display: 'block' }}>
+                            Or select from top 10 common challenges:
+                        </label>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
+                            {PRESET_CHALLENGES.map((challenge, idx) => (
+                                <div
+                                    key={idx}
+                                    onClick={() => {
+                                        setScenario(challenge);
+                                        setError('');
+                                    }}
+                                    style={{
+                                        background: scenario === challenge ? 'rgba(210, 180, 140, 0.2)' : 'var(--surface-color)',
+                                        border: `1px solid ${scenario === challenge ? '#D2B48C' : 'var(--border-color)'}`,
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        fontSize: '0.9rem',
+                                        color: scenario === challenge ? '#D2B48C' : 'var(--text-secondary)',
+                                        transition: 'all 0.2s ease',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem'
+                                    }}
+                                >
+                                    <div style={{
+                                        width: '16px',
+                                        height: '16px',
+                                        borderRadius: '50%',
+                                        border: `2px solid ${scenario === challenge ? '#D2B48C' : 'var(--text-secondary)'}`,
+                                        background: scenario === challenge ? '#D2B48C' : 'transparent',
+                                        flexShrink: 0
+                                    }} />
+                                    {challenge}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
 
