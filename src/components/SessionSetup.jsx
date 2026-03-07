@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, Zap, Brain, HelpCircle } from 'lucide-react';
 
 const PRESET_CHALLENGES = [
@@ -19,6 +19,14 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        setUserName(initialUserName || '');
+    }, [initialUserName]);
+
+    useEffect(() => {
+        setScenario(initialScenario || '');
+    }, [initialScenario]);
 
     const validateQuestion = (text) => {
         const trimmed = text.trim();
