@@ -56,15 +56,17 @@ function App() {
     const [showHelp, setShowHelp] = useState(false);
     const [session, setSession] = useState(() => {
         const urlParams = new URLSearchParams(window.location.search);
+        const urlPrompt = urlParams.get('prompt');
+
         if (urlParams.has('reset')) {
             localStorage.removeItem(APP_STATE_KEY);
             return {
                 phase: 'SETUP',
-                scenario: '',
+                scenario: urlPrompt || '',
                 userName: '',
                 questions: [],
                 isParadoxMode: false,
-                duration: 730,
+                targetCount: 10,
             };
         }
 
@@ -83,7 +85,7 @@ function App() {
         }
         return {
             phase: 'SETUP', // SETUP, STORMING, REVIEW, HISTORY
-            scenario: '',
+            scenario: urlPrompt || '',
             userName: '',
             questions: [],
             isParadoxMode: false,
