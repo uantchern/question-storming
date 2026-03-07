@@ -5,12 +5,11 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const [userName, setUserName] = useState(initialUserName || '');
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
-    const [targetCount, setTargetCount] = useState(10);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (scenario.trim() && userName.trim()) {
-            onStart(scenario.trim(), isParadox, targetCount, userName.trim());
+            onStart(scenario.trim(), isParadox, userName.trim());
         }
     };
 
@@ -65,23 +64,7 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                             required
                         />
                     </div>
-                    <div className="input-group">
-                        <label htmlFor="targetCount" className="field-label">
-                            Target Questions
-                            <span className="tooltip-container" data-tooltip="Set how many questions you want to generate.">
-                                <HelpCircle size={14} className="info-icon" />
-                            </span>
-                        </label>
-                        <input
-                            id="targetCount"
-                            type="number"
-                            className="duration-input"
-                            value={targetCount}
-                            onChange={(e) => setTargetCount(parseInt(e.target.value) || 1)}
-                            min="1"
-                            max="100"
-                        />
-                    </div>
+
                 </div>
 
 

@@ -122,8 +122,13 @@ function App() {
         }
     };
 
-    const handleStartStorm = (scenario, isParadoxMode, targetCount, userName) => {
-        setSession({ phase: 'STORMING', scenario, userName, questions: [], isParadoxMode, targetCount });
+    const handleStartStorm = (scenario, isParadoxMode, userName) => {
+        const initialQuestions = [
+            { id: Date.now().toString() + '-1', text: "Why is this challenge the most critical one to solve right now?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-2', text: "Who currently benefits from the situation remaining exactly as it is?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-3', text: "If we could completely reverse the assumptions about this challenge, what would the solution look like?", starred: false, paradoxConstraint: null }
+        ];
+        setSession({ phase: 'STORMING', scenario, userName, questions: initialQuestions, isParadoxMode });
     };
 
     const handleTimerEnd = (questions) => {
@@ -186,7 +191,6 @@ function App() {
                     <StormingInterface
                         scenario={session.scenario}
                         isParadoxMode={session.isParadoxMode}
-                        targetCount={session.targetCount}
                         initialQuestions={session.questions}
                         onTimeUp={handleTimerEnd}
                         onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
