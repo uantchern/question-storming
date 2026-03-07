@@ -132,10 +132,8 @@ function App() {
     };
 
     const handleTimerEnd = (questions) => {
-        const updatedSession = { ...session, phase: 'REVIEW', questions };
-        setSession(updatedSession);
-        // Async save to DB
-        saveSessionToDb(updatedSession);
+        saveSessionToDb({ ...session, phase: 'HISTORY', questions });
+        setSession({ phase: 'SETUP', scenario: '', userName: session.userName || '', questions: [], isParadoxMode: false, targetCount: 10 });
     };
 
     const handleReset = async () => {
@@ -197,21 +195,7 @@ function App() {
                     />
                 )}
 
-                {session.phase === 'REVIEW' && (
-                    <ReviewMode
-                        scenario={session.scenario}
-                        questions={session.questions}
-                        isParadoxMode={session.isParadoxMode}
-                        onGoToAnalysis={handleGoToAnalysis}
-                    />
-                )}
 
-                {session.phase === 'ANALYSIS' && (
-                    <SessionAnalysis
-                        session={session}
-                        onBack={() => setSession(prev => ({ ...prev, phase: 'REVIEW' }))}
-                    />
-                )}
 
                 {session.phase === 'HISTORY' && (
                     <HistoryView onBack={handleReset} />
