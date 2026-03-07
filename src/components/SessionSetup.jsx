@@ -5,11 +5,31 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const [userName, setUserName] = useState(initialUserName || '');
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
+    const [error, setError] = useState('');
+
+    const validateQuestion = (text) => {
+        const trimmed = text.trim();
+        if (!trimmed) return false;
+
+        if (trimmed.endsWith('?')) return true;
+
+        const questionWords = ['who', 'what', 'where', 'when', 'why', 'how', 'if', 'could', 'would', 'should', 'is', 'are', 'do', 'does', 'can'];
+        const lower = trimmed.toLowerCase();
+
+        // Check if starts with question word
+        return questionWords.some(word => lower.startsWith(word) || lower.indexOf('\n' + word) !== -1 || lower.match(new RegExp('\\b' + word + '\\b')));
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (scenario.trim() && userName.trim()) {
-            onStart(scenario.trim(), isParadox, userName.trim());
+        const trimmed = scenario.trim();
+        if (trimmed && userName.trim()) {
+            if (!validateQuestion(trimmed)) {
+                setError('Please framework your challenge as a question (must contain "?" or a question word)');
+                return; // block submission
+            }
+            setError('');
+            onStart(trimmed, isParadox, userName.trim());
         }
     };
 
@@ -57,12 +77,21 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                         <textarea
                             id="scenario"
                             value={scenario}
-                            onChange={(e) => setScenario(e.target.value)}
-                            placeholder="e.g., Key Word Sign is not widely known"
+                            onChange={(e) => {
+                                setScenario(e.target.value);
+                                if (error) setError('');
+                            }}
+                            placeholder="e.g., Why is Key Word Sign not widely known?"
                             rows={4}
                             autoFocus
                             required
                         />
+                        {error && (
+                            <div className="validation-msg" style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ff4d4f', fontSize: '0.9rem' }}>
+                                <HelpCircle size={14} />
+                                {error}
+                            </div>
+                        )}
                     </div>
 
                 </div>
