@@ -3,55 +3,11 @@ import SessionSetup from './components/SessionSetup';
 import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import SessionAnalysis from './components/SessionAnalysis';
-import { Layout, ClipboardCheck, HelpCircle, X, ExternalLink } from 'lucide-react';
+import { Layout, ClipboardCheck, X, ExternalLink } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState';
 
-const HelpModal = ({ onClose }) => (
-    <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content help-modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-                <h2>Question Storming Guide</h2>
-                <button className="close-btn" onClick={onClose}><X size={20} /></button>
-            </div>
-            <div className="modal-body">
-                <section>
-                    <h3><div className="help-step">1</div> Setup</h3>
-                    <p>Enter a challenge or problem statement. The clearer the challenge, the better the questions will be. You can adjust the timer if you need more or less pressure.</p>
-                </section>
-                <section>
-                    <h3><div className="help-step">2</div> Question Storming</h3>
-                    <p>When the storm begins, focus entries on <strong>Questions Only</strong>. Don't answer them yet. The goal is volume and speed. Use "?" to trigger the engine.</p>
-                </section>
-                <section>
-                    <h3><div className="help-step">3</div> Roll the dice for a 13</h3>
-                    <p>Feeling stuck? This mode injects reality-defying constraints every 20 seconds. This automated rotation forces you to view your challenge from impossible angles, shattering stagnant assumptions by attaching a specific 'Fracture' to every question entry.</p>
-                    <div className="help-examples">
-                        <strong>Examples of Constraints:</strong>
-                        <ul>
-                            <li><em>"What if the effect happened before the cause?"</em> (Time Paradox)</li>
-                            <li><em>"Solve this in a room with five 90-degree corners."</em> (Geometrically Impossible)</li>
-                            <li><em>"What if heat moved from cold to hot?"</em> (Entropy Reversal)</li>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h3><div className="help-step">4</div> Review & Audit</h3>
-                    <p>After the session, star the most impactful questions. Use the Audit Report to see statistical insights and export your session trail.</p>
-                </section>
-                <div className="help-footer">
-                    <p>Question Storming (or Q-Storming) is based on the philosophy that often the right question is more valuable than the first answer.</p>
-                    <p style={{ marginTop: '0.5rem', fontSize: '0.8rem', opacity: 0.8 }}>
-                        "Roll the dice for a 13" methodology by <a href="https://www.failonpurpose.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)' }}>Fail On Purpose</a>.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-);
-
 function App() {
-    const [showHelp, setShowHelp] = useState(false);
     const [session, setSession] = useState(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const urlPrompt = urlParams.get('prompt');
@@ -134,9 +90,6 @@ function App() {
                     <h1>Question Storming {session.isParadoxMode && <span className="paradox-label">ROLL THE DICE FOR A 13</span>}</h1>
                 </div>
                 <div className="header-actions">
-                    <button className="icon-btn" onClick={() => setShowHelp(true)} title="Information Guide">
-                        <HelpCircle size={20} />
-                    </button>
                     {session.phase !== 'SETUP' && session.phase !== 'STORMING' && (
                         <button className="reset-btn" onClick={handleReset}>New Session</button>
                     )}
@@ -158,8 +111,6 @@ function App() {
                     />
                 )}
             </main>
-
-            {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
         </div>
     );
 }
