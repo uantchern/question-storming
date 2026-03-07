@@ -5,12 +5,12 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const [userName, setUserName] = useState(initialUserName || '');
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
-    const [duration, setDuration] = useState(730);
+    const [targetCount, setTargetCount] = useState(10);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (scenario.trim() && userName.trim()) {
-            onStart(scenario.trim(), isParadox, duration, userName.trim());
+            onStart(scenario.trim(), isParadox, targetCount, userName.trim());
         }
     };
 
@@ -66,20 +66,20 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                         />
                     </div>
                     <div className="input-group">
-                        <label htmlFor="duration" className="field-label">
-                            Timer (s)
-                            <span className="tooltip-container" data-tooltip="Set the duration for your storming session. Standard is 730s (approx 12 mins).">
+                        <label htmlFor="targetCount" className="field-label">
+                            Target Questions
+                            <span className="tooltip-container" data-tooltip="Set how many questions you want to generate.">
                                 <HelpCircle size={14} className="info-icon" />
                             </span>
                         </label>
                         <input
-                            id="duration"
+                            id="targetCount"
                             type="number"
                             className="duration-input"
-                            value={duration}
-                            onChange={(e) => setDuration(parseInt(e.target.value) || 0)}
-                            min="10"
-                            max="3600"
+                            value={targetCount}
+                            onChange={(e) => setTargetCount(parseInt(e.target.value) || 1)}
+                            min="1"
+                            max="100"
                         />
                     </div>
                 </div>

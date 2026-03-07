@@ -72,9 +72,9 @@ function App() {
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
-                // Ensure duration is set if it was missing from old saved state
-                if (parsed && parsed.duration === undefined) {
-                    parsed.duration = 730;
+                // Ensure targetCount is set if old saved state
+                if (parsed && parsed.targetCount === undefined) {
+                    parsed.targetCount = 10;
                 }
                 return parsed;
             } catch (e) {
@@ -87,7 +87,7 @@ function App() {
             userName: '',
             questions: [],
             isParadoxMode: false,
-            duration: 730,
+            targetCount: 10,
         };
     });
 
@@ -120,8 +120,8 @@ function App() {
         }
     };
 
-    const handleStartStorm = (scenario, isParadoxMode, duration, userName) => {
-        setSession({ phase: 'STORMING', scenario, userName, questions: [], isParadoxMode, duration });
+    const handleStartStorm = (scenario, isParadoxMode, targetCount, userName) => {
+        setSession({ phase: 'STORMING', scenario, userName, questions: [], isParadoxMode, targetCount });
     };
 
     const handleTimerEnd = (questions) => {
@@ -142,7 +142,7 @@ function App() {
                 }
             }
         }
-        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: prev.userName || '', questions: [], isParadoxMode: false, duration: 730 }));
+        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: prev.userName || '', questions: [], isParadoxMode: false, targetCount: 10 }));
     };
 
     const openHistory = () => {
@@ -184,7 +184,7 @@ function App() {
                     <StormingInterface
                         scenario={session.scenario}
                         isParadoxMode={session.isParadoxMode}
-                        initialDuration={session.duration}
+                        targetCount={session.targetCount}
                         initialQuestions={session.questions}
                         onTimeUp={handleTimerEnd}
                         onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}

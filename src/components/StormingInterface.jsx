@@ -21,27 +21,19 @@ const PRO_TIPS = [
     "Roll the dice for a 13 is designed to break logic. Don't fight it—flow with it."
 ];
 
-function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp, initialQuestions, onUpdateQuestions }) {
-    const [timeLeft, setTimeLeft] = useState(initialDuration || 730);
+function StormingInterface({ scenario, isParadoxMode, targetCount, onTimeUp, initialQuestions, onUpdateQuestions }) {
     const [input, setInput] = useState('');
     const [error, setError] = useState('');
     const [constraintIndex, setConstraintIndex] = useState(0);
     const [tipIndex, setTipIndex] = useState(0);
     const endOfListRef = useRef(null);
 
-    // Timer logic
+    // Timer logic removed, instead end session when target count is reached
     useEffect(() => {
-        if (timeLeft <= 0) {
+        if (initialQuestions.length >= targetCount) {
             onTimeUp(initialQuestions);
-            return;
         }
-
-        const timerId = setInterval(() => {
-            setTimeLeft(prev => prev - 1);
-        }, 1000);
-
-        return () => clearInterval(timerId);
-    }, [timeLeft, onTimeUp, initialQuestions]);
+    }, [initialQuestions.length, targetCount, onTimeUp, initialQuestions]);
 
     // Constraint rotation (every 20s)
     useEffect(() => {
@@ -69,11 +61,7 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
         endOfListRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [initialQuestions.length]);
 
-    const formatTime = (seconds) => {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m}:${s.toString().padStart(2, '0')}`;
-    };
+    // Time formatter removed
 
     const validateQuestion = (text) => {
         const trimmed = text.trim();
@@ -128,9 +116,8 @@ function StormingInterface({ scenario, isParadoxMode, initialDuration, onTimeUp,
                     <div className="scenario-label">Challenge</div>
                     <div className="scenario-text">{scenario}</div>
                 </div>
-                <div className={`timer-display ${timeLeft < 30 ? 'low-time' : ''}`}>
-                    <Clock size={24} />
-                    {formatTime(timeLeft)}
+                <div className="timer-display">
+                    {initialQuestions.length} / {targetCount}
                 </div>
             </div>
 
