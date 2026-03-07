@@ -84,24 +84,7 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                     </div>
                 </div>
 
-                <div className="toggle-container">
-                    <label className="paradox-toggle">
-                        <input
-                            type="checkbox"
-                            checked={isParadox}
-                            onChange={(e) => setIsParadox(e.target.checked)}
-                        />
-                        <span className="toggle-content">
-                            <Zap size={16} className={isParadox ? 'active-icon' : ''} />
-                            <span>Roll the dice for a 13</span>
-                        </span>
-                    </label>
-                    <p className="toggle-hint">
-                        {isParadox
-                            ? "Injects 'Impossible Constraints' (like reversed time or broken physics) every 20 seconds to force extreme lateral thinking and bypass obvious logic."
-                            : "Standard brainstorming session."}
-                    </p>
-                </div>
+
 
                 <button
                     type="submit"
