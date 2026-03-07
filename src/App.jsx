@@ -71,11 +71,11 @@ function App() {
     };
 
     const handleTimerEnd = (questions) => {
-        setSession({ phase: 'SETUP', scenario: '', userName: session.userName || '', questions: [], isParadoxMode: false, targetCount: 10 });
+        setSession({ phase: 'SETUP', scenario: '', userName: '', questions: [], isParadoxMode: false, targetCount: 10 });
     };
 
     const handleReset = async () => {
-        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: prev.userName || '', questions: [], isParadoxMode: false, targetCount: 10 }));
+        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: '', questions: [], isParadoxMode: false, targetCount: 10 }));
     };
 
     const handleGoToAnalysis = (updatedQuestions) => {
