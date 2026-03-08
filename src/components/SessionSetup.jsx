@@ -56,9 +56,33 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
 
     return (
         <div className="setup-container fade-in">
-            <div className="setup-header">
-                <h2>What's the challenge?</h2>
-                <p>Define your problem statement before the storm begins.</p>
+            <div className="instructions-pane" style={{
+                background: 'var(--surface-color)',
+                padding: '2rem',
+                borderRadius: '12px',
+                border: '1px solid var(--border-color)',
+                textAlign: 'left'
+            }}>
+                <h2 style={{ 
+                    fontSize: '1.75rem', 
+                    marginBottom: '1.25rem', 
+                    fontWeight: 700,
+                    color: '#fff' 
+                }}>Instructions</h2>
+                <ol style={{ 
+                    paddingLeft: '1.25rem', 
+                    color: 'var(--text-muted)', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    gap: '0.875rem', 
+                    fontSize: '1rem',
+                    margin: 0
+                }}>
+                    <li>Enter your <strong>Name</strong>.</li>
+                    <li>Define your <strong>Challenge Scenario</strong> or select a common challenge below.</li>
+                    <li>Ensure your challenge is formulated as a question (starts with Who, What, Where, When, Why, How, etc.).</li>
+                    <li>Click <strong>Start Storming</strong> to begin generating questions.</li>
+                </ol>
             </div>
 
             <form onSubmit={handleSubmit} className="input-group">
