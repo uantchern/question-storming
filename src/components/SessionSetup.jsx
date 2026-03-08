@@ -76,6 +76,8 @@ function SessionSetup({ onStart, initialScenario }) {
                     <li>Define your <strong>Challenge Scenario</strong> or select a common challenge below.</li>
                     <li>Ensure your challenge is formulated as a question (your question must start with Who, What, How, Where, Why, When and end with a ?).</li>
                     <li>Click <strong>Start Storming</strong> to begin generating questions.</li>
+                    <li>You can question storm an unlimited number of times.</li>
+                    <li>You can share your favorite question via WhatsApp once you are done.</li>
                 </ol>
             </div>
 
