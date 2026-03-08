@@ -41,7 +41,7 @@ function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
     const handleWhatsAppShare = () => {
         const starred = localQuestions.filter(q => q.starred);
 
-        let text = `*Question Storming Results*\n\n`;
+        let text = `*Hi! I just used a Really Useful Thing from CharityOps.org to question storm a challenge.*\n\n`;
         text += `*Challenge:* ${scenario}\n`;
         if (isParadoxMode) text += `*Mode:* (Roll the dice for a 13)\n`;
         text += `\n*Top Questions:*\n`;
@@ -63,7 +63,7 @@ function ReviewMode({ scenario, questions, isParadoxMode, onGoToAnalysis }) {
         const others = localQuestions.filter(q => !q.starred);
 
         let subject = `Question Storm: ${scenario}`;
-        let body = `Question Storming Results\n\n`;
+        let body = `Hi! I just used a Really Useful Thing from CharityOps.org to question storm a challenge.\n\n`;
         body += `Challenge: ${scenario}\n`;
         if (isParadoxMode) body += `Mode: Roll the dice for a 13\n`;
         body += `\n--- TOP 3 QUESTIONS ---\n`;
