@@ -17,7 +17,6 @@ function App() {
             return {
                 phase: 'SETUP',
                 scenario: urlPrompt || '',
-                userName: '',
                 questions: [],
                 isParadoxMode: false,
                 targetCount: 10,
@@ -40,7 +39,6 @@ function App() {
         return {
             phase: 'SETUP', // SETUP, STORMING, REVIEW, HISTORY
             scenario: urlPrompt || '',
-            userName: '',
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
@@ -61,21 +59,21 @@ function App() {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
     }, [session]);
 
-    const handleStartStorm = (scenario, isParadoxMode, userName) => {
+    const handleStartStorm = (scenario, isParadoxMode) => {
         const initialQuestions = [
             { id: Date.now().toString() + '-1', text: "Why is this challenge the most critical one to solve right now?", starred: false, paradoxConstraint: null },
             { id: Date.now().toString() + '-2', text: "Who currently benefits from the situation remaining exactly as it is?", starred: false, paradoxConstraint: null },
             { id: Date.now().toString() + '-3', text: "If we could completely reverse the assumptions about this challenge, what would the solution look like?", starred: false, paradoxConstraint: null }
         ];
-        setSession({ phase: 'STORMING', scenario, userName, questions: initialQuestions, isParadoxMode });
+        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode });
     };
 
     const handleTimerEnd = (questions) => {
-        setSession({ phase: 'SETUP', scenario: '', userName: '', questions: [], isParadoxMode: false, targetCount: 10 });
+        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, targetCount: 10 });
     };
 
     const handleReset = async () => {
-        setSession(prev => ({ phase: 'SETUP', scenario: '', userName: '', questions: [], isParadoxMode: false, targetCount: 10 }));
+        setSession(prev => ({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, targetCount: 10 }));
     };
 
     const handleGoToAnalysis = (updatedQuestions) => {
@@ -98,7 +96,7 @@ function App() {
 
             <main className="main-content">
                 {session.phase === 'SETUP' && (
-                    <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} initialUserName={session.userName} />
+                    <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} />
                 )}
 
                 {session.phase === 'STORMING' && (

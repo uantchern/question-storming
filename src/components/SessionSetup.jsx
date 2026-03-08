@@ -14,15 +14,10 @@ const PRESET_CHALLENGES = [
     "How do we ensure long-term financial sustainability?"
 ];
 
-function SessionSetup({ onStart, initialScenario, initialUserName }) {
-    const [userName, setUserName] = useState(initialUserName || '');
+function SessionSetup({ onStart, initialScenario }) {
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        setUserName(initialUserName || '');
-    }, [initialUserName]);
 
     useEffect(() => {
         setScenario(initialScenario || '');
@@ -44,13 +39,13 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const trimmed = scenario.trim();
-        if (trimmed && userName.trim()) {
+        if (trimmed) {
             if (!validateQuestion(trimmed)) {
                 setError('Please framework your challenge as a question (must contain "?" or a question word)');
                 return; // block submission
             }
             setError('');
-            onStart(trimmed, isParadox, userName.trim());
+            onStart(trimmed, isParadox);
         }
     };
 
@@ -63,54 +58,29 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                 border: '1px solid var(--border-color)',
                 textAlign: 'left'
             }}>
-                <h2 style={{ 
-                    fontSize: '1.75rem', 
-                    marginBottom: '1.25rem', 
+                <h2 style={{
+                    fontSize: '1.75rem',
+                    marginBottom: '1.25rem',
                     fontWeight: 700,
-                    color: '#fff' 
+                    color: '#fff'
                 }}>Instructions</h2>
-                <ol style={{ 
-                    paddingLeft: '1.25rem', 
-                    color: 'var(--text-muted)', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    gap: '0.875rem', 
+                <ol style={{
+                    paddingLeft: '1.25rem',
+                    color: 'var(--text-muted)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.875rem',
                     fontSize: '1rem',
                     margin: 0
                 }}>
-                    <li>Enter your <strong>Name</strong>.</li>
                     <li>Define your <strong>Challenge Scenario</strong> or select a common challenge below.</li>
-                    <li>Ensure your challenge is formulated as a question (starts with Who, What, Where, When, Why, How, etc.).</li>
+                    <li>Ensure your challenge is formulated as a question (your question must start with Who, What, How, Where, Why, When and end with a ?).</li>
                     <li>Click <strong>Start Storming</strong> to begin generating questions.</li>
                 </ol>
             </div>
 
             <form onSubmit={handleSubmit} className="input-group">
                 <div className="setup-fields">
-                    <div className="input-group" style={{ gridColumn: '1 / -1' }}>
-                        <label htmlFor="storm-user-ident" className="field-label">
-                            Your Name
-                        </label>
-                        <input
-                            id="storm-user-ident"
-                            name="storm-user-ident"
-                            type="text"
-                            autoComplete="off"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                            placeholder="e.g., Alice"
-                            style={{
-                                padding: '1rem',
-                                background: 'var(--surface-color)',
-                                border: '2px solid var(--border-color)',
-                                borderRadius: '12px',
-                                color: 'white',
-                                fontSize: '1rem',
-                                width: '100%'
-                            }}
-                            required
-                        />
-                    </div>
                     <div className="input-group">
                         <label htmlFor="scenario" className="field-label">
                             Challenge Scenario
@@ -181,7 +151,7 @@ function SessionSetup({ onStart, initialScenario, initialUserName }) {
                 <button
                     type="submit"
                     className={`primary-btn ${isParadox ? 'paradox-btn' : ''}`}
-                    disabled={!scenario.trim() || !userName.trim()}
+                    disabled={!scenario.trim()}
                     style={{ marginTop: '1rem' }}
                 >
                     <Play size={20} />
