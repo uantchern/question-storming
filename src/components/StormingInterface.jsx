@@ -56,21 +56,21 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
     const generateMoreQuestions = (selectedText) => {
         const templates = [
-            `What is the hidden opportunity inside: "${selectedText}"?`,
-            `How would a completely different industry address: "${scenario}"?`,
-            `If we had no money or resources, how would we tackle: "${selectedText}"?`,
-            `What is the most absurd, ridiculous way to answer: "${selectedText}"?`,
-            `What underlying assumption are we making when we ask: "${selectedText}"?`,
-            `How can we make exactly the opposite of "${scenario}" happen?`,
-            `Who is secretly benefiting from the fact that we haven't solved: "${scenario}"?`,
-            `If we had to solve "${scenario}" in 24 hours, what is our first step?`,
-            `What would happen if we ignored "${selectedText}" completely for a year?`,
-            `How would we explain "${scenario}" to a 5-year old?`,
-            `What is the 'elephant in the room' regarding "${scenario}" that nobody is talking about?`,
-            `If our success depended 100% on answering "${selectedText}", what changes?`,
-            `Who should we ask for help about "${scenario}" that we haven't considered yet?`,
-            `What is the hardest part about answering "${selectedText}"?`,
-            `How can we reframe "${scenario}" to be a benefit rather than a problem?`
+            `If answering "${selectedText}" was strictly illegal, what backdoor approach would we take?`,
+            `What is the most painfully obvious solution to "${scenario}" that we are too proud or polite to try?`,
+            `How would our fiercest competitor or harshest critic exploit: "${selectedText}"?`,
+            `What underlying fear is actually driving us to ask: "${selectedText}" rather than acting?`,
+            `If we had unlimited budget but only 24 hours, how would we handle: "${scenario}"?`,
+            `Who is the least qualified person we could ask about "${selectedText}", and what brilliant mistake might they suggest?`,
+            `How does solving "${selectedText}" actually make "${scenario}" worse in the long run?`,
+            `What is the brutal 'Band-Aid' solution to "${scenario}", and why haven't we used it yet?`,
+            `If completely solving "${selectedText}" meant making ourselves obsolete, would we still do it?`,
+            `What would a lazy but exceptionally brilliant person do about: "${scenario}"?`,
+            `How can we completely automate, outsource, or eliminate the need to answer: "${selectedText}"?`,
+            `What sacred organizational 'cow' must we slaughter to finally resolve: "${scenario}"?`,
+            `If "${selectedText}" was actually just a symptom, what is the fatal underlying disease?`,
+            `How would a rebellious teenager radically misunderstand and inadvertently solve: "${scenario}"?`,
+            `What happens if we deliberately do absolutely nothing about "${selectedText}" for the next 5 years?`
         ];
 
         // Shuffle templates

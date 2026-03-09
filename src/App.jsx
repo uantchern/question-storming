@@ -61,9 +61,9 @@ function App() {
 
     const handleStartStorm = (scenario, isParadoxMode) => {
         const initialQuestions = [
-            { id: Date.now().toString() + '-1', text: "Why is this challenge the most critical one to solve right now?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-2', text: "Who currently benefits from the situation remaining exactly as it is?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-3', text: "If we could completely reverse the assumptions about this challenge, what would the solution look like?", starred: false, paradoxConstraint: null }
+            { id: Date.now().toString() + '-1', text: "What is the unspoken truth about this challenge that everyone is actively ignoring?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-2', text: "If the problem disappeared tomorrow by magic, what new devastating issue would take its place?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-3', text: "Who inherently profits (in power, comfort, or resources) from this challenge remaining permanently unsolved?", starred: false, paradoxConstraint: null }
         ];
         setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode });
     };
