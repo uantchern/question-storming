@@ -56,25 +56,47 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
     const generateMoreQuestions = (selectedText) => {
         const templates = [
-            `What if answering "${selectedText}" was illegal?`,
-            `What is the brutal 'Band-Aid' solution to: "${scenario}"?`,
-            `How would a critic exploit "${selectedText}"?`,
-            `What fear holds us back from answering: "${selectedText}"?`,
-            `How do we solve "${scenario}" in 24 hours?`,
-            `Who is least qualified to answer: "${selectedText}"?`,
-            `How does solving "${selectedText}" make "${scenario}" worse?`,
-            `Is "${selectedText}" just a distraction?`,
-            `Would solving "${selectedText}" make us obsolete?`,
-            `What would a lazy person do about: "${scenario}"?`,
-            `How can we automate answering: "${selectedText}"?`,
-            `What sacred cow blocks resolving: "${scenario}"?`,
-            `Is "${selectedText}" just a symptom?`,
-            `How would a teenager solve: "${scenario}"?`,
-            `What if we ignore "${selectedText}" for 5 years?`
+            `What if answering this was illegal?`,
+            `What is the brutal 'Band-Aid' solution?`,
+            `How would a critic exploit this situation?`,
+            `What fear holds us back from acting?`,
+            `How do we solve this in 24 hours?`,
+            `Who is least qualified to tackle this?`,
+            `How does solving this make things worse?`,
+            `Is this challenge just a distraction?`,
+            `Would fixing this make us obsolete?`,
+            `What would a lazy person do here?`,
+            `How can we automate this entirely?`,
+            `What sacred cow blocks the resolution?`,
+            `Is this problem merely a symptom?`,
+            `How would a teenager solve this?`,
+            `What if we ignore this for 5 years?`,
+            `What is the most expensive way to fail at this?`,
+            `How would we explain this to a five-year-old?`,
+            `What happens if we do the exact opposite?`,
+            `Why hasn't this been solved already?`,
+            `What assumption makes this impossible?`,
+            `How would a different industry fix this?`,
+            `If we had zero budget, what is our first step?`,
+            `How does this look from a competitor's view?`,
+            `What is the absolute worst possible solution?`,
+            `If this were a game, how would we cheat to win?`,
+            `What unwritten rule are we blindly following?`,
+            `Who is the elephant in the room?`,
+            `What is the hidden opportunity here?`,
+            `How can we reframe this as a benefit?`,
+            `What if our success depended entirely on this?`
         ];
 
+        // Filter out templates that have already been generated to ensure uniqueness
+        const existingTexts = new Set(initialQuestions.map(q => q.text));
+        const availableTemplates = templates.filter(t => !existingTexts.has(t));
+
+        // Fallback to full pool if we somehow run out of unique templates
+        const pool = availableTemplates.length >= 3 ? availableTemplates : templates;
+
         // Shuffle templates
-        const shuffled = [...templates].sort(() => 0.5 - Math.random());
+        const shuffled = [...pool].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, 3).map((text, idx) => ({
             id: Date.now().toString() + '-' + idx,
             text,
