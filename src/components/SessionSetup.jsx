@@ -50,61 +50,27 @@ function SessionSetup({ onStart, initialScenario }) {
     };
 
     return (
-        <div className="setup-container fade-in">
-            <div className="instructions-pane" style={{
-                background: 'var(--surface-color)',
-                padding: '2rem',
-                borderRadius: '12px',
-                border: '1px solid var(--border-color)',
-                textAlign: 'left'
-            }}>
-                <h2 style={{
-                    fontSize: '1.75rem',
-                    marginBottom: '1.25rem',
-                    fontWeight: 700,
-                    color: 'var(--text-color)'
-                }}>Instructions</h2>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                    gap: '1.5rem',
-                    marginTop: '0.5rem'
-                }}>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
-                            <HelpCircle size={24} />
-                        </div>
-                        <div>
-                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>1. Frame It</h4>
-                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
-                                Enter your challenge as a clear question (Who, What, Why, How).
-                            </p>
-                        </div>
+        <div className="setup-container fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <ul className="instructions-list" style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0' }}>
+                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
+                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
+                        <HelpCircle size={22} />
                     </div>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
-                            <Brain size={24} />
-                        </div>
-                        <div>
-                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>2. Generate</h4>
-                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
-                                Start Storming to iteratively explore deeper alternative questions.
-                            </p>
-                        </div>
+                    <div><strong>Frame It</strong> as a clear question (Who, What, Why, How).</div>
+                </li>
+                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
+                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
+                        <Brain size={22} />
                     </div>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
-                            <Share2 size={24} />
-                        </div>
-                        <div>
-                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>3. Share</h4>
-                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
-                                Select the most useful question and export it to WhatsApp.
-                            </p>
-                        </div>
+                    <div><strong>Generate</strong> iterative, deeper alternative questions.</div>
+                </li>
+                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
+                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
+                        <Share2 size={22} />
                     </div>
-                </div>
-            </div>
+                    <div><strong>Share</strong> the most useful question to WhatsApp.</div>
+                </li>
+            </ul>
 
             <form onSubmit={handleSubmit} className="input-group">
                 <div className="setup-fields">
@@ -177,12 +143,12 @@ function SessionSetup({ onStart, initialScenario }) {
 
                 <button
                     type="submit"
-                    className={`primary-btn ${isParadox ? 'paradox-btn' : ''}`}
+                    className={`primary-btn`}
                     disabled={!scenario.trim()}
-                    style={{ marginTop: '1rem' }}
+                    style={{ marginTop: 'auto', backgroundColor: '#1B2B28', color: 'white', border: 'none', padding: '16px', fontSize: '16px', fontWeight: 600, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxShadow: '0 4px 12px rgba(27, 43, 40, 0.2)' }}
                 >
                     <Play size={20} />
-                    Start {isParadox ? "Let's Q-Storm!" : 'Storming'}
+                    Start Storming
                 </button>
             </form>
         </div>
