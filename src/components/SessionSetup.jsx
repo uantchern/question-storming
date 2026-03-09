@@ -62,7 +62,7 @@ function SessionSetup({ onStart, initialScenario }) {
                     fontSize: '1.75rem',
                     marginBottom: '1.25rem',
                     fontWeight: 700,
-                    color: '#fff'
+                    color: 'var(--text-color)'
                 }}>Instructions</h2>
                 <div style={{
                     display: 'grid',
@@ -71,33 +71,33 @@ function SessionSetup({ onStart, initialScenario }) {
                     marginTop: '0.5rem'
                 }}>
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#3b82f6', flexShrink: 0 }}>
+                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
                             <HelpCircle size={24} />
                         </div>
                         <div>
-                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>1. Frame It</h4>
+                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>1. Frame It</h4>
                             <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
                                 Enter your challenge as a clear question (Who, What, Why, How).
                             </p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#a855f7', flexShrink: 0 }}>
+                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
                             <Brain size={24} />
                         </div>
                         <div>
-                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>2. Generate</h4>
+                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>2. Generate</h4>
                             <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
                                 Start Storming to iteratively explore deeper alternative questions.
                             </p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ background: 'rgba(34, 197, 94, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#22c55e', flexShrink: 0 }}>
+                        <div style={{ background: 'rgba(139, 115, 85, 0.1)', padding: '0.75rem', borderRadius: '8px', color: 'var(--accent-color)', flexShrink: 0 }}>
                             <Share2 size={24} />
                         </div>
                         <div>
-                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>3. Share</h4>
+                            <h4 style={{ color: 'var(--text-color)', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>3. Share</h4>
                             <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
                                 Select the most useful question and export it to WhatsApp.
                             </p>

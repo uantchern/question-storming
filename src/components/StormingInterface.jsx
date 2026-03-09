@@ -152,17 +152,17 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
             <div className="storming-header">
                 <div className="scenario-display">
                     <div className="scenario-label">Challenge</div>
-                    <div className="scenario-text">{scenario}</div>
+                    <div className="scenario-text" style={{ color: 'var(--text-color)' }}>{scenario}</div>
                 </div>
             </div>
 
             {!isFinished ? (
                 <div className="storm-again-prompt" style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem' }}>
-                    <h3 style={{ marginBottom: '0.5rem', color: 'white', fontSize: '1.2rem' }}>Storm again?</h3>
+                    <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-color)', fontSize: '1.2rem' }}>Storm again?</h3>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Select the most relevant question below, then click Yes to build 3 more questions!</p>
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                         <button className="primary-btn" style={{ minWidth: '120px' }} onClick={handleYes}>Yes</button>
-                        <button className="secondary-btn" style={{ minWidth: '120px', background: 'transparent', border: '1px solid var(--border-color)', color: 'white' }} onClick={handleNo}>No</button>
+                        <button className="secondary-btn" style={{ minWidth: '120px', background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)' }} onClick={handleNo}>No</button>
                     </div>
                 </div>
             ) : (
@@ -173,7 +173,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                         <button className="primary-btn" style={{ minWidth: '200px', background: '#25D366' }} onClick={handleWhatsApp}>
                             Share to WhatsApp
                         </button>
-                        <button className="secondary-btn" style={{ minWidth: '200px', background: 'transparent', border: '1px solid var(--border-color)', color: 'white' }} onClick={() => onTimeUp(initialQuestions)}>
+                        <button className="secondary-btn" style={{ minWidth: '200px', background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)' }} onClick={() => onTimeUp(initialQuestions)}>
                             Back to Main Menu
                         </button>
                     </div>
