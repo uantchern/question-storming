@@ -14,7 +14,7 @@ const PRESET_CHALLENGES = [
     "How do we ensure long-term financial sustainability?"
 ];
 
-function SessionSetup({ onStart, initialScenario }) {
+function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
@@ -72,85 +72,77 @@ function SessionSetup({ onStart, initialScenario }) {
                 </li>
             </ul>
 
-            <form onSubmit={handleSubmit} className="input-group">
-                <div className="setup-fields">
-                    <div className="input-group">
-                        <label htmlFor="scenario" className="field-label">
-                            Challenge Scenario
-                        </label>
-                        <textarea
-                            id="scenario"
-                            value={scenario}
-                            onChange={(e) => {
-                                setScenario(e.target.value);
-                                if (error) setError('');
-                            }}
-                            placeholder="e.g., Why is Key Word Sign not widely known?"
-                            rows={4}
-                            autoFocus
-                            required
-                        />
-                        {error && (
-                            <div className="validation-msg" style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ff4d4f', fontSize: '0.9rem' }}>
-                                <HelpCircle size={14} />
-                                {error}
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="input-group" style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
-                        <label className="field-label" style={{ marginBottom: '1rem', display: 'block' }}>
-                            Or select from top 10 common challenges:
-                        </label>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
-                            {PRESET_CHALLENGES.map((challenge, idx) => (
-                                <div
-                                    key={idx}
-                                    onClick={() => {
-                                        setScenario(challenge);
-                                        setError('');
-                                    }}
-                                    style={{
-                                        background: scenario === challenge ? 'rgba(210, 180, 140, 0.2)' : 'var(--surface-color)',
-                                        border: `1px solid ${scenario === challenge ? '#D2B48C' : 'var(--border-color)'}`,
-                                        padding: '0.75rem 1rem',
-                                        borderRadius: '8px',
-                                        cursor: 'pointer',
-                                        fontSize: '0.9rem',
-                                        color: scenario === challenge ? '#D2B48C' : 'var(--text-secondary)',
-                                        transition: 'all 0.2s ease',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '0.5rem'
-                                    }}
-                                >
-                                    <div style={{
-                                        width: '16px',
-                                        height: '16px',
-                                        borderRadius: '50%',
-                                        border: `2px solid ${scenario === challenge ? '#D2B48C' : 'var(--text-secondary)'}`,
-                                        background: scenario === challenge ? '#D2B48C' : 'transparent',
-                                        flexShrink: 0
-                                    }} />
-                                    {challenge}
+            {!isStarted && (
+                <form onSubmit={handleSubmit} className="input-group setup-form">
+                    <div className="setup-fields" style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+                        <div className="input-group">
+                            <label htmlFor="scenario" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                                Challenge Scenario
+                            </label>
+                            <textarea
+                                id="scenario"
+                                value={scenario}
+                                onChange={(e) => {
+                                    setScenario(e.target.value);
+                                    if (error) setError('');
+                                }}
+                                placeholder="e.g., Why is Key Word Sign not widely known?"
+                                rows={3}
+                                autoFocus
+                                required
+                                style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '2px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', resize: 'none' }}
+                            />
+                            {error && (
+                                <div className="validation-msg" style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
+                                    <HelpCircle size={14} />
+                                    {error}
                                 </div>
-                            ))}
+                            )}
+                        </div>
+
+                        <div className="input-group">
+                            <label className="field-label" style={{ fontSize: '12px', fontWeight: 600, color: '#5E5A4B', textTransform: 'uppercase', marginBottom: '4px' }}>
+                                Or select a common challenge:
+                            </label>
+                            <select
+                                value={PRESET_CHALLENGES.includes(scenario) ? scenario : ''}
+                                onChange={(e) => {
+                                    if (e.target.value) {
+                                        setScenario(e.target.value);
+                                        setError('');
+                                    }
+                                }}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 16px',
+                                    borderRadius: '8px',
+                                    border: '1px solid #D2B48C',
+                                    backgroundColor: 'white',
+                                    color: '#1B2B28',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    outline: 'none'
+                                }}
+                            >
+                                <option value="" disabled>-- Choose a preset challenge --</option>
+                                {PRESET_CHALLENGES.map((challenge, idx) => (
+                                    <option key={idx} value={challenge}>{challenge}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
-                </div>
 
-
-
-                <button
-                    type="submit"
-                    className={`primary-btn`}
-                    disabled={!scenario.trim()}
-                    style={{ marginTop: 'auto', backgroundColor: '#1B2B28', color: 'white', border: 'none', padding: '16px', fontSize: '16px', fontWeight: 600, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxShadow: '0 4px 12px rgba(27, 43, 40, 0.2)' }}
-                >
-                    <Play size={20} />
-                    Start Storming
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className="primary-btn"
+                        disabled={!scenario.trim()}
+                        style={{ backgroundColor: '#1B2B28', color: 'white', border: 'none', padding: '16px', fontSize: '16px', fontWeight: 600, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxShadow: '0 4px 12px rgba(27, 43, 40, 0.2)', transition: 'transform 0.2s ease, background-color 0.2s ease' }}
+                    >
+                        <Play size={20} />
+                        Start Storming
+                    </button>
+                </form>
+            )}
         </div>
     );
 }

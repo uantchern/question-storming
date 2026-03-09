@@ -24,6 +24,8 @@ const PRO_TIPS = [
 function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
     const [selectedId, setSelectedId] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
+    const [constraintIndex, setConstraintIndex] = useState(0);
+    const [tipIndex, setTipIndex] = useState(0);
     const endOfListRef = useRef(null);
 
     // Constraint rotation (every 20s)

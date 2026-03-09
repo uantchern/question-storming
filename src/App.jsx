@@ -97,7 +97,7 @@ function App() {
                     <span style={{ marginRight: '0.5rem' }}>✦</span> A Really Useful Thing
                 </p>
 
-                <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} />
+                <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} isStarted={session.phase !== 'SETUP'} />
             </div>
 
             <div className={`chat-pane ${session.phase !== 'SETUP' ? 'started' : ''}`} id="chatContainer">
