@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, AlertCircle, Clock, Brain } from 'lucide-react';
+import { Send, AlertCircle, Clock, Brain, MessageCircle } from 'lucide-react';
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
@@ -26,6 +26,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
     const [isFinished, setIsFinished] = useState(false);
     const [constraintIndex, setConstraintIndex] = useState(0);
     const [tipIndex, setTipIndex] = useState(0);
+    const [warning, setWarning] = useState('');
     const endOfListRef = useRef(null);
 
     // Constraint rotation (every 20s)
@@ -109,9 +110,10 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
     const handleYes = () => {
         if (!selectedId) {
-            alert("Please select the most relevant question first!");
+            setWarning("Please select the most relevant question above first!");
             return;
         }
+        setWarning('');
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || scenario;
         const newQuestions = generateMoreQuestions(selectedText);
         onUpdateQuestions([...initialQuestions, ...newQuestions]);
@@ -119,6 +121,11 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
     };
 
     const handleNo = () => {
+        if (!selectedId) {
+            setWarning("Please select your favorite question before finishing.");
+            return;
+        }
+        setWarning('');
         setIsFinished(true);
     };
 
@@ -179,6 +186,13 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
             {!isFinished ? (
                 <div className="storm-again-prompt" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem', width: '100%' }}>
+
+                    {warning && (
+                        <div style={{ padding: '0.75rem', backgroundColor: '#FEF2F2', border: '1px solid #F87171', color: '#DC2626', borderRadius: '8px', fontSize: '0.9rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', animation: 'fadeIn 0.3s' }}>
+                            <AlertCircle size={16} /> {warning}
+                        </div>
+                    )}
+
                     <p style={{ color: 'var(--text-muted)', marginBottom: '0.5rem', fontSize: '0.9rem', textAlign: 'center' }}>
                         Select the most relevant question above, then choose to storm again or finish.
                     </p>
