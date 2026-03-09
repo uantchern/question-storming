@@ -4,7 +4,7 @@
   --text-muted: #5E5A4B;
   --accent-color: #8B7355;
   --accent-hover: #1B2B28;
-  --surface-color: var(--text-color)fff;
+  --surface-color: #ffffff;
   --surface-hover: #fafafa;
   --border-color: #D2B48C;
   --error-color: #ef4444;
@@ -199,8 +199,8 @@ input[type="text"]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--accent-color);
-  background-color: #24344d;
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(210, 180, 140, 0.3);
 }
 
 .setup-fields {
@@ -225,7 +225,7 @@ textarea:focus {
 .duration-input:focus {
   outline: none;
   border-color: var(--accent-color);
-  background-color: #24344d;
+  background-color: #ffffff;
 }
 
 @media (max-width: 640px) {
