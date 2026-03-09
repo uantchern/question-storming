@@ -111,27 +111,26 @@ function App() {
                     <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, flexGrow: 1, fontFamily: 'Georgia, serif' }}>Session Viewer</h2>
                 </div>
 
-                {session.phase === 'SETUP' ? (
-                    <div className="chat-window" style={{ backgroundColor: '#F9F8F6', flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div className="chat-window" style={{ backgroundColor: '#F9F8F6', flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {session.phase === 'SETUP' ? (
                         <div className="empty-state" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.6, textAlign: 'center', color: '#5E5A4B' }}>
                             <div style={{ fontSize: '3.75rem', marginBottom: '1rem', color: '#D2B48C' }}>📋</div>
                             <p style={{ fontSize: '1.125rem', fontWeight: 600 }}>Ready to storm.</p>
                             <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Enter a challenge and click "Start Storming" to begin.</p>
                         </div>
-                    </div>
-                ) : (
-                    <StormingInterface
-                        scenario={session.scenario}
-                        isParadoxMode={session.isParadoxMode}
-                        initialQuestions={session.questions}
-                        onTimeUp={handleTimerEnd}
-                        onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
-                    />
-                )}
+                    ) : (
+                        <StormingInterface
+                            scenario={session.scenario}
+                            isParadoxMode={session.isParadoxMode}
+                            initialQuestions={session.questions}
+                            onTimeUp={handleTimerEnd}
+                            onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );
 }
 
 export default App;
-
