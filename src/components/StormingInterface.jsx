@@ -156,30 +156,6 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                 </div>
             </div>
 
-            {!isFinished ? (
-                <div className="storm-again-prompt" style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem' }}>
-                    <h3 style={{ marginBottom: '0.5rem', color: 'var(--text-color)', fontSize: '1.2rem' }}>Storm again?</h3>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Select the most relevant question below, then click Yes to build 3 more questions!</p>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                        <button className="primary-btn" style={{ minWidth: '120px' }} onClick={handleYes}>Yes</button>
-                        <button className="secondary-btn" style={{ minWidth: '120px', background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)' }} onClick={handleNo}>No</button>
-                    </div>
-                </div>
-            ) : (
-                <div className="storm-again-prompt" style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem', background: 'var(--surface-color)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ marginBottom: '0.5rem', color: '#10b981', fontSize: '1.2rem' }}>Ready to Share!</h3>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Click the single best question below that you want to share, or go back to start a new session.</p>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <button className="primary-btn" style={{ minWidth: '200px', background: '#25D366' }} onClick={handleWhatsApp}>
-                            Share to WhatsApp
-                        </button>
-                        <button className="secondary-btn" style={{ minWidth: '200px', background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)' }} onClick={() => onTimeUp(initialQuestions)}>
-                            Back to Main Menu
-                        </button>
-                    </div>
-                </div>
-            )}
-
             <div className="questions-list">
                 {initialQuestions.slice(-3).map((q, i) => (
                     <div
@@ -197,8 +173,35 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                         <div className="question-content">{q.text}</div>
                     </div>
                 ))}
-                <div ref={endOfListRef} />
             </div>
+
+            {!isFinished ? (
+                <div className="storm-again-prompt" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem', width: '100%' }}>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '0.5rem', fontSize: '0.9rem', textAlign: 'center' }}>
+                        Select the most relevant question above, then choose to storm again or finish.
+                    </p>
+                    <button onClick={handleYes} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: 'var(--surface-color)', color: 'var(--text-color)', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease' }}>
+                        <span style={{ fontSize: '1.2rem' }}>⚡</span> Storm Again
+                    </button>
+                    <button onClick={handleNo} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        Finish Session
+                    </button>
+                </div>
+            ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px', marginBottom: '16px', width: '100%' }}>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '0px', fontSize: '15px', textAlign: 'center' }}>
+                        Your session has concluded. Select the best question above.
+                    </p>
+                    <button onClick={handleWhatsApp} style={{ backgroundColor: '#25D366', color: 'white', fontWeight: 600, padding: '12px 16px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', transition: 'background-color 0.2s', border: 'none', cursor: 'pointer', width: '100%' }}>
+                        <MessageCircle size={20} /> Share Details via WhatsApp
+                    </button>
+                    <button onClick={() => onTimeUp(initialQuestions)} style={{ backgroundColor: '#334155', color: 'white', fontWeight: 600, padding: '12px 16px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer', width: '100%' }}>
+                        Back to Menu
+                    </button>
+                </div>
+            )}
+
+            <div ref={endOfListRef} />
         </div>
     );
 }
