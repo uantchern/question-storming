@@ -56,21 +56,21 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
     const generateMoreQuestions = (selectedText) => {
         const templates = [
-            `If answering "${selectedText}" was strictly illegal, what backdoor approach would we take?`,
-            `What is the most painfully obvious solution to "${scenario}" that we are too proud or polite to try?`,
-            `How would our fiercest competitor or harshest critic exploit: "${selectedText}"?`,
-            `What underlying fear is actually driving us to ask: "${selectedText}" rather than acting?`,
-            `If we had unlimited budget but only 24 hours, how would we handle: "${scenario}"?`,
-            `Who is the least qualified person we could ask about "${selectedText}", and what brilliant mistake might they suggest?`,
-            `How does solving "${selectedText}" actually make "${scenario}" worse in the long run?`,
-            `What is the brutal 'Band-Aid' solution to "${scenario}", and why haven't we used it yet?`,
-            `If completely solving "${selectedText}" meant making ourselves obsolete, would we still do it?`,
-            `What would a lazy but exceptionally brilliant person do about: "${scenario}"?`,
-            `How can we completely automate, outsource, or eliminate the need to answer: "${selectedText}"?`,
-            `What sacred organizational 'cow' must we slaughter to finally resolve: "${scenario}"?`,
-            `If "${selectedText}" was actually just a symptom, what is the fatal underlying disease?`,
-            `How would a rebellious teenager radically misunderstand and inadvertently solve: "${scenario}"?`,
-            `What happens if we deliberately do absolutely nothing about "${selectedText}" for the next 5 years?`
+            `What if answering "${selectedText}" was illegal?`,
+            `What is the brutal 'Band-Aid' solution to: "${scenario}"?`,
+            `How would a critic exploit "${selectedText}"?`,
+            `What fear holds us back from answering: "${selectedText}"?`,
+            `How do we solve "${scenario}" in 24 hours?`,
+            `Who is least qualified to answer: "${selectedText}"?`,
+            `How does solving "${selectedText}" make "${scenario}" worse?`,
+            `Is "${selectedText}" just a distraction?`,
+            `Would solving "${selectedText}" make us obsolete?`,
+            `What would a lazy person do about: "${scenario}"?`,
+            `How can we automate answering: "${selectedText}"?`,
+            `What sacred cow blocks resolving: "${scenario}"?`,
+            `Is "${selectedText}" just a symptom?`,
+            `How would a teenager solve: "${scenario}"?`,
+            `What if we ignore "${selectedText}" for 5 years?`
         ];
 
         // Shuffle templates
