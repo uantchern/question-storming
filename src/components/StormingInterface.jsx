@@ -168,10 +168,13 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
             ) : (
                 <div className="storm-again-prompt" style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '2rem', background: 'var(--surface-color)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                     <h3 style={{ marginBottom: '0.5rem', color: '#10b981', fontSize: '1.2rem' }}>Ready to Share!</h3>
-                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Click the single best question below that you want to share, then hit the button.</p>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>Click the single best question below that you want to share, or go back to start a new session.</p>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                         <button className="primary-btn" style={{ minWidth: '200px', background: '#25D366' }} onClick={handleWhatsApp}>
                             Share to WhatsApp
+                        </button>
+                        <button className="secondary-btn" style={{ minWidth: '200px', background: 'transparent', border: '1px solid var(--border-color)', color: 'white' }} onClick={() => onTimeUp(initialQuestions)}>
+                            Back to Main Menu
                         </button>
                     </div>
                 </div>
