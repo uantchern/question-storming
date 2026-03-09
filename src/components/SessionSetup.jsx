@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Play, Zap, Brain } from 'lucide-react';
+import { Play, Zap, Brain, HelpCircle, Share2 } from 'lucide-react';
 
 const PRESET_CHALLENGES = [
     "How can we reach out to more donors?",
@@ -64,21 +64,46 @@ function SessionSetup({ onStart, initialScenario }) {
                     fontWeight: 700,
                     color: '#fff'
                 }}>Instructions</h2>
-                <ol style={{
-                    paddingLeft: '1.25rem',
-                    color: 'var(--text-muted)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.875rem',
-                    fontSize: '1rem',
-                    margin: 0
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '1.5rem',
+                    marginTop: '0.5rem'
                 }}>
-                    <li>Define your <strong>Challenge Scenario</strong> or select a common challenge below.</li>
-                    <li>Ensure your challenge is formulated as a question (your question must start with Who, What, How, Where, Why, When and end with a ?).</li>
-                    <li>Click <strong>Start Storming</strong> to begin generating questions.</li>
-                    <li>You can question storm an unlimited number of times.</li>
-                    <li>You can share your favorite question via WhatsApp once you are done.</li>
-                </ol>
+                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                        <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#3b82f6', flexShrink: 0 }}>
+                            <HelpCircle size={24} />
+                        </div>
+                        <div>
+                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>1. Frame It</h4>
+                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
+                                Enter your challenge as a clear question (Who, What, Why, How).
+                            </p>
+                        </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                        <div style={{ background: 'rgba(168, 85, 247, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#a855f7', flexShrink: 0 }}>
+                            <Brain size={24} />
+                        </div>
+                        <div>
+                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>2. Generate</h4>
+                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
+                                Start Storming to iteratively explore deeper alternative questions.
+                            </p>
+                        </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                        <div style={{ background: 'rgba(34, 197, 94, 0.1)', padding: '0.75rem', borderRadius: '8px', color: '#22c55e', flexShrink: 0 }}>
+                            <Share2 size={24} />
+                        </div>
+                        <div>
+                            <h4 style={{ color: '#fff', margin: '0 0 0.5rem 0', fontWeight: '600', fontSize: '1rem' }}>3. Share</h4>
+                            <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
+                                Select the most useful question and export it to WhatsApp.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <form onSubmit={handleSubmit} className="input-group">
