@@ -19,7 +19,7 @@ function App() {
             localStorage.removeItem(APP_STATE_KEY);
             return {
                 phase: 'SETUP',
-                scenario: urlPrompt || '',
+                scenario: { subject: urlPrompt || '', persona: '', constraint: '' },
                 questions: [],
                 isParadoxMode: false,
                 targetCount: 10,
@@ -30,6 +30,20 @@ function App() {
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
+                // Invalidate old state if it uses the legacy string scenario format
+                if (parsed && typeof parsed.scenario === 'string' && parsed.scenario !== '') {
+                    localStorage.removeItem(APP_STATE_KEY);
+                    console.warn("Invalidated legacy string-based scenario state.");
+                    return {
+                        phase: 'SETUP',
+                        scenario: { subject: '', persona: '', constraint: '' },
+                        questions: [],
+                        isParadoxMode: false,
+                        targetCount: 10,
+                        apiKey: ''
+                    };
+                }
+
                 // Ensure targetCount is set if old saved state
                 if (parsed && parsed.targetCount === undefined) {
                     parsed.targetCount = 10;
@@ -41,7 +55,7 @@ function App() {
         }
         return {
             phase: 'SETUP', // SETUP, STORMING, REVIEW, HISTORY
-            scenario: urlPrompt || '',
+            scenario: { subject: '', persona: '', constraint: '' },
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
@@ -87,11 +101,11 @@ function App() {
     };
 
     const handleTimerEnd = (questions) => {
-        setSession({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, targetCount: 10 });
+        setSession({ phase: 'SETUP', scenario: { subject: '', persona: '', constraint: '' }, questions: [], isParadoxMode: false, targetCount: 10 });
     };
 
     const handleReset = async () => {
-        setSession(prev => ({ phase: 'SETUP', scenario: '', questions: [], isParadoxMode: false, targetCount: 10 }));
+        setSession(prev => ({ phase: 'SETUP', scenario: { subject: '', persona: '', constraint: '' }, questions: [], isParadoxMode: false, targetCount: 10 }));
     };
 
     const handleGoToAnalysis = (updatedQuestions) => {
