@@ -98,7 +98,7 @@ function App() {
                     Question Storming {session.isParadoxMode && <span className="paradox-label" style={{ fontSize: '12px' }}>ROLL THE DICE FOR A 13</span>}
                 </h1>
                 <p className="tagline" style={{ color: '#8B7355', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '30px' }}>
-                    <span style={{ marginRight: '0.5rem' }}>✦</span> A Really Useful Thing
+                    <span style={{ marginRight: '0.5rem' }}>✦</span> RUT: A Really Useful Thing
                 </p>
 
                 <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} isStarted={session.phase !== 'SETUP'} />

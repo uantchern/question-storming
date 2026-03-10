@@ -101,7 +101,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         }
         const winningQuestion = initialQuestions.find(q => q.id === selectedId);
 
-        let text = `*Hi! I just used a Really Useful Thing from CharityOps.org to question storm a challenge.*\n\n`;
+        let text = `*Hi! I just used a Really Useful Thing (RUT) from CharityOps.org to question storm a challenge.*\n\n`;
         text += `*Challenge:* ${scenario}\n`;
         if (isParadoxMode) text += `*Mode:* (Roll the dice for a 13)\n`;
         text += `\n*Winning Question:*\n${winningQuestion.text}\n`;
