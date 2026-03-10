@@ -8,7 +8,8 @@ The user is brainstorming about a core challenge scenario. They have selected a 
 You must NOT repeat typical boilerplate questions. You must deeply analyze the context and push the boundaries of their thinking regarding governance, impact, operations, psychology, and organizational design.
 Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in markdown.`;
 
-    let userPrompt = `SCENARIO CHOSEN: "${scenario}"
+    let scenarioText = typeof scenario === 'object' ? `Subject: ${scenario.subject}\nPersona: ${scenario.persona}\nConstraint: ${scenario.constraint}` : scenario;
+    let userPrompt = `SCENARIO CHOSEN:\n${scenarioText}
 THEIR CURRENT THREAD / FOCUS: "${selectedText}"\n`;
 
     if (isParadoxMode && paradoxConstraint) {

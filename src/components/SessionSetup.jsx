@@ -15,12 +15,18 @@ const PRESET_CHALLENGES = [
 ];
 
 function SessionSetup({ onStart, initialScenario, isStarted }) {
-    const [scenario, setScenario] = useState(initialScenario || '');
+    const [subject, setSubject] = useState(initialScenario?.subject || '');
+    const [persona, setPersona] = useState(initialScenario?.persona || '');
+    const [constraint, setConstraint] = useState(initialScenario?.constraint || '');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        setScenario(initialScenario || '');
+        if (initialScenario && typeof initialScenario === 'object') {
+            setSubject(initialScenario.subject || '');
+            setPersona(initialScenario.persona || '');
+            setConstraint(initialScenario.constraint || '');
+        }
     }, [initialScenario]);
 
     const validateQuestion = (text) => {
@@ -38,14 +44,11 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const trimmed = scenario.trim();
-        if (trimmed) {
-            if (!validateQuestion(trimmed)) {
-                setError('Please framework your challenge as a question (must contain "?" or a question word)');
-                return; // block submission
-            }
+        if (subject.trim() && persona.trim() && constraint.trim()) {
             setError('');
-            onStart(trimmed, isParadox);
+            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox);
+        } else {
+            setError('Please fill in Subject, Persona, and Constraint.');
         }
     };
 
@@ -76,22 +79,46 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                 <form onSubmit={handleSubmit} className="input-group setup-form">
                     <div className="setup-fields" style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
                         <div className="input-group">
-                            <label htmlFor="scenario" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
-                                Challenge Scenario
+                            <label htmlFor="subject" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                                Core Subject
                             </label>
-                            <textarea
-                                id="scenario"
-                                value={scenario}
-                                onChange={(e) => {
-                                    setScenario(e.target.value);
-                                    if (error) setError('');
-                                }}
-                                placeholder="e.g., Why is Key Word Sign not widely known?"
-                                rows={3}
+                            <input
+                                type="text"
+                                id="subject"
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                                placeholder="e.g., Volunteer Retention, New App, Fundraising"
                                 autoFocus
                                 required
-                                style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '2px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', resize: 'none' }}
+                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '16px' }}
                             />
+
+                            <label htmlFor="persona" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                                Target Persona
+                            </label>
+                            <input
+                                type="text"
+                                id="persona"
+                                value={persona}
+                                onChange={(e) => setPersona(e.target.value)}
+                                placeholder="e.g., Burned out staff, High-net-worth donor"
+                                required
+                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '16px' }}
+                            />
+
+                            <label htmlFor="constraint" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                                Limitation / Constraint
+                            </label>
+                            <input
+                                type="text"
+                                id="constraint"
+                                value={constraint}
+                                onChange={(e) => setConstraint(e.target.value)}
+                                placeholder="e.g., Zero budget left, 48 hours deadline"
+                                required
+                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
+                            />
+
                             {error && (
                                 <div className="validation-msg" style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
                                     <HelpCircle size={14} />
@@ -99,43 +126,12 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 </div>
                             )}
                         </div>
-
-                        <div className="input-group">
-                            <label className="field-label" style={{ fontSize: '12px', fontWeight: 600, color: '#5E5A4B', textTransform: 'uppercase', marginBottom: '4px' }}>
-                                Or select a common challenge:
-                            </label>
-                            <select
-                                value={PRESET_CHALLENGES.includes(scenario) ? scenario : ''}
-                                onChange={(e) => {
-                                    if (e.target.value) {
-                                        setScenario(e.target.value);
-                                        setError('');
-                                    }
-                                }}
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 16px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #D2B48C',
-                                    backgroundColor: 'white',
-                                    color: '#1B2B28',
-                                    fontSize: '14px',
-                                    cursor: 'pointer',
-                                    outline: 'none'
-                                }}
-                            >
-                                <option value="" disabled>-- Choose a preset challenge --</option>
-                                {PRESET_CHALLENGES.map((challenge, idx) => (
-                                    <option key={idx} value={challenge}>{idx + 1}. {challenge}</option>
-                                ))}
-                            </select>
-                        </div>
                     </div>
 
                     <button
                         type="submit"
                         className="primary-btn"
-                        disabled={!scenario.trim()}
+                        disabled={!subject.trim() || !persona.trim() || !constraint.trim()}
                         style={{ backgroundColor: '#1B2B28', color: 'white', border: 'none', padding: '16px', fontSize: '16px', fontWeight: 600, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxShadow: '0 4px 12px rgba(27, 43, 40, 0.2)', transition: 'transform 0.2s ease, background-color 0.2s ease' }}
                     >
                         <Play size={20} />

@@ -232,41 +232,126 @@ const analyzeAndProbe = (selectedText) => {
     return probes.sort(() => 0.5 - Math.random());
 };
 
+export const MATRIX_TEMPLATES = {
+    exploratory: [
+        "How does {subject} specifically serve the actual needs of {persona}?",
+        "If {persona} had to explain {subject} to a five-year-old, where would they struggle?",
+        "Why is {subject} currently failing to resonate deeply with {persona}?",
+        "What hidden agenda does {persona} have when dealing with {subject}?",
+        "How much money is being wasted trying to force {persona} to accept {subject}?",
+        "What is the single biggest lie {persona} tells themselves about {subject}?"
+    ],
+    inversion: [
+        "What if {persona} completely ignored {subject} starting tomorrow?",
+        "If {subject} was made illegal, how would {persona} adapt?",
+        "Could we achieve the exact opposite of {subject} and still satisfy {persona}?",
+        "What if {persona} was explicitly banned from participating in {subject}?",
+        "If our mission was to destroy {subject}, how would {persona} react?",
+        "How would {persona} behave if {subject} was flawlessly executed by a competitor?"
+    ],
+    constraint: [
+        "If we had to solve for {subject} under the pressure of {constraint}, what drastically changes?",
+        "How would {persona} approach {subject} if {constraint} was brutally enforced?",
+        "If {constraint} was suddenly removed, would {persona} actually improve {subject}?",
+        "Why are we using {constraint} as an excuse to avoid fixing {subject} for {persona}?",
+        "Could {constraint} actually be the secret to optimizing {subject} for {persona}?",
+        "Does {persona} secretly love {constraint} because it prevents them from having to change {subject}?"
+    ]
+};
+
+export const getMatrixQuestions = (subject, persona, constraint, count = 3, excludeTexts = []) => {
+    let pool = [];
+
+    const categories = Object.keys(MATRIX_TEMPLATES);
+    categories.forEach(category => {
+        MATRIX_TEMPLATES[category].forEach(template => {
+            let text = template
+                .replace(/\{subject\}/g, subject || "the core issue")
+                .replace(/\{persona\}/g, persona || "our stakeholders")
+                .replace(/\{constraint\}/g, constraint || "current limitations");
+            pool.push({ text, category });
+        });
+    });
+
+    const available = pool.filter(q => !excludeTexts.includes(q.text));
+    let shuffled = available.sort(() => 0.5 - Math.random());
+
+    let finalQuestions = [];
+    let usedCategories = new Set();
+
+    // First pass: try to get one from each category
+    for (let q of shuffled) {
+        if (!usedCategories.has(q.category) && finalQuestions.length < count) {
+            finalQuestions.push(q);
+            usedCategories.add(q.category);
+        }
+    }
+
+    // Fill the rest if needed, ensuring no exact string repeats
+    for (let q of shuffled) {
+        if (finalQuestions.length >= count) break;
+        if (!finalQuestions.some(fq => fq.text === q.text)) {
+            finalQuestions.push(q);
+        }
+    }
+
+    return finalQuestions.map(q => q.text).sort(() => 0.5 - Math.random());
+};
+
 // Utility to randomly pick N unique questions from the pool
 // Organically handles syntax analysis without mad-libs templates
 export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null, selectedText = null) => {
-    let poolToUse = [...QUESTION_POOL];
+    // Check if scenario is the new structured Matrix format
+    if (typeof scenario === 'object' && scenario !== null && scenario.subject) {
+        const { subject, persona, constraint } = scenario;
+        let poolToUse = getMatrixQuestions(subject, persona, constraint, 15, excludeTexts);
 
-    // Add specific vault questions if the scenario exactly matches a preset challenge
-    if (scenario && CHALLENGE_VAULTS[scenario] && CHALLENGE_VAULTS[scenario].length > 0) {
+        let finalQuestions = [];
+
+        if (selectedText && typeof selectedText === 'string' && selectedText !== scenario.subject && selectedText !== scenario) {
+            let contextualProbes = analyzeAndProbe(selectedText);
+            let followUpCount = Math.min(2, count - 1);
+            for (let i = 0; i < followUpCount; i++) {
+                if (contextualProbes[i] && !excludeTexts.includes(contextualProbes[i])) {
+                    finalQuestions.push(contextualProbes[i]);
+                }
+            }
+        }
+
+        const remainingCount = count - finalQuestions.length;
+        for (let i = 0; i < remainingCount && i < poolToUse.length; i++) {
+            if (!finalQuestions.includes(poolToUse[i])) {
+                finalQuestions.push(poolToUse[i]);
+            }
+        }
+
+        return finalQuestions.sort(() => 0.5 - Math.random());
+    }
+
+    // Fallback for legacy string-based scenario
+    let poolToUse = [...QUESTION_POOL];
+    if (scenario && typeof scenario === 'string' && CHALLENGE_VAULTS[scenario] && CHALLENGE_VAULTS[scenario].length > 0) {
         poolToUse = [...poolToUse, ...CHALLENGE_VAULTS[scenario]];
     }
 
     const available = poolToUse.filter(q => !excludeTexts.includes(q));
-
-    // If we run out of unique questions, recycle the pool
     const poolFinal = available.length >= count ? available : poolToUse;
     const shuffled = [...poolFinal].sort(() => 0.5 - Math.random());
 
     let finalQuestions = [];
 
-    // If there is an active train of thought
-    if (selectedText && selectedText !== scenario) {
-        // Run deep NLP syntax/context tracking on their selected question
+    if (selectedText && selectedText !== scenario && typeof selectedText === 'string') {
         let contextualProbes = analyzeAndProbe(selectedText);
-
         let followUpCount = Math.min(2, count - 1);
         for (let i = 0; i < followUpCount; i++) {
             if (contextualProbes[i]) finalQuestions.push(contextualProbes[i]);
         }
     }
 
-    // Fill the remainder with lateral/random probing questions to keep them thinking wide
     const remainingCount = count - finalQuestions.length;
     for (let i = 0; i < remainingCount; i++) {
         finalQuestions.push(shuffled[i]);
     }
 
-    // Shuffle the final mix so the contextual questions aren't predictably placed
     return finalQuestions.sort(() => 0.5 - Math.random());
 };
