@@ -54,9 +54,14 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     return (
         <div className="setup-container fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <p style={{ fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5', margin: '0 0 30px 0' }}>
-                Challenge entrenched mindsets and spark new ideas.
-            </p>
+            <div style={{ padding: '20px', backgroundColor: 'rgba(210, 180, 140, 0.1)', border: '1px solid #D2B48C', borderRadius: '12px', marginBottom: '30px' }}>
+                <div style={{ fontWeight: 800, color: '#8B7355', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+                    Question Stormer RUT
+                </div>
+                <p style={{ fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5', margin: 0 }}>
+                    Challenge entrenched mindsets and spark new ideas.
+                </p>
+            </div>
 
             {!isStarted && (
                 <form onSubmit={handleSubmit} className="input-group setup-form">
