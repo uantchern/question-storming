@@ -54,12 +54,15 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     return (
         <div className="setup-container fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div style={{ padding: '20px', backgroundColor: 'rgba(210, 180, 140, 0.1)', border: '1px solid #D2B48C', borderRadius: '12px', marginBottom: '24px' }}>
-                <div style={{ fontWeight: 800, color: '#8B7355', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
-                    Question Stormer RUT
+            <div style={{ marginBottom: '32px' }}>
+                <div style={{ fontSize: '12px', fontWeight: 800, color: '#8B7355', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <Zap size={14} /> RUT: A Really Useful Thing
                 </div>
-                <p style={{ fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5', margin: 0 }}>
-                    Challenge entrenched mindsets and spark new ideas.
+                <h1 style={{ fontSize: '28px', fontFamily: 'Georgia, serif', fontWeight: 900, color: '#1B2B28', margin: '0 0 16px 0', lineHeight: 1.2 }}>
+                    The Question Stormer
+                </h1>
+                <p style={{ fontSize: '14px', color: '#5E5A4B', lineHeight: '1.6', margin: 0 }}>
+                    Challenge entrenched mindsets and spark new ideas. Enter your core subject, target persona, and a constraint, and our AI will force a breakthrough.
                 </p>
             </div>
 

@@ -126,34 +126,40 @@ function App() {
             </div>
 
             <div className={`chat-pane ${session.phase !== 'SETUP' ? 'started' : ''}`} id="chatContainer">
-                <div className="chat-header" style={{ backgroundColor: '#1B2B28', padding: '20px 24px', display: 'flex', alignItems: 'center', color: 'white', gap: '12px' }}>
-                    <button onClick={handleReset} className="mobile-back-btn" style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white' }}>
-                        <span style={{ fontSize: '1.25rem' }}>←</span>
-                    </button>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '9999px', background: '#8B7355', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 'bold', border: '1px solid #D2B48C', overflow: 'hidden' }}>
-                        <span style={{ color: 'white' }}>QS</span>
-                    </div>
-                    <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, flexGrow: 1, fontFamily: 'Georgia, serif' }}>Session Viewer</h2>
-                </div>
-
-                <div className="chat-window" style={{ backgroundColor: '#F9F8F6', flex: 1, overflowY: 'auto', padding: '24px', paddingBottom: '40px', position: 'relative' }}>
-                    {session.phase === 'SETUP' ? (
-                        <div className="empty-state" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '300px', opacity: 0.6, textAlign: 'center', color: '#5E5A4B' }}>
-                            <div style={{ fontSize: '3.75rem', marginBottom: '1rem', color: '#D2B48C' }}>📋</div>
-                            <p style={{ fontSize: '1.125rem', fontWeight: 600 }}>Ready to storm.</p>
-                            <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Enter a challenge and click "Start Storming" to begin.</p>
+                {session.phase === 'SETUP' ? (
+                    <div style={{ flex: 1, padding: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', opacity: 0.7, margin: 'auto' }}>
+                            <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: '#F2EFE9', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', color: '#8B7355' }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                            </div>
+                            <h3 style={{ fontSize: '1.25rem', fontFamily: 'Georgia, serif', color: '#1B2B28', marginBottom: '8px', fontWeight: 600 }}>Ready to storm questions</h3>
+                            <p style={{ color: '#5E5A4B', fontSize: '0.875rem', maxWidth: '320px', lineHeight: 1.5 }}>Fill out the details on the left and click Start Storming to see your scenario generation here.</p>
                         </div>
-                    ) : (
-                        <StormingInterface
-                            scenario={session.scenario}
-                            isParadoxMode={session.isParadoxMode}
-                            initialQuestions={session.questions}
-                            apiKey={session.apiKey}
-                            onTimeUp={handleTimerEnd}
-                            onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
-                        />
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="chat-header" style={{ backgroundColor: '#1B2B28', padding: '20px 24px', display: 'flex', alignItems: 'center', color: 'white', gap: '12px' }}>
+                            <button onClick={handleReset} className="mobile-back-btn" style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white' }}>
+                                <span style={{ fontSize: '1.25rem' }}>←</span>
+                            </button>
+                            <div style={{ width: '32px', height: '32px', borderRadius: '9999px', background: '#8B7355', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', fontWeight: 'bold', border: '1px solid #D2B48C', overflow: 'hidden' }}>
+                                <span style={{ color: 'white' }}>QS</span>
+                            </div>
+                            <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, flexGrow: 1, fontFamily: 'Georgia, serif' }}>Session Viewer</h2>
+                        </div>
+
+                        <div className="chat-window" style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', flex: 1, overflowY: 'auto', padding: '24px', paddingBottom: '40px', position: 'relative' }}>
+                            <StormingInterface
+                                scenario={session.scenario}
+                                isParadoxMode={session.isParadoxMode}
+                                initialQuestions={session.questions}
+                                apiKey={session.apiKey}
+                                onTimeUp={handleTimerEnd}
+                                onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
+                            />
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
