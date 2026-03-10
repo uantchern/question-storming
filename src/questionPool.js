@@ -213,8 +213,8 @@ const analyzeAndProbe = (selectedText) => {
         probes.push(`Are we cowardly hiding behind hypotheticals instead of dealing with immediate, painful reality?`);
         probes.push(`If that hypothetical disaster actually happens, which of our charity's structural weaknesses will completely shatter first?`);
     } else {
-        probes.push(`What terrifying, unwritten rule of the Singapore social sector is preventing us from being completely honest about this?`);
-        probes.push(`If an incredibly hostile external auditor evaluated that premise, what would they immediately flag as a critical, terminating risk?`);
+        probes.push(`What terrifying, unwritten rule of the Singapore COC guidelines is preventing us from being completely honest about this?`);
+        probes.push(`If the NCSS auditor evaluated that premise, what would they immediately flag as a critical, terminating risk to our IPC status?`);
     }
 
     // Meta-cognitive probes about the user's thought process itself (pure psychology)
@@ -260,18 +260,18 @@ export const MATRIX_TEMPLATES = {
 };
 
 export const MATRIX_SCENARIOS = [
-    "A major shift regarding {subject} has occurred. Your target audience ({persona}) feels abandoned, especially given this constraint: {constraint}.",
-    "A massive crisis involving {subject} has hit the news. The target group ({persona}) is demanding answers, complicating the reality that: {constraint}.",
-    "You are given complete control to overhaul {subject} for your target audience ({persona}), but you must simultaneously adhere to this strict limitation: {constraint}.",
-    "The board cuts funding for {subject}, arguing that efforts regarding {persona} do not show enough ROI. You must now operate under this condition: {constraint}.",
-    "A new grassroots movement successfully serving {persona} is outperforming your efforts on {subject}, entirely unburdened by your primary limitation: {constraint}.",
-    "Because of this constraint—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}.",
-    "An anonymous whistleblower from {persona} has leaked internal communications showing massive incompetence regarding {subject}, creating a PR nightmare given {constraint}.",
-    "A wealthy philanthropist offers to completely fund the solution to {subject} for {persona}, but only if you immediately adopt their deeply controversial method governed by {constraint}.",
-    "The government has announced a sweeping new regulation regarding {subject} that will utterly devastate {persona}. You have 30 days to respond, despite {constraint}.",
-    "Your most loyal segment of {persona} has publicly criticized your approach to {subject}, forcing you to reassess everything while still bound by {constraint}.",
-    "A competitor has just launched an innovative, deeply engaging solution to {subject} that is rapidly stealing {persona} away from your organization, unimpeded by {constraint}.",
-    "Internal data shows that your current strategy for {subject} is actively harming {persona}, and continuing the strategy is only viable because of {constraint}."
+    "The Commissioner of Charities (COC) is initiating a surprise audit regarding {subject}. Your stakeholders ({persona}) are panicking, especially given this explicit constraint: {constraint}.",
+    "An investigative report on Channel NewsAsia has implicated your {subject}. The target group ({persona}) is demanding absolute transparency, complicating the reality that: {constraint}.",
+    "You are given complete control to overhaul {subject} for {persona}, but you must simultaneously adhere to a strict new compliance directive from MSF stating: {constraint}.",
+    "The Tote Board abruptly cuts 50% of your matching funding for {subject}, arguing that efforts regarding {persona} fail to meet national social impact metrics. You must now operate under this condition: {constraint}.",
+    "A secular grassroots movement successfully serving {persona} is outperforming your efforts on {subject}, entirely unburdened by your primary regulatory limitation: {constraint}.",
+    "Because of strict IPC (Institution of a Public Character) guidelines—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}.",
+    "An anonymous whistleblower from {persona} has leaked internal communications to the Charities Unit showing massive governance lapses regarding {subject}, creating a PR nightmare given {constraint}.",
+    "A wealthy local philanthropist offers to completely fund the solution to {subject} for {persona}, but only if you immediately adopt their deeply controversial method governed by {constraint}.",
+    "The government has announced a sweeping new regulation to the Charities Act regarding {subject} that will utterly devastate {persona}. You have 30 days to respond, despite {constraint}.",
+    "Your most loyal segment of {persona} has publicly criticized your approach to {subject} on social media, forcing you to reassess everything while still bound by the Code of Governance limitation: {constraint}.",
+    "A competing IPC has just launched an innovative, deeply engaging solution to {subject} that is rapidly stealing {persona} away from your organization, unimpeded by {constraint}.",
+    "Internal MSF alignment data shows that your current strategy for {subject} is actively harming {persona}, and continuing the strategy is only legally viable because of {constraint}."
 ];
 
 export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {
