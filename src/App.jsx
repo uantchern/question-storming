@@ -61,7 +61,7 @@ function App() {
     }, [session]);
 
     const handleStartStorm = (scenario, isParadoxMode) => {
-        const randomQuestions = getRandomQuestions(3);
+        const randomQuestions = getRandomQuestions(3, [], scenario);
         const initialQuestions = randomQuestions.map((text, index) => ({
             id: Date.now().toString() + '-' + index,
             text: text,
