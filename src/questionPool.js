@@ -265,7 +265,13 @@ export const MATRIX_SCENARIOS = [
     "You are given complete control to overhaul {subject} for your target audience ({persona}), but you must simultaneously adhere to this strict limitation: {constraint}.",
     "The board cuts funding for {subject}, arguing that efforts regarding {persona} do not show enough ROI. You must now operate under this condition: {constraint}.",
     "A new grassroots movement successfully serving {persona} is outperforming your efforts on {subject}, entirely unburdened by your primary limitation: {constraint}.",
-    "Because of this constraint—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}."
+    "Because of this constraint—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}.",
+    "An anonymous whistleblower from {persona} has leaked internal communications showing massive incompetence regarding {subject}, creating a PR nightmare given {constraint}.",
+    "A wealthy philanthropist offers to completely fund the solution to {subject} for {persona}, but only if you immediately adopt their deeply controversial method governed by {constraint}.",
+    "The government has announced a sweeping new regulation regarding {subject} that will utterly devastate {persona}. You have 30 days to respond, despite {constraint}.",
+    "Your most loyal segment of {persona} has publicly criticized your approach to {subject}, forcing you to reassess everything while still bound by {constraint}.",
+    "A competitor has just launched an innovative, deeply engaging solution to {subject} that is rapidly stealing {persona} away from your organization, unimpeded by {constraint}.",
+    "Internal data shows that your current strategy for {subject} is actively harming {persona}, and continuing the strategy is only viable because of {constraint}."
 ];
 
 export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {

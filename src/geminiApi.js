@@ -22,6 +22,7 @@ Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in mar
     let userPrompt;
     if (isInitialGeneration) {
         userPrompt = `CORE PARAMETERS:\n${scenarioText}\n\nGenerate 3 realistic, difficult scenarios (situations) merging these parameters.`;
+        userPrompt += `\n\n[SYSTEM RANDOMIZER SEED: ${Math.random()}]\nEnsure these scenarios are entirely unique from any previous suggestions, highly specific, and creatively distinct. Do not fall into predictable charity tropes.`;
     } else {
         userPrompt = `SCENARIO CHOSEN:\n${scenarioText}\nTHEIR CURRENT THREAD / FOCUS: "${selectedTextLocal}"\n`;
     }

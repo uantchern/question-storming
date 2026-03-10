@@ -181,6 +181,11 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     <button onClick={handleYes} disabled={isGenerating} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: isGenerating ? 'rgba(210, 180, 140, 0.3)' : 'var(--surface-color)', color: 'var(--text-color)', fontWeight: 600, cursor: isGenerating ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease' }}>
                         <span style={{ fontSize: '1.2rem' }}>⚡</span> {isGenerating ? "Storming..." : (initialQuestions.length <= 3 ? "Storm Questions" : "Storm Again")}
                     </button>
+                    {initialQuestions.length <= 3 && (
+                        <button onClick={() => onTimeUp([])} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid transparent', backgroundColor: 'transparent', color: '#5E5A4B', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }} onMouseOver={e => { e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.05)'; e.currentTarget.style.color = '#1B2B28'; }} onMouseOut={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#5E5A4B'; }}>
+                            Back to Menu / Regenerate
+                        </button>
+                    )}
                     {initialQuestions.length > 3 && (
                         <button onClick={handleNo} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             Finish Session
