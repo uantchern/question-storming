@@ -41,197 +41,189 @@ export const QUESTION_POOL = [
     "What fear is actively holding the management team back from taking bold action?"
 ];
 
-// 10 Common Challenges as defined in SessionSetup.jsx Preset List
-const CHALLENGES = [
-    "How can we reach out to more donors?",
-    "How can we attract more volunteers?",
-    "What is the biggest inefficiency in our operations?",
-    "How do we diversify our funding sources?",
-    "How can we improve board engagement?",
-    "How do we effectively measure and report our impact?",
-    "How can we retain our staff and prevent burnout?",
-    "How do we increase our digital presence and awareness?",
-    "How can we build strategic partnerships with corporates?",
-    "How do we ensure long-term financial sustainability?"
-];
-
-const PROMPT_TEMPLATES = {
+// Completely organic, hand-crafted vaults without any robotic "fill in the blank" templates.
+export const CHALLENGE_VAULTS = {
     "How can we reach out to more donors?": [
-        "Are we treating donors like ATMs instead of partners in {X}?",
-        "What if our current donor acquisition strategy is entirely ruined by {X}?",
-        "Do donors secretly hate our {X}?",
-        "Why would any donor actually care about {X} when there are 2,000 other charities?",
-        "Who authored the last terrible appeal letter regarding {X}?",
-        "Is our donor outreach model fundamentally broken because of {X}?"
+        "Are we treating our major donors like human ATMs instead of true partners?",
+        "Do affluent donors secretly hate the way we pitch to them?",
+        "Why would an objective philanthropist actually care about our mission when there are 2,000 other charities in Singapore?",
+        "Is our donor outreach model fundamentally archaic compared to modern platforms?",
+        "Are we asking for money when we should be asking for strategic leverage?",
+        "Who authored the last terrible, robotic appeal letter we sent out?",
+        "If a high-net-worth individual handed us $1 million today, do we even know how to spend it?",
+        "Are we ignoring our existing donors while desperately hunting for new ones?",
+        "Does our fundraising team actually believe in our cause, or are they just hitting KPIs?",
+        "Are we refusing to ask difficult people for money out of pure executive cowardice?",
+        "Does our board realistically open their personal networks, or just demand staff do it?",
+        "Are we so obsessed with securing grants that we've alienated grassroots givers?"
     ],
     "How can we attract more volunteers?": [
-        "Do we just want volunteers to do our {X} work for free?",
-        "Why does our onboarding process for {X} feel like a punishment?",
-        "Are we treating volunteers worse than {X}?",
-        "If we had to pay our volunteers for {X}, how fast would we automate it?",
-        "Who is alienating the volunteers the minute they touch {X}?",
-        "Is our lack of volunteers a symptom of {X}?"
+        "Do we actually value volunteers, or do we just want free, compliant labor?",
+        "Why does our volunteer onboarding process feel as tedious as an inter-ministry audit?",
+        "Are we treating passionate volunteers worse than our lowest-paid staff?",
+        "If we had to pay our volunteers a living wage, how fast would we automate their tasks?",
+        "Who inside the organization is actively alienating volunteers on their very first day?",
+        "Do we have a volunteer retention problem disguised as an attraction problem?",
+        "Are we assigning brilliant volunteers completely meaningless administrative duties?",
+        "Is our lack of volunteer engagement simply a reflection of our toxic internal culture?",
+        "What happens when the older tier of lifelong volunteers finally retires?",
+        "Would the Executive Director be willing to do the tasks we push onto our volunteers?",
+        "Why do enthusiastic tertiary students never return after their first stint with us?",
+        "Are we gatekeeping our own volunteer programs because of an obsession with risk management?"
     ],
     "What is the biggest inefficiency in our operations?": [
-        "Why is our process for {X} still stuck in the 1990s?",
-        "Who is terrified of losing their job if we automate {X}?",
-        "If we lost 50% of our budget tomorrow, would we still fund {X}?",
-        "Are we spending 10 hours a week on {X} just to please one bored board member?",
-        "What is the true financial cost of our incompetence in {X}?",
-        "How is {X} dragging down the entire charity's performance?"
+        "Why is our core administration process still trapped in 1999?",
+        "Who is terrified of losing their job if we finally upgrade our core software?",
+        "If we lost 50% of our general fund tomorrow, would we still prioritize these operations?",
+        "Are we spending 10 hours a week generating manual reports just to appease a single board member?",
+        "What is the true, crushing financial cost of our collective incompetence in basic tech?",
+        "Are we confusing 'working hard' with 'working efficiently'?",
+        "Is the fear of a temporary disruption blocking a permanent operational upgrade?",
+        "Why do we require four layers of management approval for a simple claim?",
+        "Are we intentionally keeping our processes complex so nobody can be blamed when things break?",
+        "How much donor money is being burnt annually because we refuse to fire the vendor?",
+        "Are completely meaningless staff meetings paralyzing our actual outreach work?",
+        "Is 'governance' being aggressively weaponized as an excuse for glacial speed?"
     ],
     "How do we diversify our funding sources?": [
-        "Are we completely addicted to the government grant for {X}?",
-        "If NCSS changed funding rules for {X}, would we close down?",
-        "Why are our funding pitches for {X} so overwhelmingly boring?",
-        "Who is blocking us from trying a risky new model for {X}?",
-        "Are we too proud to ask for money to fund {X} directly?",
-        "Does our over-reliance on one funder blind us to fixing {X}?"
+        "Are we terrifyingly addicted to a single government grant?",
+        "If MSF or NCSS changed their funding guidelines tomorrow, would we immediately collapse?",
+        "Why are our alternative funding pitches so overwhelmingly safe and boring?",
+        "Who on the leadership team is blocking us from trying a high-risk, high-reward funding model?",
+        "Are we too proud to ask the general public directly for operational funding?",
+        "Does our over-reliance on one major foundation blind us to completely rethinking our operations?",
+        "Is the board secretly terrified of launching an unrestricted giving campaign?",
+        "Are we just relabeling old, failing programs to qualify for new restricted grants?",
+        "If we stopped relying entirely on charity galas, how else would we actually survive?",
+        "Why do we expect diverse funding when our marketing targets the exact same audience every year?",
+        "Does our Executive Director possess the actual commercial acumen to diversify?",
+        "Are we avoiding fee-for-service models purely out of an ideological purism?"
     ],
     "How can we improve board engagement?": [
-        "Is our board completely disconnected from the reality of {X}?",
-        "Why does the board only care about {X} when it affects our public image?",
-        "Are we feeding the board vanity metrics about {X} to hide our failures?",
-        "Who are we afraid to remove from the board, despite them ruining {X}?",
-        "Would a shadow board of 20-year-olds manage {X} better than we do?",
-        "Does the board's interference in {X} actually hurt our mission?"
+        "Is our board completely, blissfully disconnected from the gritty reality of our social workers?",
+        "Why does the board only suddenly care when our public image is severely threatened?",
+        "Are we deliberately feeding the board vanity metrics to camouflage our operational failures?",
+        "Who are we terrified to remove from the board, despite them completely derailing meetings?",
+        "Would a shadow board of 25-year-olds manage this charity's future better than the incumbents?",
+        "Does the board's constant interference actually hurt our mission more than it helps?",
+        "Are our board meetings just glorified, exhausting rubber-stamping exercises?",
+        "Why are board members allowed to retain their seats despite missing 50% of the meetings?",
+        "Is the Chairman actively silencing dissenting voices to maintain total control?",
+        "Do board members truly understand our financial reality, or do they just glance at the P&L?",
+        "Are we prioritizing board members with prestige over board members with actual sector competence?",
+        "How much management time is wasted solely on managing the fragile egos of the board?"
     ],
     "How do we effectively measure and report our impact?": [
-        "Are our impact numbers completely fabricated regarding {X}?",
-        "If an investigative journalist dug into our {X} numbers, what would they expose?",
-        "Why do we measure outputs of {X} instead of actual societal change?",
-        "Who benefits from keeping our {X} metrics impossibly vague?",
-        "Are we confusing 'doing an activity' with 'making an impact' in {X}?",
-        "Are we manipulating the data on {X} to secure future grants?"
+        "Are our quantitative impact numbers actually fabricated to look good in the Annual Report?",
+        "If an investigative journalist aggressively dug into our metrics, what devastating truth would they expose?",
+        "Why do we exclusively measure the output of activities instead of actual, lasting societal transformation?",
+        "Who specifically benefits from keeping our impact metrics impossibly vague and subjective?",
+        "Are we purposefully confusing 'distributing aid' with 'breaking the cycle of poverty'?",
+        "Is our fear of losing future grants actively manipulating the data we choose to report?",
+        "Do our beneficiaries privately laugh at the surveys we force them to fill out?",
+        "If our impact is truly as high as we claim, why hasn't the core problem shrunk at all locally?",
+        "Are we terrified to admit that one of our major legacy programs has virtually zero impact?",
+        "Why do we rely on anecdotes when funders are desperately begging for rigorous data?",
+        "Is the data collection burden placed on our exhausted social workers completely unethical?",
+        "Who will be the brave person to finally declare that our KPIs are measuring the wrong things?"
     ],
     "How can we retain our staff and prevent burnout?": [
-        "Are we using the phrase 'passion for the cause' to excuse underpaying staff for {X}?",
-        "Who is the toxic manager driving people to quit over {X}?",
-        "If a staff member was hospitalized over {X}, whose fault is it?",
-        "Are we ignoring staff complaints about {X} because 'it has always been this way'?",
-        "Would the Executive Director tolerate the workload required for {X}?",
-        "Is our staff turnover directly tied to how we mismanage {X}?"
+        "Are we cynically weaponizing 'passion for the cause' to excuse chronically underpaying our staff?",
+        "Who is the specific, incredibly toxic manager driving our best people to quit in exhaustion?",
+        "If a frontline staff member was hospitalized from stress, who on the board would take responsibility?",
+        "Are we completely ignoring staff burnout complaints because 'the social sector has always been punishing'?",
+        "Would the Executive Director even tolerate the immense workload they demand of the junior executives?",
+        "Is our horrifying staff turnover rate directly tied to how we aggressively mismanage basic trauma?",
+        "Are we trying to solve systemic structural overwork with cheap pizza lunches and mindfulness seminars?",
+        "If we actually paid market-rate wages, would our charity immediately become insolvent?",
+        "Are we allowing a severe 'savior complex' culture to normalize working 70-hour weeks?",
+        "Why do exit interviews always highlight the exact same leadership failures week after week?",
+        "Are our 'family-friendly' HR policies just an illusion that completely breaks down in practice?",
+        "Is the fear of failing a client forcing our staff to completely sacrifice their personal lives?"
     ],
     "How do we increase our digital presence and awareness?": [
-        "Are we posting about {X} just to make ourselves feel productive?",
-        "Why is our social media presence for {X} so bureaucratic and lifeless?",
-        "Are we afraid to show the ugly truth of {X} online?",
-        "Who is enforcing the boring brand guidelines that cripple our voice on {X}?",
-        "If our website crashed during {X}, would anyone actually notice?",
-        "Does our digital presence just look like compliance theatre for {X}?"
+        "Are we endlessly posting on social media just to make middle management feel productive?",
+        "Why does our digital presence feel so unimaginably bureaucratic and completely lifeless?",
+        "Are we terrified of showing the raw, ugly truth of our sector online because it's untidy?",
+        "Who is violently enforcing the boring brand guidelines that actively cripple our organizational voice?",
+        "If our primary website crashed for an entire month, would anyone in the public actually notice?",
+        "Is our digital strategy simply compliance theatre without any real audience engagement?",
+        "Are we spending thousands on a PR agency that fundamentally doesn't understand the Singaporean ground reality?",
+        "Why does our content sound exactly like a sterile government press release?",
+        "Are we obsessing over TikTok trends while completely ignoring the donors who actually write checks?",
+        "Is the leadership team completely out of touch with how digital narratives are actually shaped today?",
+        "If we stopped censoring our frontline workers, what powerful digital stories could we actually tell?",
+        "Are we investing in digital awareness because we need to, or because everyone else is doing it?"
     ],
     "How can we build strategic partnerships with corporates?": [
-        "Are corporates just using our {X} as a cheap CSR photo-op?",
-        "What are we afraid to demand from our corporate sponsor for {X}?",
-        "Why do corporate partners disappear the moment we ask for hard cash for {X}?",
-        "Are we compromising our charity's core values to secure funding for {X}?",
-        "Who is signing off on these terrible corporate partnerships for {X}?",
-        "Is corporate funding forcing us to prioritize {X} over our real beneficiaries?"
+        "Are corporate partners merely using our beneficiaries as props for a cheap CSR photo-op on LinkedIn?",
+        "What critical systemic change are we terrified to demand from our major corporate sponsors?",
+        "Why do powerful corporate partners magically disappear the exact moment we ask them for hard, unrestricted cash?",
+        "Are we quietly compromising our charity's core ethical values just to secure their funding?",
+        "Who on the board is blindly signing off on these utterly terrible, one-sided corporate partnerships?",
+        "Is our desperate need for corporate funding literally forcing us to prioritize the wrong beneficiaries?",
+        "Are we allowing corporations to dictate our program design despite having zero expertise in social work?",
+        "Why are we constantly bending backward for corporate volunteers who actually create more work for our staff?",
+        "If a corporate sponsor's core business harms our beneficiaries, why do we still accept their money?",
+        "Are we essentially running an event management agency for corporate team-building disguised as charity work?",
+        "Are our executives terrified to tell a dominant corporate sponsor 'no'?",
+        "If we evaluated the return-on-investment of managing corporate partners, are we actually running at a loss?"
     ],
     "How do we ensure long-term financial sustainability?": [
-        "Is our long-term plan for {X} just 'hope and pray'?",
-        "If our reserves hit zero tomorrow, what happens to {X}?",
-        "Why are we artificially keeping {X} alive at a massive financial loss?",
-        "Who is treating the charity's endowment like a personal piggy bank for {X}?",
-        "Are we financially unsustainable because our core model for {X} is fundamentally broken?",
-        "Are we hiding a massive structural deficit behind our work on {X}?"
+        "Is our long-term financial strategy for survival literally just 'hope and pray'?",
+        "If our operational reserves hit zero tomorrow morning, who would be the first person fired?",
+        "Why are we artificially keeping failing, unscalable legacy programs alive at a massive financial loss?",
+        "Who on the board is treating the charity's hard-earned endowment like a personal reputational piggy bank?",
+        "Are we fundamentally financially unsustainable because our entire operational model is deeply broken?",
+        "Are we actively hiding a terrifying structural deficit by aggressively delaying critical core maintenance?",
+        "If we cannot financially survive without paying our staff below market rate, should we even exist?",
+        "Why do we refuse to merge with another IPC despite offering the exact same overlapping services?",
+        "Are we terrified that scaling down to become hyper-focused will make us look weak to funders?",
+        "Is the frantic pursuit of sustainability destroying the actual impact we originally set out to make?",
+        "What happens when the founder or key major donor eventually passes away?",
+        "Are we financially mismanaging our assets out of pure ignorance, while pretending it's prudence?"
     ]
 };
 
-const ITEMS = [
-    "the status quo",
-    "our outdated policies",
-    "staff compliance",
-    "the Executive Director",
-    "the founder's ego",
-    "compliance theatre",
-    "our vanity projects",
-    "the actual beneficiaries",
-    "bureaucracy",
-    "board interference",
-    "the NCSS evaluator",
-    "our fear of failure",
-    "our inability to adapt",
-    "legacy software",
-    "the toxic culture",
-    "donor demands"
-];
-
-// Generate the specific 50 vaults dynamically
-export const CHALLENGE_VAULTS = {};
-
-CHALLENGES.forEach(challenge => {
-    let qSet = new Set();
-    const templates = PROMPT_TEMPLATES[challenge];
-
-    // Safety check in case challenge is not found
-    if (templates) {
-        // Generate up to 50 unique questions for this challenge
-        let attempts = 0;
-        while (qSet.size < 50 && attempts < 500) {
-            let t = templates[Math.floor(Math.random() * templates.length)];
-            let item = ITEMS[Math.floor(Math.random() * ITEMS.length)];
-            let specificQ = t.replace("{X}", item);
-            qSet.add(specificQ);
-            attempts++;
-        }
-        CHALLENGE_VAULTS[challenge] = Array.from(qSet);
-    } else {
-        CHALLENGE_VAULTS[challenge] = [];
-    }
-});
-
-// Dynamic NLP-based syntax and context analyzer
+// Dynamic NLP-based syntax analyzer.
+// Purely analyzes grammatical sentence starters rather than trying to clumsily "fill in the blanks".
 const analyzeAndProbe = (selectedText) => {
     let cleanText = selectedText.trim().replace(/\?$/, '');
     let lowerText = cleanText.toLowerCase();
 
-    // Extract Focus Noun/Phrase
-    let focus = "this issue";
-    const prepositionMatch = lowerText.match(/(?:about|over|for|with|regarding|on|to|of)\s+(.{4,})$/i);
-    if (prepositionMatch) {
-        focus = "'" + prepositionMatch[1] + "'";
-    } else {
-        const words = cleanText.split(' ');
-        if (words.length > 4) {
-            focus = "the issue of '" + words.slice(-4).join(' ') + "'";
-        } else {
-            focus = "'" + cleanText + "'";
-        }
-    }
-
     let probes = [];
 
-    // Probe syntactical sentence starters
+    // Probe syntactical sentence starters without templated insertion
     if (lowerText.startsWith("who")) {
-        probes.push(`Why are we blaming individuals instead of examining the systemic failures surrounding ${focus}?`);
-        probes.push(`If we removed the person in question tomorrow, would ${focus} actually be resolved?`);
+        probes.push(`Are we trying to scapegoat an individual to avoid fixing a deeply broken system?`);
+        probes.push(`If we fired the person supposedly responsible tomorrow, would anything actually improve?`);
     } else if (lowerText.startsWith("why")) {
-        probes.push(`Are we genuinely trying to understand 'why', or are we just making excuses for ${focus}?`);
-        probes.push(`What if the real reason for ${focus} is an uncomfortable truth the Board is actively choosing to ignore?`);
+        probes.push(`Are we genuinely trying to understand 'why', or are we just making excuses for our incompetence?`);
+        probes.push(`What if the real reason is an uncomfortable truth the leadership is actively choosing to ignore?`);
     } else if (lowerText.startsWith("how")) {
-        probes.push(`Before we rush to ask 'how', shouldn't we ask if we are even the right organization to intervene in ${focus}?`);
-        probes.push(`Is our proposed process to fix ${focus} more complicated than the actual problem itself?`);
+        probes.push(`Before we rush to ask 'how', shouldn't we stop and ask if we are even the right organization to intervene?`);
+        probes.push(`Is our proposed 'solution' actually going to be far more complicated than the underlying problem itself?`);
     } else if (lowerText.startsWith("what")) {
-        probes.push(`Are we defining ${focus} correctly, or are we willfully just looking at the symptoms?`);
-        probes.push(`If ${focus} is the 'what', what is the underlying 'why' that management refuses to see?`);
+        probes.push(`Are we correctly defining the root crisis, or are we willfully just agonizing over the visible symptoms?`);
+        probes.push(`If that is indeed the 'what', what is the devastating 'why' that management refuses to confront?`);
     } else if (lowerText.match(/^(is|are|do|does|can|could)/)) {
-        probes.push(`Why are we framing a complex problem like ${focus} as a simple binary yes/no?`);
-        probes.push(`If the answer to your question is 'yes', what drastic action must we take regarding ${focus} in the next 24 hours?`);
+        probes.push(`Why are we defensively framing an incredibly complex crisis as a ridiculously simple binary yes/no?`);
+        probes.push(`If the brutal answer to your question is 'yes', what drastic structural action must we take in the next 24 hours?`);
     } else if (lowerText.startsWith("if")) {
-        probes.push(`Are we hiding behind hypotheticals instead of dealing with the immediate reality of ${focus}?`);
-        probes.push(`If that hypothetical happens, which of our charity's structural weaknesses will break first?`);
+        probes.push(`Are we cowardly hiding behind hypotheticals instead of dealing with immediate, painful reality?`);
+        probes.push(`If that hypothetical disaster actually happens, which of our charity's structural weaknesses will completely shatter first?`);
     } else {
-        probes.push(`What unwritten rule of the Singapore social sector is preventing us from being honest about ${focus}?`);
-        probes.push(`If an external NCSS auditor looked at ${focus}, what would they immediately flag as a critical risk?`);
+        probes.push(`What terrifying, unwritten rule of the Singapore social sector is preventing us from being completely honest about this?`);
+        probes.push(`If an incredibly hostile external auditor evaluated that premise, what would they immediately flag as a critical, terminating risk?`);
     }
 
-    // Meta-cognitive probes about the user's thought process itself
+    // Meta-cognitive probes about the user's thought process itself (pure psychology)
     const metaProbes = [
-        `You just asked: "${selectedText}". Are you protecting someone's feelings by phrasing it this safely?`,
-        `Why did your mind go straight to questioning ${focus} instead of questioning your own governance structure?`,
-        `If your question is truly "${selectedText}", who stands to benefit the most if that question goes completely unanswered?`,
-        `Does asking "${selectedText}" actually solve the problem, or does it just make us sound busy?`
+        `You just asked: "${selectedText}". Are you protecting a colleague's feelings by phrasing it this safely?`,
+        `Why did your mind immediately default to that angle instead of aggressively questioning your own governance structure?`,
+        `If your question is truly "${selectedText}", who inside this organization stands to benefit the most if that question goes completely unanswered?`,
+        `Does agonizing over "${selectedText}" actually solve the problem, or does it just make the board sound busy?`,
+        `If an absolute cynic read that question, would they assume you are just performing 'compliance theatre'?`
     ];
 
     probes.push(metaProbes[Math.floor(Math.random() * metaProbes.length)]);
@@ -241,7 +233,7 @@ const analyzeAndProbe = (selectedText) => {
 };
 
 // Utility to randomly pick N unique questions from the pool
-// Now respects the challenge scenario selected AND learns the train of thought!
+// Organically handles syntax analysis without mad-libs templates
 export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null, selectedText = null) => {
     let poolToUse = [...QUESTION_POOL];
 
@@ -258,7 +250,7 @@ export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null
 
     let finalQuestions = [];
 
-    // If there is an active train of thought (a selected question that isn't just the base scenario)
+    // If there is an active train of thought
     if (selectedText && selectedText !== scenario) {
         // Run deep NLP syntax/context tracking on their selected question
         let contextualProbes = analyzeAndProbe(selectedText);
