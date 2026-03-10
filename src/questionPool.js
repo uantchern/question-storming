@@ -234,38 +234,38 @@ const analyzeAndProbe = (selectedText) => {
 
 export const MATRIX_TEMPLATES = {
     exploratory: [
-        "How does {subject} specifically serve the actual needs of {persona}?",
-        "If {persona} had to explain {subject} to a five-year-old, where would they struggle?",
-        "Why is {subject} currently failing to resonate deeply with {persona}?",
-        "What hidden agenda does {persona} have when dealing with {subject}?",
-        "How much money is being wasted trying to force {persona} to accept {subject}?",
-        "What is the single biggest lie {persona} tells themselves about {subject}?"
+        "How does {subject} specifically serve the actual needs of your target audience ({persona})?",
+        "If those representing {persona} had to explain {subject} to a five-year-old, where would they struggle?",
+        "Why is {subject} currently failing to resonate deeply with this specific group: {persona}?",
+        "What hidden agenda might exist for {persona} when dealing with {subject}?",
+        "How much effort is being wasted trying to force {persona} to accept {subject}?",
+        "What is the single biggest lie told about {subject} to the target audience ({persona})?"
     ],
     inversion: [
-        "What if {persona} completely ignored {subject} starting tomorrow?",
-        "If {subject} was made illegal, how would {persona} adapt?",
+        "What if the entire target group ({persona}) completely ignored {subject} starting tomorrow?",
+        "If {subject} was made illegal, how would those representing {persona} adapt?",
         "Could we achieve the exact opposite of {subject} and still satisfy {persona}?",
-        "What if {persona} was explicitly banned from participating in {subject}?",
-        "If our mission was to destroy {subject}, how would {persona} react?",
+        "What if those representing {persona} were explicitly banned from participating in {subject}?",
+        "If our mission was to completely destroy {subject}, how would this group ({persona}) react?",
         "How would {persona} behave if {subject} was flawlessly executed by a competitor?"
     ],
     constraint: [
-        "If we had to solve for {subject} under the pressure of {constraint}, what drastically changes?",
-        "How would {persona} approach {subject} if {constraint} was brutally enforced?",
-        "If {constraint} was suddenly removed, would {persona} actually improve {subject}?",
-        "Why are we using {constraint} as an excuse to avoid fixing {subject} for {persona}?",
-        "Could {constraint} actually be the secret to optimizing {subject} for {persona}?",
-        "Does {persona} secretly love {constraint} because it prevents them from having to change {subject}?"
+        "If we had to solve for {subject} with this limitation—{constraint}—what drastically changes?",
+        "How would {persona} approach {subject} if the following was brutally enforced: {constraint}?",
+        "If this limitation was suddenly removed: {constraint}. Would we actually improve {subject} for {persona}?",
+        "Why are we using this constraint ({constraint}) as an excuse to avoid fixing {subject} for {persona}?",
+        "Could this exact limitation ({constraint}) actually be the secret to optimizing {subject} for {persona}?",
+        "Does our team secretly love this constraint ({constraint}) because it prevents having to truly change {subject}?"
     ]
 };
 
 export const MATRIX_SCENARIOS = [
-    "The {persona} has completely abandoned {subject} due to the pressure of {constraint}, forcing leadership to intervene.",
-    "A massive crisis involving {subject} has hit the news, and {persona} is demanding answers while dealing with {constraint}.",
-    "You are given complete control to overhaul {subject} for {persona}, but you must immediately adhere to {constraint}.",
-    "The board cuts funding for {subject}, arguing that {persona} does not show enough ROI, all while operating under {constraint}.",
-    "A new grassroots movement driven by {persona} is outperforming your efforts on {subject}, unburdened by {constraint}.",
-    "Because of {constraint}, {persona} has created a wildly inefficient, dangerous shadow-system to still achieve {subject}."
+    "A major shift regarding {subject} has occurred. Your target audience ({persona}) feels abandoned, especially given this constraint: {constraint}.",
+    "A massive crisis involving {subject} has hit the news. The target group ({persona}) is demanding answers, complicating the reality that: {constraint}.",
+    "You are given complete control to overhaul {subject} for your target audience ({persona}), but you must simultaneously adhere to this strict limitation: {constraint}.",
+    "The board cuts funding for {subject}, arguing that efforts regarding {persona} do not show enough ROI. You must now operate under this condition: {constraint}.",
+    "A new grassroots movement successfully serving {persona} is outperforming your efforts on {subject}, entirely unburdened by your primary limitation: {constraint}.",
+    "Because of this constraint—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}."
 ];
 
 export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {
