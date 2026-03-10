@@ -1,24 +1,42 @@
 export const generateGeminiQuestions = async (scenario, selectedText, apiKey, isParadoxMode, paradoxConstraint) => {
     let targetModel = "gemini-1.5-flash";
 
-    // System prompt for high quality, probing questions.
-    let systemPrompt = `You are a legendary, hyper-analytical Question Storming facilitator for the Singapore charity, non-profit, and IPC sector.
-Your goal is to generate exactly 3 highly probing, uncomfortable, and deeply contextual follow-up questions to force a breakthrough.
-The user is brainstorming about a core challenge scenario. They have selected a specific follow-up question to dive deeper into.
+    let scenarioText = typeof scenario === 'object' ? `Subject: ${scenario.subject}\nPersona: ${scenario.persona}\nConstraint: ${scenario.constraint}` : scenario;
+    let selectedTextLocal = typeof selectedText === 'object' ? `Subject: ${selectedText.subject}\nPersona: ${selectedText.persona}\nConstraint: ${selectedText.constraint}` : selectedText;
+    let isInitialGeneration = scenarioText === selectedTextLocal;
+
+    let systemPrompt = `You are a legendary, hyper-analytical Question Storming facilitator for the Singapore charity, non-profit, and IPC sector.`;
+
+    if (isInitialGeneration) {
+        systemPrompt += `\nYour goal is to generate exactly 3 distinct, highly realistic, and difficult SCENARIOS (1-2 sentences each) based on the user's focus triad.
+The scenarios must be grounded in the context of Singapore charities and directly tie together the Subject, Persona, and Constraint.
+DO NOT return questions. Return actual situation descriptions (scenarios).
+Return ONLY a valid JSON array of exactly 3 string scenarios. DO NOT wrap in markdown.`;
+    } else {
+        systemPrompt += `\nYour goal is to generate exactly 3 highly probing, uncomfortable, and deeply contextual follow-up questions to force a breakthrough.
+The user is brainstorming about a core challenge scenario. They have selected a specific follow-up context to dive deeper into.
 You must NOT repeat typical boilerplate questions. You must deeply analyze the context and push the boundaries of their thinking regarding governance, impact, operations, psychology, and organizational design.
 Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in markdown.`;
+    }
 
-    let scenarioText = typeof scenario === 'object' ? `Subject: ${scenario.subject}\nPersona: ${scenario.persona}\nConstraint: ${scenario.constraint}` : scenario;
-    let userPrompt = `SCENARIO CHOSEN:\n${scenarioText}
-THEIR CURRENT THREAD / FOCUS: "${selectedText}"\n`;
+    let userPrompt;
+    if (isInitialGeneration) {
+        userPrompt = `CORE PARAMETERS:\n${scenarioText}\n\nGenerate 3 realistic, difficult scenarios (situations) merging these parameters.`;
+    } else {
+        userPrompt = `SCENARIO CHOSEN:\n${scenarioText}\nTHEIR CURRENT THREAD / FOCUS: "${selectedTextLocal}"\n`;
+    }
 
     if (isParadoxMode && paradoxConstraint) {
         userPrompt += `\nCRITICAL PARADOX CONSTRAINT: You must violently warp logic applying this constraint: "${paradoxConstraint}". Break normal assumptions. Force them outside their structural thinking.\n`;
-    } else {
+    } else if (!isInitialGeneration) {
         userPrompt += `\nGenerate highly contextual, unpredictable questions. Challenge their ego, their metrics, their board, and the system.\n`;
     }
 
-    userPrompt += `\nGenerate exactly 3 uniquely challenging follow-up questions as a JSON array of strings. Do not use code blocks.`;
+    if (isInitialGeneration) {
+        userPrompt += `\nGenerate exactly 3 uniquely challenging scenarios as a JSON array of strings. Do not use code blocks.`;
+    } else {
+        userPrompt += `\nGenerate exactly 3 uniquely challenging follow-up questions as a JSON array of strings. Do not use code blocks.`;
+    }
 
     try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey}`, {

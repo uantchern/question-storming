@@ -61,8 +61,9 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
     // Time formatter removed
 
     const handleYes = async () => {
+        const isInitialPhase = initialQuestions.length <= 3;
         if (!selectedId) {
-            setWarning("Please select the most relevant question above first!");
+            setWarning(`Please select the most relevant ${isInitialPhase ? 'scenario' : 'question'} above first!`);
             return;
         }
         setWarning('');
@@ -174,14 +175,17 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     )}
 
                     <p style={{ color: 'var(--text-muted)', marginBottom: '0.5rem', fontSize: '0.9rem', textAlign: 'center' }}>
-                        {isGenerating ? "Synthesizing deeper questions..." : "Select the most relevant question above, then choose to storm again or finish."}
+                        {isGenerating ? (initialQuestions.length <= 3 ? "Generating initial questions..." : "Synthesizing deeper questions...") :
+                            (initialQuestions.length <= 3 ? "Select the most relevant scenario above to begin storming questions." : "Select the most relevant question above, then choose to storm again or finish.")}
                     </p>
                     <button onClick={handleYes} disabled={isGenerating} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: isGenerating ? 'rgba(210, 180, 140, 0.3)' : 'var(--surface-color)', color: 'var(--text-color)', fontWeight: 600, cursor: isGenerating ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease' }}>
-                        <span style={{ fontSize: '1.2rem' }}>⚡</span> {isGenerating ? "Storming..." : "Storm Again"}
+                        <span style={{ fontSize: '1.2rem' }}>⚡</span> {isGenerating ? "Storming..." : (initialQuestions.length <= 3 ? "Storm Questions" : "Storm Again")}
                     </button>
-                    <button onClick={handleNo} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        Finish Session
-                    </button>
+                    {initialQuestions.length > 3 && (
+                        <button onClick={handleNo} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            Finish Session
+                        </button>
+                    )}
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px', marginBottom: '16px', width: '100%' }}>

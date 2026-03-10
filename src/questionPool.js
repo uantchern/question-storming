@@ -259,6 +259,30 @@ export const MATRIX_TEMPLATES = {
     ]
 };
 
+export const MATRIX_SCENARIOS = [
+    "The {persona} has completely abandoned {subject} due to the pressure of {constraint}, forcing leadership to intervene.",
+    "A massive crisis involving {subject} has hit the news, and {persona} is demanding answers while dealing with {constraint}.",
+    "You are given complete control to overhaul {subject} for {persona}, but you must immediately adhere to {constraint}.",
+    "The board cuts funding for {subject}, arguing that {persona} does not show enough ROI, all while operating under {constraint}.",
+    "A new grassroots movement driven by {persona} is outperforming your efforts on {subject}, unburdened by {constraint}.",
+    "Because of {constraint}, {persona} has created a wildly inefficient, dangerous shadow-system to still achieve {subject}."
+];
+
+export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {
+    let pool = [];
+    MATRIX_SCENARIOS.forEach(template => {
+        let text = template
+            .replace(/\{subject\}/g, subject || "the core issue")
+            .replace(/\{persona\}/g, persona || "our stakeholders")
+            .replace(/\{constraint\}/g, constraint || "current limitations");
+        pool.push(text);
+    });
+
+    const available = pool.filter(q => !excludeTexts.includes(q));
+    let shuffled = available.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+};
+
 export const getMatrixQuestions = (subject, persona, constraint, count = 3, excludeTexts = []) => {
     let pool = [];
 
@@ -304,6 +328,14 @@ export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null
     // Check if scenario is the new structured Matrix format
     if (typeof scenario === 'object' && scenario !== null && scenario.subject) {
         const { subject, persona, constraint } = scenario;
+
+        let scenarioText = `Subject: ${subject}\nPersona: ${persona}\nConstraint: ${constraint}`;
+        let selectedTextLocal = typeof selectedText === 'object' && selectedText !== null ? `Subject: ${selectedText.subject}\nPersona: ${selectedText.persona}\nConstraint: ${selectedText.constraint}` : selectedText;
+
+        if (!selectedText || scenarioText === selectedTextLocal) {
+            return getMatrixScenarios(subject, persona, constraint, count, excludeTexts);
+        }
+
         let poolToUse = getMatrixQuestions(subject, persona, constraint, 15, excludeTexts);
 
         let finalQuestions = [];
