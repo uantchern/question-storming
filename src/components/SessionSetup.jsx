@@ -1,25 +1,63 @@
 import { useState, useEffect } from 'react';
 import { Play, Zap, Brain, HelpCircle, Share2 } from 'lucide-react';
 
-const PRESET_CHALLENGES = [
-    "How can we reach out to more donors?",
-    "How can we attract more volunteers?",
-    "What is the biggest inefficiency in our operations?",
-    "How do we diversify our funding sources?",
-    "How can we improve board engagement?",
-    "How do we effectively measure and report our impact?",
-    "How can we retain our staff and prevent burnout?",
-    "How do we increase our digital presence and awareness?",
-    "How can we build strategic partnerships with corporates?",
-    "How do we ensure long-term financial sustainability?"
+const TOP_TOPICS = [
+    {
+        label: "1. Impact: Are programs making a real impact on beneficiaries?",
+        subject: "Making a real impact on our beneficiaries",
+        persona: "Beneficiaries",
+        constraint: "Difficulty proving tangible long-term impact"
+    },
+    {
+        label: "2. Reserves: How do we build reserves & how much do we need?",
+        subject: "Building up financial reserves",
+        persona: "Board / Donors",
+        constraint: "Uncertainty on quantum and optics of holding cash"
+    },
+    {
+        label: "3. Fundraising: Same events every year, can we change & why?",
+        subject: "Changing successful but stale fundraising events",
+        persona: "Donors",
+        constraint: "Fear of losing revenue if we pivot to something new"
+    },
+    {
+        label: "4. Purpose: Are we serving our purpose & do we agree on it?",
+        subject: "Aligning collectively on our true purpose",
+        persona: "Board / Staff",
+        constraint: "Legacy mindsets and mission drift"
+    },
+    {
+        label: "5. Talent: Can't attract staff - low pay or poor branding?",
+        subject: "Failing to attract staff",
+        persona: "Prospective Staff",
+        constraint: "Low pay / Unattractive employer branding"
+    }
 ];
 
 function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [subject, setSubject] = useState(initialScenario?.subject || '');
     const [persona, setPersona] = useState(initialScenario?.persona || '');
     const [constraint, setConstraint] = useState(initialScenario?.constraint || '');
+    const [selectedPreset, setSelectedPreset] = useState('');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
+
+    const handleTopicSelect = (e) => {
+        const idx = e.target.value;
+        setSelectedPreset(idx);
+
+        if (idx === '') {
+            setSubject('');
+            setPersona('');
+            setConstraint('');
+            return;
+        }
+
+        const topic = TOP_TOPICS[idx];
+        setSubject(topic.subject);
+        setPersona(topic.persona);
+        setConstraint(topic.constraint);
+    };
 
     useEffect(() => {
         if (initialScenario && typeof initialScenario === 'object') {
@@ -69,54 +107,67 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
             {!isStarted && (
                 <form onSubmit={handleSubmit} className="input-group setup-form">
                     <div className="setup-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
-                        <div className="input-group">
-                            <label htmlFor="subject" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
-                                Core Subject
-                            </label>
-                            <input
-                                type="text"
-                                id="subject"
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                placeholder="e.g., Retention, Technology, Fundraising"
-                                autoFocus
-                                required
-                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
-                            />
+                        <label htmlFor="preset" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Quick Start: Top 5 Sector Issues
+                        </label>
+                        <select
+                            id="preset"
+                            value={selectedPreset}
+                            onChange={handleTopicSelect}
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '14px', color: '#1B2B28', backgroundColor: '#F9F8F6', marginBottom: '24px', cursor: 'pointer', outline: 'none' }}
+                        >
+                            <option value="">✍️ Custom / Enter my own...</option>
+                            {TOP_TOPICS.map((t, idx) => (
+                                <option key={idx} value={idx}>{t.label}</option>
+                            ))}
+                        </select>
 
-                            <label htmlFor="persona" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
-                                Target Persona
-                            </label>
-                            <input
-                                type="text"
-                                id="persona"
-                                value={persona}
-                                onChange={(e) => setPersona(e.target.value)}
-                                placeholder="e.g., Staff, Donors, Volunteers"
-                                required
-                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
-                            />
+                        <label htmlFor="subject" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Core Subject
+                        </label>
+                        <input
+                            type="text"
+                            id="subject"
+                            value={subject}
+                            onChange={(e) => { setSubject(e.target.value); setSelectedPreset(''); }}
+                            placeholder="e.g., Retention, Technology, Fundraising"
+                            autoFocus
+                            required
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
+                        />
 
-                            <label htmlFor="constraint" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
-                                Limitation / Constraint
-                            </label>
-                            <input
-                                type="text"
-                                id="constraint"
-                                value={constraint}
-                                onChange={(e) => setConstraint(e.target.value)}
-                                placeholder="e.g., Budget, Bureaucracy, Time"
-                                required
-                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
-                            />
+                        <label htmlFor="persona" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Target Persona
+                        </label>
+                        <input
+                            type="text"
+                            id="persona"
+                            value={persona}
+                            onChange={(e) => { setPersona(e.target.value); setSelectedPreset(''); }}
+                            placeholder="e.g., Staff, Donors, Volunteers"
+                            required
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
+                        />
 
-                            {error && (
-                                <div className="validation-msg" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
-                                    <HelpCircle size={14} />
-                                    {error}
-                                </div>
-                            )}
-                        </div>
+                        <label htmlFor="constraint" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Limitation / Constraint
+                        </label>
+                        <input
+                            type="text"
+                            id="constraint"
+                            value={constraint}
+                            onChange={(e) => { setConstraint(e.target.value); setSelectedPreset(''); }}
+                            placeholder="e.g., Budget, Bureaucracy, Time"
+                            required
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
+                        />
+
+                        {error && (
+                            <div className="validation-msg" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
+                                <HelpCircle size={14} />
+                                {error}
+                            </div>
+                        )}
                     </div>
 
                     <button
