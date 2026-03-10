@@ -181,18 +181,64 @@ CHALLENGES.forEach(challenge => {
     }
 });
 
-const CONTEXTUAL_FOLLOW_UPS = [
-    "If the answer is '{Q}', who in the organization is most afraid of the truth?",
-    "If '{Q}' is the core issue, why haven't we solved it yet?",
-    "Regarding your point about '{Q}' — what is the absolute worst-case scenario if we ignore this?",
-    "What 'sacred cow' is preventing us from addressing this: '{Q}'?",
-    "If a lean tech startup asked '{Q}', what would their immediate first step be?",
-    "How does the uncomfortable truth behind '{Q}' actively hurt our beneficiaries?",
-    "What is the simplest, most brutal answer to: '{Q}'?",
-    "If we actually addressed '{Q}', what process would break first?",
-    "Could solving the problem in '{Q}' actually double our impact?",
-    "Is it possible that '{Q}' is just a symptom of a much worse structural issue?"
-];
+// Dynamic NLP-based syntax and context analyzer
+const analyzeAndProbe = (selectedText) => {
+    let cleanText = selectedText.trim().replace(/\?$/, '');
+    let lowerText = cleanText.toLowerCase();
+
+    // Extract Focus Noun/Phrase
+    let focus = "this issue";
+    const prepositionMatch = lowerText.match(/(?:about|over|for|with|regarding|on|to|of)\s+(.{4,})$/i);
+    if (prepositionMatch) {
+        focus = "'" + prepositionMatch[1] + "'";
+    } else {
+        const words = cleanText.split(' ');
+        if (words.length > 4) {
+            focus = "the issue of '" + words.slice(-4).join(' ') + "'";
+        } else {
+            focus = "'" + cleanText + "'";
+        }
+    }
+
+    let probes = [];
+
+    // Probe syntactical sentence starters
+    if (lowerText.startsWith("who")) {
+        probes.push(`Why are we blaming individuals instead of examining the systemic failures surrounding ${focus}?`);
+        probes.push(`If we removed the person in question tomorrow, would ${focus} actually be resolved?`);
+    } else if (lowerText.startsWith("why")) {
+        probes.push(`Are we genuinely trying to understand 'why', or are we just making excuses for ${focus}?`);
+        probes.push(`What if the real reason for ${focus} is an uncomfortable truth the Board is actively choosing to ignore?`);
+    } else if (lowerText.startsWith("how")) {
+        probes.push(`Before we rush to ask 'how', shouldn't we ask if we are even the right organization to intervene in ${focus}?`);
+        probes.push(`Is our proposed process to fix ${focus} more complicated than the actual problem itself?`);
+    } else if (lowerText.startsWith("what")) {
+        probes.push(`Are we defining ${focus} correctly, or are we willfully just looking at the symptoms?`);
+        probes.push(`If ${focus} is the 'what', what is the underlying 'why' that management refuses to see?`);
+    } else if (lowerText.match(/^(is|are|do|does|can|could)/)) {
+        probes.push(`Why are we framing a complex problem like ${focus} as a simple binary yes/no?`);
+        probes.push(`If the answer to your question is 'yes', what drastic action must we take regarding ${focus} in the next 24 hours?`);
+    } else if (lowerText.startsWith("if")) {
+        probes.push(`Are we hiding behind hypotheticals instead of dealing with the immediate reality of ${focus}?`);
+        probes.push(`If that hypothetical happens, which of our charity's structural weaknesses will break first?`);
+    } else {
+        probes.push(`What unwritten rule of the Singapore social sector is preventing us from being honest about ${focus}?`);
+        probes.push(`If an external NCSS auditor looked at ${focus}, what would they immediately flag as a critical risk?`);
+    }
+
+    // Meta-cognitive probes about the user's thought process itself
+    const metaProbes = [
+        `You just asked: "${selectedText}". Are you protecting someone's feelings by phrasing it this safely?`,
+        `Why did your mind go straight to questioning ${focus} instead of questioning your own governance structure?`,
+        `If your question is truly "${selectedText}", who stands to benefit the most if that question goes completely unanswered?`,
+        `Does asking "${selectedText}" actually solve the problem, or does it just make us sound busy?`
+    ];
+
+    probes.push(metaProbes[Math.floor(Math.random() * metaProbes.length)]);
+
+    // Scramble the synthesized probes
+    return probes.sort(() => 0.5 - Math.random());
+};
 
 // Utility to randomly pick N unique questions from the pool
 // Now respects the challenge scenario selected AND learns the train of thought!
@@ -214,15 +260,12 @@ export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null
 
     // If there is an active train of thought (a selected question that isn't just the base scenario)
     if (selectedText && selectedText !== scenario) {
-        let cleanText = selectedText.trim();
-        // Remove trailing question mark for smoother integration in templates if desired, but retaining it is often fine.
+        // Run deep NLP syntax/context tracking on their selected question
+        let contextualProbes = analyzeAndProbe(selectedText);
 
-        const contextualShuffled = [...CONTEXTUAL_FOLLOW_UPS].sort(() => 0.5 - Math.random());
-
-        // Provide 2 contextual follow-up questions to ground the options in their previous thought
         let followUpCount = Math.min(2, count - 1);
         for (let i = 0; i < followUpCount; i++) {
-            finalQuestions.push(contextualShuffled[i].replace("{Q}", cleanText));
+            if (contextualProbes[i]) finalQuestions.push(contextualProbes[i]);
         }
     }
 
