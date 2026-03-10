@@ -126,7 +126,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                             >
                                 <option value="" disabled>-- Choose a preset challenge --</option>
                                 {PRESET_CHALLENGES.map((challenge, idx) => (
-                                    <option key={idx} value={challenge}>{challenge}</option>
+                                    <option key={idx} value={challenge}>{idx + 1}. {challenge}</option>
                                 ))}
                             </select>
                         </div>
