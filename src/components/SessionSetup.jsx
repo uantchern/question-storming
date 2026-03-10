@@ -54,26 +54,9 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     return (
         <div className="setup-container fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <ul className="instructions-list" style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0' }}>
-                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
-                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
-                        <HelpCircle size={22} />
-                    </div>
-                    <div><strong>Frame It</strong> as a clear question (Who, What, Why, How).</div>
-                </li>
-                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
-                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
-                        <Brain size={22} />
-                    </div>
-                    <div><strong>Generate</strong> iterative, deeper alternative questions.</div>
-                </li>
-                <li style={{ marginBottom: '24px', display: 'flex', alignItems: 'flex-start', gap: '16px', fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5' }}>
-                    <div style={{ color: '#D2B48C', marginTop: '2px', width: '24px', textAlign: 'center' }}>
-                        <Share2 size={22} />
-                    </div>
-                    <div><strong>Share</strong> the most useful question to WhatsApp.</div>
-                </li>
-            </ul>
+            <p style={{ fontSize: '15px', color: '#5E5A4B', lineHeight: '1.5', margin: '0 0 30px 0' }}>
+                Challenge entrenched mindsets and spark new ideas.
+            </p>
 
             {!isStarted && (
                 <form onSubmit={handleSubmit} className="input-group setup-form">
