@@ -63,7 +63,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         const existingTexts = initialQuestions.map(q => q.text);
 
         // Grab 3 random and highly probing questions from the pool
-        const newQuestionsText = getRandomQuestions(3, existingTexts, scenario);
+        const newQuestionsText = getRandomQuestions(3, existingTexts, scenario, selectedText);
 
         return newQuestionsText.map((text, idx) => ({
             id: Date.now().toString() + '-' + idx,

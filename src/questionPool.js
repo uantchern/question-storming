@@ -181,9 +181,22 @@ CHALLENGES.forEach(challenge => {
     }
 });
 
+const CONTEXTUAL_FOLLOW_UPS = [
+    "If the answer is '{Q}', who in the organization is most afraid of the truth?",
+    "If '{Q}' is the core issue, why haven't we solved it yet?",
+    "Regarding your point about '{Q}' — what is the absolute worst-case scenario if we ignore this?",
+    "What 'sacred cow' is preventing us from addressing this: '{Q}'?",
+    "If a lean tech startup asked '{Q}', what would their immediate first step be?",
+    "How does the uncomfortable truth behind '{Q}' actively hurt our beneficiaries?",
+    "What is the simplest, most brutal answer to: '{Q}'?",
+    "If we actually addressed '{Q}', what process would break first?",
+    "Could solving the problem in '{Q}' actually double our impact?",
+    "Is it possible that '{Q}' is just a symptom of a much worse structural issue?"
+];
+
 // Utility to randomly pick N unique questions from the pool
-// Now respects the challenge scenario selected!
-export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null) => {
+// Now respects the challenge scenario selected AND learns the train of thought!
+export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null, selectedText = null) => {
     let poolToUse = [...QUESTION_POOL];
 
     // Add specific vault questions if the scenario exactly matches a preset challenge
@@ -195,7 +208,30 @@ export const getRandomQuestions = (count = 3, excludeTexts = [], scenario = null
 
     // If we run out of unique questions, recycle the pool
     const poolFinal = available.length >= count ? available : poolToUse;
-
     const shuffled = [...poolFinal].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
+
+    let finalQuestions = [];
+
+    // If there is an active train of thought (a selected question that isn't just the base scenario)
+    if (selectedText && selectedText !== scenario) {
+        let cleanText = selectedText.trim();
+        // Remove trailing question mark for smoother integration in templates if desired, but retaining it is often fine.
+
+        const contextualShuffled = [...CONTEXTUAL_FOLLOW_UPS].sort(() => 0.5 - Math.random());
+
+        // Provide 2 contextual follow-up questions to ground the options in their previous thought
+        let followUpCount = Math.min(2, count - 1);
+        for (let i = 0; i < followUpCount; i++) {
+            finalQuestions.push(contextualShuffled[i].replace("{Q}", cleanText));
+        }
+    }
+
+    // Fill the remainder with lateral/random probing questions to keep them thinking wide
+    const remainingCount = count - finalQuestions.length;
+    for (let i = 0; i < remainingCount; i++) {
+        finalQuestions.push(shuffled[i]);
+    }
+
+    // Shuffle the final mix so the contextual questions aren't predictably placed
+    return finalQuestions.sort(() => 0.5 - Math.random());
 };
