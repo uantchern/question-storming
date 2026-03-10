@@ -115,15 +115,12 @@ function App() {
     return (
         <div className={`app-container ${session.isParadoxMode ? 'paradox-theme' : ''}`}>
             <div className={`setup-pane ${session.phase !== 'SETUP' ? 'started' : ''}`} id="debugDrawer">
-                <div className="font-serif text-3xl leading-none cursor-default select-none group" style={{ fontFamily: 'Georgia, serif', marginBottom: '1.5rem' }}>
+                <div className="font-serif text-3xl leading-none cursor-default select-none group" style={{ fontFamily: 'Georgia, serif', marginBottom: '1rem' }}>
                     <span className="relative inline-block" style={{ position: 'relative', display: 'inline-block' }}>
                         <span className="italic relative z-10" style={{ color: '#103020', fontWeight: 500, paddingRight: '0.25rem', position: 'relative', zIndex: 10, fontStyle: 'italic' }}>Charity</span>
                         <span style={{ position: 'absolute', left: '-0.2em', right: 0, bottom: '12%', height: '2px', background: '#B08968', zIndex: 0, transformOrigin: 'left', transition: 'transform 0.7s ease-out' }}></span>
                     </span><span className="relative z-10 tracking-tight" style={{ color: '#B08968', position: 'relative', zIndex: 10, fontWeight: 400, letterSpacing: '-0.025em', marginLeft: '-0.05em' }}>Ops</span>
                 </div>
-
-
-
                 <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} isStarted={session.phase !== 'SETUP'} />
                 {isStarting && <div style={{ marginTop: '16px', color: '#B08968', fontSize: '14px', fontWeight: 'bold', textAlign: 'center' }}>Connecting to AI Model...</div>}
             </div>

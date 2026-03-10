@@ -54,7 +54,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     return (
         <div className="setup-container fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div style={{ padding: '20px', backgroundColor: 'rgba(210, 180, 140, 0.1)', border: '1px solid #D2B48C', borderRadius: '12px', marginBottom: '30px' }}>
+            <div style={{ padding: '20px', backgroundColor: 'rgba(210, 180, 140, 0.1)', border: '1px solid #D2B48C', borderRadius: '12px', marginBottom: '24px' }}>
                 <div style={{ fontWeight: 800, color: '#8B7355', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
                     Question Stormer RUT
                 </div>
@@ -65,9 +65,9 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
             {!isStarted && (
                 <form onSubmit={handleSubmit} className="input-group setup-form">
-                    <div className="setup-fields" style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+                    <div className="setup-fields" style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
                         <div className="input-group">
-                            <label htmlFor="subject" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                            <label htmlFor="subject" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
                                 Core Subject
                             </label>
                             <input
@@ -78,10 +78,10 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 placeholder="e.g., Volunteer Retention, New App, Fundraising"
                                 autoFocus
                                 required
-                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '16px' }}
+                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
                             />
 
-                            <label htmlFor="persona" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                            <label htmlFor="persona" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
                                 Target Persona
                             </label>
                             <input
@@ -91,10 +91,10 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 onChange={(e) => setPersona(e.target.value)}
                                 placeholder="e.g., Burned out staff, High-net-worth donor"
                                 required
-                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '16px' }}
+                                style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
                             />
 
-                            <label htmlFor="constraint" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
+                            <label htmlFor="constraint" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
                                 Limitation / Constraint
                             </label>
                             <input
@@ -108,7 +108,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                             />
 
                             {error && (
-                                <div className="validation-msg" style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
+                                <div className="validation-msg" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
                                     <HelpCircle size={14} />
                                     {error}
                                 </div>
