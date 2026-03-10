@@ -61,9 +61,9 @@ function App() {
 
     const handleStartStorm = (scenario, isParadoxMode) => {
         const initialQuestions = [
-            { id: Date.now().toString() + '-1', text: "What unspoken truth are we ignoring?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-2', text: "What if the problem vanished tomorrow?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-3', text: "Who profits from the status quo?", starred: false, paradoxConstraint: null }
+            { id: Date.now().toString() + '-1', text: "What if we lost our IPC status tomorrow?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-2', text: "What unspoken truth is our Board of Directors ignoring?", starred: false, paradoxConstraint: null },
+            { id: Date.now().toString() + '-3', text: "Who benefits the most from maintaining our current inefficiencies?", starred: false, paradoxConstraint: null }
         ];
         setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode });
     };
