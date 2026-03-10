@@ -122,12 +122,7 @@ function App() {
                     </span><span className="relative z-10 tracking-tight" style={{ color: '#B08968', position: 'relative', zIndex: 10, fontWeight: 400, letterSpacing: '-0.025em', marginLeft: '-0.05em' }}>Ops</span>
                 </div>
 
-                <h1 style={{ fontSize: '28px', color: '#1B2B28', fontWeight: 800, marginBottom: '8px', fontFamily: 'Georgia, serif' }}>
-                    Question Storming {session.isParadoxMode && <span className="paradox-label" style={{ fontSize: '12px' }}>ROLL THE DICE FOR A 13</span>}
-                </h1>
-                <p className="tagline" style={{ color: '#8B7355', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '30px' }}>
-                    <span style={{ marginRight: '0.5rem' }}>✦</span> RUT: A Really Useful Thing
-                </p>
+
 
                 <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} isStarted={session.phase !== 'SETUP'} />
                 {isStarting && <div style={{ marginTop: '16px', color: '#B08968', fontSize: '14px', fontWeight: 'bold', textAlign: 'center' }}>Connecting to AI Model...</div>}
