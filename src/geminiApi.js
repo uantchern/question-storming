@@ -13,9 +13,9 @@ The scenarios must be grounded in the context of Singapore charities and directl
 DO NOT return questions. Return actual situation descriptions (scenarios).
 Return ONLY a valid JSON array of exactly 3 string scenarios. DO NOT wrap in markdown.`;
     } else {
-        systemPrompt += `\nYour goal is to generate exactly 3 highly probing, uncomfortable, and deeply contextual follow-up questions to force a breakthrough.
+        systemPrompt += `\nYour goal is to generate exactly 3 practical, insightful, and highly relevant follow-up questions to help them solve their specific issue.
 The user is brainstorming about a core challenge scenario. They have selected a specific follow-up context to dive deeper into.
-You must NOT repeat typical boilerplate questions. You must deeply analyze the context and push the boundaries of their thinking regarding governance, impact, operations, psychology, and organizational design.
+You must NOT repeat typical boilerplate questions. You must deeply analyze the specific context they have provided and ask actionable questions that get to the root of the problem regarding governance, operations, impact, and organizational design.
 Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in markdown.`;
     }
 
@@ -30,13 +30,13 @@ Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in mar
     if (isParadoxMode && paradoxConstraint) {
         userPrompt += `\nCRITICAL PARADOX CONSTRAINT: You must violently warp logic applying this constraint: "${paradoxConstraint}". Break normal assumptions. Force them outside their structural thinking.\n`;
     } else if (!isInitialGeneration) {
-        userPrompt += `\nGenerate highly contextual, unpredictable questions. Challenge their ego, their metrics, their board, and the system.\n`;
+        userPrompt += `\nGenerate highly contextual and practical questions that will help them directly resolve the specific situation they are focusing on. Ensure the questions directly address the selected thread and the core parameters.\n`;
     }
 
     if (isInitialGeneration) {
         userPrompt += `\nGenerate exactly 3 uniquely challenging scenarios as a JSON array of strings. Do not use code blocks.`;
     } else {
-        userPrompt += `\nGenerate exactly 3 uniquely challenging follow-up questions as a JSON array of strings. Do not use code blocks.`;
+        userPrompt += `\nGenerate exactly 3 uniquely practical follow-up questions as a JSON array of strings. Do not use code blocks.`;
     }
 
     try {
