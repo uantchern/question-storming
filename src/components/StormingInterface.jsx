@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, AlertCircle, Clock, Brain, MessageCircle } from 'lucide-react';
 import { getRandomQuestions } from '../questionPool';
+import { generateGeminiQuestions } from '../geminiApi';
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
@@ -22,9 +23,10 @@ const PRO_TIPS = [
     "Roll the dice for a 13 is designed to break logic. Don't fight it—flow with it."
 ];
 
-function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions }) {
+function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions, apiKey }) {
     const [selectedId, setSelectedId] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
     const [constraintIndex, setConstraintIndex] = useState(0);
     const [tipIndex, setTipIndex] = useState(0);
     const [warning, setWarning] = useState('');
@@ -58,31 +60,36 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
 
     // Time formatter removed
 
-    const generateMoreQuestions = (selectedText) => {
-        // Find texts we've already generated to avoid repeating
-        const existingTexts = initialQuestions.map(q => q.text);
-
-        // Grab 3 random and highly probing questions from the pool
-        const newQuestionsText = getRandomQuestions(3, existingTexts, scenario, selectedText);
-
-        return newQuestionsText.map((text, idx) => ({
-            id: Date.now().toString() + '-' + idx,
-            text,
-            starred: false,
-            paradoxConstraint: isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null
-        }));
-    };
-
-    const handleYes = () => {
+    const handleYes = async () => {
         if (!selectedId) {
             setWarning("Please select the most relevant question above first!");
             return;
         }
         setWarning('');
+        setIsGenerating(true);
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || scenario;
-        const newQuestions = generateMoreQuestions(selectedText);
+
+        let newQuestionsText = [];
+        if (apiKey) {
+            const geminiQs = await generateGeminiQuestions(scenario, selectedText, apiKey, isParadoxMode, isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null);
+            if (geminiQs) newQuestionsText = geminiQs;
+        }
+
+        if (newQuestionsText.length === 0) {
+            const existingTexts = initialQuestions.map(q => q.text);
+            newQuestionsText = getRandomQuestions(3, existingTexts, scenario, selectedText);
+        }
+
+        const newQuestions = newQuestionsText.map((text, idx) => ({
+            id: Date.now().toString() + '-' + idx,
+            text,
+            starred: false,
+            paradoxConstraint: isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null
+        }));
+
         onUpdateQuestions([...initialQuestions, ...newQuestions]);
         setSelectedId(null);
+        setIsGenerating(false);
     };
 
     const handleNo = () => {
@@ -159,10 +166,10 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     )}
 
                     <p style={{ color: 'var(--text-muted)', marginBottom: '0.5rem', fontSize: '0.9rem', textAlign: 'center' }}>
-                        Select the most relevant question above, then choose to storm again or finish.
+                        {isGenerating ? "Synthesizing deeper questions..." : "Select the most relevant question above, then choose to storm again or finish."}
                     </p>
-                    <button onClick={handleYes} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: 'var(--surface-color)', color: 'var(--text-color)', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease' }}>
-                        <span style={{ fontSize: '1.2rem' }}>⚡</span> Storm Again
+                    <button onClick={handleYes} disabled={isGenerating} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: isGenerating ? 'rgba(210, 180, 140, 0.3)' : 'var(--surface-color)', color: 'var(--text-color)', fontWeight: 600, cursor: isGenerating ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'all 0.2s ease' }}>
+                        <span style={{ fontSize: '1.2rem' }}>⚡</span> {isGenerating ? "Storming..." : "Storm Again"}
                     </button>
                     <button onClick={handleNo} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         Finish Session

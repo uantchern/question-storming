@@ -4,11 +4,13 @@ import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import SessionAnalysis from './components/SessionAnalysis';
 import { getRandomQuestions } from './questionPool';
+import { generateGeminiQuestions } from './geminiApi';
 import { Layout, ClipboardCheck, X, ExternalLink } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState';
 
 function App() {
+    const [isStarting, setIsStarting] = useState(false);
     const [session, setSession] = useState(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const urlPrompt = urlParams.get('prompt');
@@ -43,6 +45,7 @@ function App() {
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
+            apiKey: ''
         };
     });
 
@@ -60,8 +63,17 @@ function App() {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
     }, [session]);
 
-    const handleStartStorm = (scenario, isParadoxMode) => {
-        const randomQuestions = getRandomQuestions(3, [], scenario);
+    const handleStartStorm = async (scenario, isParadoxMode, apiKey = '') => {
+        setIsStarting(true);
+        let randomQuestions = [];
+        if (apiKey) {
+            const geminiQs = await generateGeminiQuestions(scenario, scenario, apiKey, isParadoxMode, null);
+            if (geminiQs) randomQuestions = geminiQs;
+        }
+        if (randomQuestions.length === 0) {
+            randomQuestions = getRandomQuestions(3, [], scenario);
+        }
+
         const initialQuestions = randomQuestions.map((text, index) => ({
             id: Date.now().toString() + '-' + index,
             text: text,
@@ -69,7 +81,8 @@ function App() {
             paradoxConstraint: null
         }));
 
-        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode });
+        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey, targetCount: 10 });
+        setIsStarting(false);
     };
 
     const handleTimerEnd = (questions) => {
@@ -102,6 +115,7 @@ function App() {
                 </p>
 
                 <SessionSetup onStart={handleStartStorm} initialScenario={session.scenario} isStarted={session.phase !== 'SETUP'} />
+                {isStarting && <div style={{ marginTop: '16px', color: '#B08968', fontSize: '14px', fontWeight: 'bold', textAlign: 'center' }}>Connecting to AI Model...</div>}
             </div>
 
             <div className={`chat-pane ${session.phase !== 'SETUP' ? 'started' : ''}`} id="chatContainer">
@@ -127,6 +141,7 @@ function App() {
                             scenario={session.scenario}
                             isParadoxMode={session.isParadoxMode}
                             initialQuestions={session.questions}
+                            apiKey={session.apiKey}
                             onTimeUp={handleTimerEnd}
                             onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
                         />
