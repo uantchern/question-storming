@@ -17,7 +17,6 @@ const PRESET_CHALLENGES = [
 function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [scenario, setScenario] = useState(initialScenario || '');
     const [isParadox, setIsParadox] = useState(false);
-    const [apiKey, setApiKey] = useState(() => localStorage.getItem('qs_apiKey') || '');
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -46,8 +45,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                 return; // block submission
             }
             setError('');
-            if (apiKey) localStorage.setItem('qs_apiKey', apiKey);
-            onStart(trimmed, isParadox, apiKey);
+            onStart(trimmed, isParadox);
         }
     };
 
@@ -132,21 +130,6 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 ))}
                             </select>
                         </div>
-                    </div>
-
-                    <div className="input-group" style={{ marginBottom: '24px' }}>
-                        <label htmlFor="apiKey" className="field-label" style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase' }}>
-                            Google Gemini API Key (Optional)
-                        </label>
-                        <input
-                            type="password"
-                            id="apiKey"
-                            value={apiKey}
-                            onChange={(e) => setApiKey(e.target.value)}
-                            placeholder="AIzaSy..."
-                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '14px', color: '#1B2B28', backgroundColor: 'white', marginTop: '8px', outline: 'none' }}
-                        />
-                        <div style={{ fontSize: '11px', color: '#8B7355', marginTop: '6px', lineHeight: '1.4' }}>Provide a key for dynamic AI generation. Leave blank for the offline question pool.</div>
                     </div>
 
                     <button

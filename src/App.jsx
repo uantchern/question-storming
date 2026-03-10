@@ -65,9 +65,10 @@ function App() {
 
     const handleStartStorm = async (scenario, isParadoxMode, apiKey = '') => {
         setIsStarting(true);
+        const activeApiKey = apiKey || (import.meta.env ? import.meta.env.VITE_GEMINI_API_KEY : '');
         let randomQuestions = [];
-        if (apiKey) {
-            const geminiQs = await generateGeminiQuestions(scenario, scenario, apiKey, isParadoxMode, null);
+        if (activeApiKey) {
+            const geminiQs = await generateGeminiQuestions(scenario, scenario, activeApiKey, isParadoxMode, null);
             if (geminiQs) randomQuestions = geminiQs;
         }
         if (randomQuestions.length === 0) {
@@ -81,7 +82,7 @@ function App() {
             paradoxConstraint: null
         }));
 
-        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey, targetCount: 10 });
+        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey: activeApiKey, targetCount: 10 });
         setIsStarting(false);
     };
 
