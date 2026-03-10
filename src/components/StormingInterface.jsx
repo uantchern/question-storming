@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, AlertCircle, Clock, Brain, MessageCircle } from 'lucide-react';
+import { getRandomQuestions } from '../questionPool';
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
@@ -58,49 +59,13 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
     // Time formatter removed
 
     const generateMoreQuestions = (selectedText) => {
-        const templates = [
-            `How would our most critical NCSS evaluator view this situation?`,
-            `What if our biggest corporate sponsor completely withdrew funding?`,
-            `How do we solve this in 30 days relying only on our current volunteer pool?`,
-            `What fear holds the Board of Directors back from taking bold action?`,
-            `How would a lean tech startup solve this with zero budget?`,
-            `If we had to explain this to our beneficiaries, how would they react?`,
-            `What sacred cow in our governance blocks the resolution?`,
-            `If this challenge was a leak in our operation, where is the water coming from?`,
-            `How does solving this make another department's work harder?`,
-            `Is this challenge just a symptom of a deeper cultural issue?`,
-            `What would the Charity Council say about this?`,
-            `How can we fully automate this to free up our social workers?`,
-            `What assumption makes us believe we are the only IPC who can solve this?`,
-            `Why hasn't this been addressed in our last strategic review?`,
-            `If we had to partner with another IPC to solve this, who would it be?`,
-            `What is the absolute worst solution we could propose to our donors?`,
-            `What is the 'Band-Aid' solution we keep applying instead of fixing the root cause?`,
-            `What if answering this honestly meant we needed to change our constitution?`,
-            `How does this look from the perspective of a brand new volunteer?`,
-            `If our success depended entirely on solving this today, what is step one?`,
-            `Who is the 'elephant in the room' when discussing this topic?`,
-            `What if we did the exact opposite of what the sector expects us to do?`,
-            `What is the hidden opportunity for a new fundraising angle here?`,
-            `How would a completely unrelated industry (like F&B) solve this?`,
-            `Are we overcomplicating this just to satisfy perceived compliance?`,
-            `What unwritten rule of the Singapore charity sector are we blindly following?`,
-            `How would we explain this challenge to a five-year-old?`,
-            `If our Executive Director resigned tomorrow, how would this problem change?`,
-            `What is the most expensive way we currently fail at this?`,
-            `Could this problem actually be a blessing in disguise?`
-        ];
+        // Find texts we've already generated to avoid repeating
+        const existingTexts = initialQuestions.map(q => q.text);
 
-        // Filter out templates that have already been generated to ensure uniqueness
-        const existingTexts = new Set(initialQuestions.map(q => q.text));
-        const availableTemplates = templates.filter(t => !existingTexts.has(t));
+        // Grab 3 random and highly probing questions from the pool
+        const newQuestionsText = getRandomQuestions(3, existingTexts);
 
-        // Fallback to full pool if we somehow run out of unique templates
-        const pool = availableTemplates.length >= 3 ? availableTemplates : templates;
-
-        // Shuffle templates
-        const shuffled = [...pool].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, 3).map((text, idx) => ({
+        return newQuestionsText.map((text, idx) => ({
             id: Date.now().toString() + '-' + idx,
             text,
             starred: false,

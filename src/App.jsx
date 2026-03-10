@@ -3,6 +3,7 @@ import SessionSetup from './components/SessionSetup';
 import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import SessionAnalysis from './components/SessionAnalysis';
+import { getRandomQuestions } from './questionPool';
 import { Layout, ClipboardCheck, X, ExternalLink } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState';
@@ -60,11 +61,14 @@ function App() {
     }, [session]);
 
     const handleStartStorm = (scenario, isParadoxMode) => {
-        const initialQuestions = [
-            { id: Date.now().toString() + '-1', text: "What if we lost our IPC status tomorrow?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-2', text: "What unspoken truth is our Board of Directors ignoring?", starred: false, paradoxConstraint: null },
-            { id: Date.now().toString() + '-3', text: "Who benefits the most from maintaining our current inefficiencies?", starred: false, paradoxConstraint: null }
-        ];
+        const randomQuestions = getRandomQuestions(3);
+        const initialQuestions = randomQuestions.map((text, index) => ({
+            id: Date.now().toString() + '-' + index,
+            text: text,
+            starred: false,
+            paradoxConstraint: null
+        }));
+
         setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode });
     };
 
