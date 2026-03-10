@@ -75,7 +75,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 id="subject"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
-                                placeholder="e.g., Volunteer Retention, New App, Fundraising"
+                                placeholder="e.g., Retention, Technology, Fundraising"
                                 autoFocus
                                 required
                                 style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
@@ -89,7 +89,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 id="persona"
                                 value={persona}
                                 onChange={(e) => setPersona(e.target.value)}
-                                placeholder="e.g., Burned out staff, High-net-worth donor"
+                                placeholder="e.g., Staff, Donors, Volunteers"
                                 required
                                 style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
                             />
@@ -102,7 +102,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                 id="constraint"
                                 value={constraint}
                                 onChange={(e) => setConstraint(e.target.value)}
-                                placeholder="e.g., Zero budget left, 48 hours deadline"
+                                placeholder="e.g., Budget, Bureaucracy, Time"
                                 required
                                 style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
                             />
