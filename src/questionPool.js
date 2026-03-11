@@ -260,18 +260,18 @@ export const MATRIX_TEMPLATES = {
 };
 
 export const MATRIX_SCENARIOS = [
-    "The Commissioner of Charities (COC) is initiating a surprise audit regarding {subject}. Your stakeholders ({persona}) are panicking, especially given this explicit constraint: {constraint}.",
-    "An investigative report on Channel NewsAsia has implicated your {subject}. The target group ({persona}) is demanding absolute transparency, complicating the reality that: {constraint}.",
-    "You are given complete control to overhaul {subject} for {persona}, but you must simultaneously adhere to a strict new compliance directive from MSF stating: {constraint}.",
-    "The Tote Board abruptly cuts 50% of your matching funding for {subject}, arguing that efforts regarding {persona} fail to meet national social impact metrics. You must now operate under this condition: {constraint}.",
-    "A secular grassroots movement successfully serving {persona} is outperforming your efforts on {subject}, entirely unburdened by your primary regulatory limitation: {constraint}.",
-    "Because of strict IPC (Institution of a Public Character) guidelines—{constraint}—your target group ({persona}) has created a wildly inefficient shadow-system to still achieve {subject}.",
-    "An anonymous whistleblower from {persona} has leaked internal communications to the Charities Unit showing massive governance lapses regarding {subject}, creating a PR nightmare given {constraint}.",
-    "A wealthy local philanthropist offers to completely fund the solution to {subject} for {persona}, but only if you immediately adopt their deeply controversial method governed by {constraint}.",
-    "The government has announced a sweeping new regulation to the Charities Act regarding {subject} that will utterly devastate {persona}. You have 30 days to respond, despite {constraint}.",
-    "Your most loyal segment of {persona} has publicly criticized your approach to {subject} on social media, forcing you to reassess everything while still bound by the Code of Governance limitation: {constraint}.",
-    "A competing IPC has just launched an innovative, deeply engaging solution to {subject} that is rapidly stealing {persona} away from your organization, unimpeded by {constraint}.",
-    "Internal MSF alignment data shows that your current strategy for {subject} is actively harming {persona}, and continuing the strategy is only legally viable because of {constraint}."
+    "The Commissioner of Charities (COC) is initiating a surprise audit regarding your challenge: '{subject}'. Your target group ('{persona}') is panicking, especially given this explicit constraint: '{constraint}'.",
+    "An investigative report on Channel NewsAsia has implicated your handling of this challenge: '{subject}'. The target group ('{persona}') is demanding absolute transparency, complicating the reality of your constraint: '{constraint}'.",
+    "You are given complete control to overhaul the challenge of '{subject}' for your target ('{persona}'), but you must simultaneously adhere to a strict new compliance directive from MSF enforcing your constraint: '{constraint}'.",
+    "The Tote Board abruptly cuts 50% of your matching funding for the initiative: '{subject}'. They argue that your efforts regarding your target ('{persona}') fail to meet national social impact metrics. You must now operate under this condition: '{constraint}'.",
+    "A secular grassroots movement successfully serving your target ('{persona}') is outperforming your efforts on your core challenge: '{subject}'. They are entirely unburdened by your primary regulatory limitation: '{constraint}'.",
+    "Because of strict IPC (Institution of a Public Character) guidelines enforcing your constraint ('{constraint}'), your target group ('{persona}') has created a wildly inefficient shadow-system to still navigate the challenge: '{subject}'.",
+    "An anonymous whistleblower from your target group ('{persona}') has leaked internal communications to the Charities Unit. The leak exposes massive governance lapses regarding your challenge ('{subject}'), creating a PR nightmare given your constraint: '{constraint}'.",
+    "A wealthy local philanthropist offers to completely fund the solution to your challenge ('{subject}') for your target ('{persona}'). However, they will only do so if you immediately adopt their deeply controversial method, inextricably amplifying your constraint: '{constraint}'.",
+    "The government has announced a sweeping new regulation to the Charities Act regarding your challenge ('{subject}') that will utterly devastate your target group ('{persona}'). You have 30 days to respond, despite your constraint: '{constraint}'.",
+    "Your most loyal segment of the target group ('{persona}') has publicly criticized your approach to the challenge ('{subject}') on social media. This forces you to reassess everything while still bound by the Code of Governance limitation: '{constraint}'.",
+    "A competing IPC has just launched an innovative, deeply engaging solution to your challenge ('{subject}'). It is rapidly stealing your target group ('{persona}') away from your organization, unimpeded by your constraint: '{constraint}'.",
+    "Internal MSF alignment data shows that your current strategy for your challenge ('{subject}') is actively harming your target ('{persona}'). Furthermore, continuing the strategy is only legally viable because of your constraint: '{constraint}'."
 ];
 
 export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {
