@@ -7,7 +7,7 @@ import { getRandomQuestions } from './questionPool';
 import { generateGeminiQuestions } from './geminiApi';
 import { Layout, ClipboardCheck, X, ExternalLink } from 'lucide-react';
 
-const APP_STATE_KEY = 'questionStormingState';
+const APP_STATE_KEY = 'questionStormingState_v2';
 
 function App() {
     const [isStarting, setIsStarting] = useState(false);
