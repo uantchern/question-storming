@@ -5,24 +5,24 @@ export const generateGeminiQuestions = async (scenario, selectedText, apiKey, is
     let selectedTextLocal = typeof selectedText === 'object' ? `Subject: ${selectedText.subject}\nPersona: ${selectedText.persona}\nConstraint: ${selectedText.constraint}` : selectedText;
     let isInitialGeneration = scenarioText === selectedTextLocal;
 
-    let systemPrompt = `You are a legendary, hyper-analytical Question Storming facilitator exclusively focused on the Singapore charity, non-profit, and IPC (Institutions of a Public Character) sector. You MUST fiercely anchor every single output to the strict governance frameworks of the Singapore Commissioner of Charities (COC), the Charities Act, NCSS guidelines, charities.gov.sg, or local statutory board regulations.`;
+    let systemPrompt = `You are a legendary, hyper-analytical Question Storming facilitator exclusively focused on the Singapore charity, non-profit, and IPC (Institutions of a Public Character) sector.`;
 
     if (isInitialGeneration) {
-        systemPrompt += `\nYour goal is to generate exactly 3 distinct, highly realistic, and difficult SCENARIOS (1-2 sentences each) based on the user's focus triad.
-The scenarios MUST be exceptionally grounded in the actual context of Singapore charities. They must explicitly or implicitly involve tensions related to IPC status renewals, COC investigations, town council dynamics, NCSS funding models, or high-compliance Singaporean donor structures.
+        systemPrompt += `\nYour goal is to generate exactly 3 distinct, highly realistic, and extremely concise SCENARIOS (under 20 words each) based on the user's focus triad.
+The scenarios MUST be exceptionally relevant to the specific Subject, Persona, and Constraint provided. Keep the scenarios very punchy, practical, and highly focused on the core tension. Do not force heavy compliance jargon unless it fits naturally.
 DO NOT return questions. Return actual situation descriptions (scenarios).
 Return ONLY a valid JSON array of exactly 3 string scenarios. DO NOT wrap in markdown.`;
     } else {
         systemPrompt += `\nYour goal is to generate exactly 3 practical, insightful, and highly relevant follow-up questions to help them solve their specific issue.
 The user is brainstorming about a core challenge scenario. They have selected a specific follow-up context to dive deeper into.
-You must NOT repeat typical boilerplate questions. You must deeply analyze the specific context and ask actionable, uncomfortable questions that force them to consider the Charities Act, Code of Governance, operational compliance, or distinctly Singaporean socio-economic factors.
+You must NOT repeat typical boilerplate questions. You must deeply analyze the specific context and ask actionable, uncomfortable questions that are concise and directly address the core tension.
 Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in markdown.`;
     }
 
     let userPrompt;
     if (isInitialGeneration) {
-        userPrompt = `CORE PARAMETERS:\n${scenarioText}\n\nGenerate 3 realistic, difficult scenarios (situations) merging these parameters.`;
-        userPrompt += `\n\n[SYSTEM RANDOMIZER SEED: ${Math.random()}]\nEnsure these scenarios are entirely unique from any previous suggestions, highly specific, and creatively distinct. Do not fall into predictable charity tropes.`;
+        userPrompt = `CORE PARAMETERS:\n${scenarioText}\n\nGenerate 3 realistic, concise scenarios (situations) merging these parameters accurately. KEEP EACH SCENARIO UNDER 20 WORDS.`;
+        userPrompt += `\n\n[SYSTEM RANDOMIZER SEED: ${Math.random()}]\nEnsure these scenarios are highly relevant to the provided parameters, specific, and clearly state the tension without rambling.`;
     } else {
         userPrompt = `SCENARIO CHOSEN:\n${scenarioText}\nTHEIR CURRENT THREAD / FOCUS: "${selectedTextLocal}"\n`;
     }
