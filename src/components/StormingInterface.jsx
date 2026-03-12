@@ -23,7 +23,7 @@ const PRO_TIPS = [
     "Roll the dice for a 13 is designed to break logic. Don't fight it—flow with it."
 ];
 
-function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions, apiKey }) {
+function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions, onUpdateQuestions, apiKey, reasoning, onUpdateReasoning }) {
     const [selectedId, setSelectedId] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
@@ -71,14 +71,21 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || (typeof scenario === 'object' ? scenario.subject : scenario);
 
         let newQuestionsText = [];
+        let newReasoning = "";
         if (apiKey) {
             const geminiQs = await generateGeminiQuestions(scenario, selectedText, apiKey, isParadoxMode, isParadoxMode ? PARADOX_CONSTRAINTS[constraintIndex] : null);
-            if (geminiQs) newQuestionsText = geminiQs;
+            if (geminiQs && geminiQs.items) {
+                 newQuestionsText = geminiQs.items;
+                 newReasoning = geminiQs.reasoning;
+            } else if (geminiQs) {
+                 newQuestionsText = geminiQs;
+            }
         }
 
         if (newQuestionsText.length === 0) {
             const existingTexts = initialQuestions.map(q => q.text);
             newQuestionsText = getRandomQuestions(3, existingTexts, scenario, selectedText);
+            newReasoning = "Used static offline fallbacks, no live AI reasoning available.";
         }
 
         const newQuestions = newQuestionsText.map((text, idx) => ({
@@ -89,6 +96,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         }));
 
         onUpdateQuestions([...initialQuestions, ...newQuestions]);
+        if (onUpdateReasoning) onUpdateReasoning(newReasoning);
         setSelectedId(null);
         setIsGenerating(false);
     };
@@ -145,6 +153,17 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     </div>
                 </div>
             </div>
+
+            {reasoning && (
+                <div style={{ backgroundColor: 'rgba(139, 115, 85, 0.05)', borderLeft: '3px solid #D2B48C', padding: '16px 20px', borderRadius: '0 8px 8px 0', marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 800, color: '#8B7355', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Brain size={14} /> AI Reasoning Process
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#5E5A4B', lineHeight: '1.6' }}>
+                        {reasoning}
+                    </div>
+                </div>
+            )}
 
             <div className="questions-list">
                 {initialQuestions.slice(-3).map((q, i) => (

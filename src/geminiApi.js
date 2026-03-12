@@ -13,17 +13,41 @@ export const generateGeminiQuestions = async (scenario, selectedText, apiKey, is
 Crucial Rule: Treat the user's inputs for Subject, Persona, and Constraint as conceptual seeds, not exact text strings. Do not parrot, quote, or forcefully paste the user's exact phrasing into the scenarios. Instead, extract the underlying meaning of the inputs and synthesize them smoothly into your own natural, professional prose.
 Translate the Constraint into a real-world structural barrier (e.g., funding blocks, staff burnout, regulatory hurdles). Show how it hurts the charity; do not just state that it exists.
 Keep each scenario extremely concise (under 25 words).
-[SCENARIO FRAMEWORKS]
-Scenario 1 (The Funder's Ultimatum): Frame the constraint as a catastrophic funding block from an institutional donor demanding impossible metrics.
-Scenario 2 (The Operational Bottleneck): Frame the constraint as an operational bottleneck causing the charity to lose ground to a more agile, tech-driven competitor.
-Scenario 3 (The Competitive Disruption): Frame the constraint as an internal crisis of trust or strategic drift, revealed by an external audit or changing sector trends.
+[FEW-SHOT EXAMPLES]
+User Input:
+Subject: Improve marketing outreach
+Persona: Tech-savvy youth
+Constraint: Zero budget for ads
+
+Ideal AI Output:
+{
+  "reasoning": "A zero budget means relying purely on organic reach, which is heavily algorithm-dependent. I need to frame scenarios around funding pressure, algorithmic invisibility, and reputational risk.",
+  "items": [
+    "A major funder warns your grant will not be renewed unless your youth engagement metrics drastically improve purely through organic social traction.",
+    "A rival charity goes viral, effortlessly capturing your youth audience while your unpaid posts remain invisible due to algorithmic changes.",
+    "A leaked internal report reveals youth view your brand as 'stale', triggering a crisis of confidence you cannot spend your way out of."
+  ]
+}
+
 DO NOT return questions. Return actual situation descriptions (scenarios).
-Return ONLY a valid JSON array of exactly 3 string scenarios. DO NOT wrap in markdown.`;
+Return ONLY a valid JSON object containing 'reasoning' (string) and 'items' (array of exactly 3 string scenarios). DO NOT wrap in markdown.`;
     } else {
         systemPrompt += `\nYour goal is to generate exactly 3 practical, insightful, and highly relevant follow-up questions to help them solve their specific issue.
 The user is brainstorming about a core challenge scenario. They have selected a specific follow-up context to dive deeper into.
 You must NOT repeat typical boilerplate questions. You must deeply analyze the specific context and ask actionable, uncomfortable questions that are concise and directly address the core tension.
-Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in markdown.`;
+
+[FEW-SHOT EXAMPLES]
+Ideal AI Output:
+{
+  "reasoning": "The user is concerned about losing major donors due to toxic board culture. The core tension is the power dynamic between governance and funding.",
+  "items": [
+    "If your largest donor demanded the removal of the board chair tomorrow to maintain funding, how would you navigate the legal fallout?",
+    "Why are we allowing volunteer board members to unilaterally make operational decisions that jeopardize millions in institutional grants?",
+    "What specific reporting mechanism can we implement today to shield frontline staff from toxic board interference?"
+  ]
+}
+
+Return ONLY a valid JSON object containing 'reasoning' (string) and 'items' (array of exactly 3 string questions). DO NOT wrap in markdown.`;
     }
 
     let userPrompt;
@@ -41,9 +65,9 @@ Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in mar
     }
 
     if (isInitialGeneration) {
-        userPrompt += `\nGenerate exactly 3 uniquely challenging scenarios as a JSON array of strings. Do not use code blocks.`;
+        userPrompt += `\nGenerate exactly 3 uniquely challenging scenarios as a JSON object with 'reasoning' and 'items'. Do not use code blocks.`;
     } else {
-        userPrompt += `\nGenerate exactly 3 uniquely practical follow-up questions as a JSON array of strings. Do not use code blocks.`;
+        userPrompt += `\nGenerate exactly 3 uniquely practical follow-up questions as a JSON object with 'reasoning' and 'items'. Do not use code blocks.`;
     }
 
     try {
@@ -74,8 +98,16 @@ Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in mar
             parsed = JSON.parse(cleaned);
         }
 
-        if (Array.isArray(parsed) && parsed.length >= 3) {
-            return parsed.slice(0, 3);
+        if (parsed && typeof parsed.reasoning === 'string' && Array.isArray(parsed.items) && parsed.items.length >= 3) {
+            return {
+                reasoning: parsed.reasoning,
+                items: parsed.items.slice(0, 3)
+            };
+        } else if (Array.isArray(parsed) && parsed.length >= 3) {
+            return {
+                reasoning: "AI generated alternative formats. Using standard logic parameters.",
+                items: parsed.slice(0, 3)
+            };
         } else {
             throw new Error("Invalid format from AI");
         }

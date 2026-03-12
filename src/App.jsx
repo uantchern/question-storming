@@ -59,7 +59,8 @@ function App() {
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
-            apiKey: ''
+            apiKey: '',
+            reasoning: ''
         };
     });
 
@@ -81,12 +82,20 @@ function App() {
         setIsStarting(true);
         const activeApiKey = apiKey || (import.meta.env ? import.meta.env.VITE_GEMINI_API_KEY : '');
         let randomQuestions = [];
+        let generatedReasoning = '';
+
         if (activeApiKey) {
             const geminiQs = await generateGeminiQuestions(scenario, scenario, activeApiKey, isParadoxMode, null);
-            if (geminiQs) randomQuestions = geminiQs;
+            if (geminiQs && geminiQs.items) {
+                 randomQuestions = geminiQs.items;
+                 generatedReasoning = geminiQs.reasoning;
+            } else if (geminiQs) {
+                 randomQuestions = geminiQs;
+            }
         }
         if (randomQuestions.length === 0) {
             randomQuestions = getRandomQuestions(3, [], scenario);
+            generatedReasoning = "Used static offline fallbacks, no live AI reasoning available.";
         }
 
         const initialQuestions = randomQuestions.map((text, index) => ({
@@ -96,7 +105,7 @@ function App() {
             paradoxConstraint: null
         }));
 
-        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey: activeApiKey, targetCount: 10 });
+        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey: activeApiKey, targetCount: 10, reasoning: generatedReasoning });
         setIsStarting(false);
     };
 
@@ -154,8 +163,10 @@ function App() {
                                 isParadoxMode={session.isParadoxMode}
                                 initialQuestions={session.questions}
                                 apiKey={session.apiKey}
+                                reasoning={session.reasoning}
                                 onTimeUp={handleTimerEnd}
                                 onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
+                                onUpdateReasoning={(r) => setSession(prev => ({ ...prev, reasoning: r }))}
                             />
                         </div>
                     </>

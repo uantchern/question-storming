@@ -40,6 +40,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [constraint, setConstraint] = useState(initialScenario?.constraint || '');
     const [selectedPreset, setSelectedPreset] = useState('');
     const [isParadox, setIsParadox] = useState(false);
+    const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_api_key') || '');
     const [error, setError] = useState('');
 
     const handleTopicSelect = (e) => {
@@ -82,9 +83,14 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!apiKey.trim()) {
+            setError('Please provide a Gemini API Key to use the generative features.');
+            return;
+        }
         if (subject.trim() && persona.trim() && constraint.trim()) {
             setError('');
-            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox);
+            localStorage.setItem('gemini_api_key', apiKey.trim());
+            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox, apiKey.trim());
         } else {
             setError('Please fill in Subject, Persona, and Constraint.');
         }
@@ -158,6 +164,19 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                             value={constraint}
                             onChange={(e) => { setConstraint(e.target.value); setSelectedPreset(''); }}
                             placeholder="e.g., Budget, Bureaucracy, Time"
+                            required
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
+                        />
+
+                        <label htmlFor="apiKey" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Gemini API Key (Required)
+                        </label>
+                        <input
+                            type="password"
+                            id="apiKey"
+                            value={apiKey}
+                            onChange={(e) => setApiKey(e.target.value)}
+                            placeholder="AIzaSy..."
                             required
                             style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
                         />
