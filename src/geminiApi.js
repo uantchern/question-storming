@@ -5,11 +5,18 @@ export const generateGeminiQuestions = async (scenario, selectedText, apiKey, is
     let selectedTextLocal = typeof selectedText === 'object' ? `Subject: ${selectedText.subject}\nPersona: ${selectedText.persona}\nConstraint: ${selectedText.constraint}` : selectedText;
     let isInitialGeneration = scenarioText === selectedTextLocal;
 
-    let systemPrompt = `You are a legendary, hyper-analytical Question Storming facilitator exclusively focused on the Singapore charity, non-profit, and IPC (Institutions of a Public Character) sector.`;
+    let systemPrompt = `SYSTEM ROLE: You are a Tier-1 Non-Profit Strategist and Philanthropic Consultant. You possess deep, systemic knowledge of the global charities sector. You understand the complex, real-world frictions NGOs face: the 'overhead myth', donor reporting fatigue, restricted vs. unrestricted funding challenges, the difficulty of Monitoring & Evaluation (M&E) for long-term systemic change, and shifting philanthropic trends. Filter every user input through this highly realistic, expert worldview. Do not generate scenarios that are naive or ignore the operational realities of running a modern charity.`;
 
     if (isInitialGeneration) {
-        systemPrompt += `\nYour goal is to generate exactly 3 distinct, highly realistic, and extremely concise SCENARIOS (under 20 words each) based on the user's focus triad.
-The scenarios MUST be exceptionally relevant to the specific Subject, Persona, and Constraint provided. Keep the scenarios very punchy, practical, and highly focused on the core tension. Do not force heavy compliance jargon unless it fits naturally.
+        systemPrompt += `\n[TASK] The user is trying to achieve a core Subject for a target Persona, but they are facing a severe Constraint. Your task is to generate exactly 3 realistic, highly specific "Storming Scenarios" to challenge their entrenched mindset.
+[RULES FOR SYNTHESIS - CRITICAL]
+Crucial Rule: Treat the user's inputs for Subject, Persona, and Constraint as conceptual seeds, not exact text strings. Do not parrot, quote, or forcefully paste the user's exact phrasing into the scenarios. Instead, extract the underlying meaning of the inputs and synthesize them smoothly into your own natural, professional prose.
+Translate the Constraint into a real-world structural barrier (e.g., funding blocks, staff burnout, regulatory hurdles). Show how it hurts the charity; do not just state that it exists.
+Keep each scenario extremely concise (under 25 words).
+[SCENARIO FRAMEWORKS]
+Scenario 1 (The Funder's Ultimatum): Frame the constraint as a catastrophic funding block from an institutional donor demanding impossible metrics.
+Scenario 2 (The Operational Bottleneck): Frame the constraint as an operational bottleneck causing the charity to lose ground to a more agile, tech-driven competitor.
+Scenario 3 (The Competitive Disruption): Frame the constraint as an internal crisis of trust or strategic drift, revealed by an external audit or changing sector trends.
 DO NOT return questions. Return actual situation descriptions (scenarios).
 Return ONLY a valid JSON array of exactly 3 string scenarios. DO NOT wrap in markdown.`;
     } else {
@@ -21,8 +28,8 @@ Return ONLY a valid JSON array of exactly 3 string questions. DO NOT wrap in mar
 
     let userPrompt;
     if (isInitialGeneration) {
-        userPrompt = `CORE PARAMETERS:\n${scenarioText}\n\nGenerate 3 realistic, concise scenarios (situations) merging these parameters accurately. KEEP EACH SCENARIO UNDER 20 WORDS.`;
-        userPrompt += `\n\n[SYSTEM RANDOMIZER SEED: ${Math.random()}]\nEnsure these scenarios are highly relevant to the provided parameters, specific, and clearly state the tension without rambling.`;
+        userPrompt = `[INPUTS]\n${scenarioText}\n\nGenerate 3 realistic, concise scenarios (situations) based on the specific frameworks provided. KEEP EACH SCENARIO UNDER 25 WORDS.`;
+        userPrompt += `\n\n[SYSTEM RANDOMIZER SEED: ${Math.random()}]\nEnsure these scenarios are highly relevant to the abstracted meaning of the provided parameters without quoting them directly.`;
     } else {
         userPrompt = `SCENARIO CHOSEN:\n${scenarioText}\nTHEIR CURRENT THREAD / FOCUS: "${selectedTextLocal}"\n`;
     }
