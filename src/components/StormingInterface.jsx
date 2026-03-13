@@ -150,24 +150,50 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                             className="question-content" 
                             style={{ fontSize: q.text.length > 120 ? '0.95rem' : '1.125rem', transition: 'font-size 0.2s', width: '100%', position: 'relative' }}
                         >
-                            <div 
-                                contentEditable
-                                suppressContentEditableWarning={true}
-                                onBlur={(e) => {
-                                    const newText = e.currentTarget.textContent;
-                                    if (newText !== q.text) {
+                            {selectedId === q.id ? (
+                                <textarea
+                                    value={q.text}
+                                    autoFocus
+                                    onFocus={(e) => {
+                                        let val = e.target.value;
+                                        e.target.value = '';
+                                        e.target.value = val;
+                                        e.target.style.height = 'auto';
+                                        e.target.style.height = e.target.scrollHeight + 'px';
+                                    }}
+                                    onChange={(e) => {
+                                        e.target.style.height = 'auto';
+                                        e.target.style.height = e.target.scrollHeight + 'px';
+                                        const newText = e.target.value;
                                         const updated = initialQuestions.map(item => item.id === q.id ? { ...item, text: newText } : item);
                                         onUpdateQuestions(updated);
-                                    }
-                                }}
-                                onClick={(e) => { e.stopPropagation(); setSelectedId(q.id); window.selectedQuestionId = q.id; }}
-                                style={{ outline: 'none', paddingRight: '24px', cursor: 'text' }}
-                            >
-                                {q.text}
-                            </div>
-                            <div className="edit-hint" style={{ position: 'absolute', right: 0, top: '4px', opacity: 0.3, pointerEvents: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', fontWeight: 'bold' }}>
-                                <Edit2 size={12} /> Refine
-                            </div>
+                                    }}
+                                    onClick={(e) => e.stopPropagation()}
+                                    style={{ 
+                                        width: '100%', 
+                                        background: 'rgba(255, 255, 255, 0.7)', 
+                                        border: '1px solid #D2B48C', 
+                                        borderRadius: '6px',
+                                        padding: '8px 12px',
+                                        resize: 'none', 
+                                        outline: 'none', 
+                                        fontSize: 'inherit', 
+                                        fontFamily: 'inherit', 
+                                        color: '#1B2B28',
+                                        overflow: 'hidden',
+                                        boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.05)'
+                                    }}
+                                />
+                            ) : (
+                                <div style={{ paddingRight: '24px' }}>
+                                    {q.text}
+                                </div>
+                            )}
+                            {selectedId !== q.id && (
+                                <div className="edit-hint" style={{ position: 'absolute', right: 0, top: '4px', opacity: 0.3, pointerEvents: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', fontWeight: 'bold' }}>
+                                    <Edit2 size={12} /> Refine
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
