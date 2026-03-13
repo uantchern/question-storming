@@ -39,7 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: npm run build
+        run: |
+          echo 'VITE_GEMINI_API_KEY="AIzaSyDF1HpI1RIFenpJochk1-tba64OZTLiiXw"' > .env
+          npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
