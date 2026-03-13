@@ -89,10 +89,6 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
             return;
         }
 
-        if (!apiKey.trim()) {
-            setError('Please enter your API Key in the Settings input.');
-            return;
-        }
 
         const constraintWords = constraint.trim().split(/\s+/).filter(word => word.length > 0);
         if (constraintWords.length < 3) {

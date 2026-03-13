@@ -73,10 +73,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         }
 
         const apiKey = localStorage.getItem('geminiApiKey');
-        if (!apiKey) {
-            setWarning('Please return to Start and enter your API Key in Settings first!');
-            return;
-        }
+
 
         setWarning('');
         setIsGenerating(true);
