@@ -260,18 +260,18 @@ export const MATRIX_TEMPLATES = {
 };
 
 export const MATRIX_SCENARIOS = [
-    "A surprise audit regarding '{subject}' sparks panic among '{persona}', worsened by '{constraint}'.",
-    "A media report exposes flaws in '{subject}'. '{persona}' demands answers, but you face '{constraint}'.",
-    "A new mandate forces you to overhaul '{subject}' for '{persona}', while strictly observing '{constraint}'.",
-    "Funding for '{subject}' is abruptly cut, forcing you to serve '{persona}' under '{constraint}'.",
-    "A competitor effortlessly solves '{subject}' for '{persona}', unburdened by your '{constraint}'.",
-    "Due to '{constraint}', '{persona}' bypasses your system for '{subject}' completely.",
-    "A leaked memo regarding '{subject}' angers '{persona}', causing a crisis amplified by '{constraint}'.",
-    "A major donor offers to fund '{subject}' for '{persona}', but only if you embrace '{constraint}'.",
-    "A new law completely changes how you handle '{subject}' for '{persona}' under '{constraint}'.",
-    "'{persona}' publicly criticizes your approach to '{subject}', forcing a reset despite '{constraint}'.",
-    "A rival launches a better solution to '{subject}', stealing '{persona}' due to your '{constraint}'.",
-    "Data shows your current '{subject}' strategy actively fails '{persona}' because of '{constraint}'."
+    "You are aggressively pushing for '{subject}', but the target audience of {persona} is actively resisting due to the hard reality of {constraint}.",
+    "A major long-term grant requires you to completely solve '{subject}' for {persona}, but {constraint} makes the timeline nearly impossible.",
+    "Internal data brutally reveals that your current approach to '{subject}' is actively alienating {persona} entirely because of {constraint}.",
+    "To rapidly scale '{subject}', you must rely entirely on {persona}, yet you are paralyzed by {constraint}.",
+    "A direct competitor successfully achieves '{subject}' for {persona} because they somehow bypassed the crushing limitation of {constraint}.",
+    "The board demands immediate, visible progress on '{subject}', but {persona} refuses to engage until you resolve {constraint}.",
+    "A localized crisis abruptly forces you to scrap your plans for '{subject}' and deliver it to {persona} under the extreme pressure of {constraint}.",
+    "Foundational funding for '{subject}' is immediately frozen until you can prove to {persona} that you have overcome {constraint}.",
+    "You discover that {persona} fundamentally misunderstands your goal for '{subject}', and communicating the truth is blocked by {constraint}.",
+    "A critical strategic partner offers to fully fund '{subject}' for {persona}, but you ethically cannot accept because of {constraint}.",
+    "Your most passionate team member quits out of frustration trying to deliver '{subject}' to {persona} while fighting the daily friction of {constraint}.",
+    "The public desperately needs '{subject}', but {persona} is structurally incapable of receiving it right now because of {constraint}."
 ];
 
 export const getMatrixScenarios = (subject, persona, constraint, count = 3, excludeTexts = []) => {
