@@ -60,10 +60,19 @@ export const generateScenarios = async (subject, persona, constraint) => {
     return [collision, quietFailure, externalPressure].map(formatText);
 };
 
-export const generateDeepDiveQuestions = async (primaryContext, scenario) => {
+export const generateDeepDiveQuestions = async (primaryContext, scenario, roundCounter) => {
     let per = scenario?.persona ? charityLexiconFilter(scenario.persona.toLowerCase()) : "the persona";
     let sub = scenario?.subject ? charityLexiconFilter(scenario.subject.toLowerCase()) : "the issue";
     let con = scenario?.constraint ? charityLexiconFilter(scenario.constraint.toLowerCase()) : "the limitation";
+    
+    // Round 3 Pivot: Micro-Moves framework
+    if (roundCounter === 2) {
+        return [
+            `Draft the one-sentence email addressing: "${primaryContext}"`,
+            `Schedule a specific 15-minute meeting about this for tomorrow.`,
+            `Execute the smallest visible change without asking for permission.`
+        ];
+    }
     
     // Round 2 Pivot: Micro-Action framework
     return [

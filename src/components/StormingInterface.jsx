@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, AlertCircle, Clock, Brain, MessageCircle } from 'lucide-react';
+import { Send, AlertCircle, Clock, Brain, MessageCircle, Edit2 } from 'lucide-react';
 import { generateDeepDiveQuestions } from '../questionPool';
 
 const PARADOX_CONSTRAINTS = [
@@ -75,8 +75,9 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         setWarning('');
         setIsGenerating(true);
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || (typeof scenario === 'object' ? scenario.subject : scenario);
+        const roundCounter = Math.floor(initialQuestions.length / 3);
 
-        let newQuestionsText = await generateDeepDiveQuestions(selectedText, scenario);
+        let newQuestionsText = await generateDeepDiveQuestions(selectedText, scenario, roundCounter);
         let newReasoning = "Analyzing selection against static CharityOps heuristic matrix...";
 
         const newQuestions = newQuestionsText.map((text, idx) => ({
@@ -147,9 +148,26 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                         <div className="question-number">{String(i + 1).padStart(2, '0')}</div>
                         <div 
                             className="question-content" 
-                            style={{ fontSize: q.text.length > 120 ? '0.95rem' : '1.125rem', transition: 'font-size 0.2s' }}
+                            style={{ fontSize: q.text.length > 120 ? '0.95rem' : '1.125rem', transition: 'font-size 0.2s', width: '100%', position: 'relative' }}
                         >
-                            {q.text}
+                            <div 
+                                contentEditable
+                                suppressContentEditableWarning={true}
+                                onBlur={(e) => {
+                                    const newText = e.currentTarget.textContent;
+                                    if (newText !== q.text) {
+                                        const updated = initialQuestions.map(item => item.id === q.id ? { ...item, text: newText } : item);
+                                        onUpdateQuestions(updated);
+                                    }
+                                }}
+                                onClick={(e) => { e.stopPropagation(); setSelectedId(q.id); window.selectedQuestionId = q.id; }}
+                                style={{ outline: 'none', paddingRight: '24px', cursor: 'text' }}
+                            >
+                                {q.text}
+                            </div>
+                            <div className="edit-hint" style={{ position: 'absolute', right: 0, top: '4px', opacity: 0.3, pointerEvents: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', fontWeight: 'bold' }}>
+                                <Edit2 size={12} /> Refine
+                            </div>
                         </div>
                     </div>
                 ))}
