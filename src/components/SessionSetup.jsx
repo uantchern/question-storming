@@ -83,12 +83,20 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (subject.trim() && persona.trim() && constraint.trim() && apiKey.trim()) {
-            setError('');
-            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox, apiKey.trim());
-        } else {
+
+        if (!subject.trim() || !persona.trim() || !constraint.trim() || !apiKey.trim()) {
             setError('Please fill in Subject, Persona, Constraint, and a secure Gemini API Key.');
+            return;
         }
+
+        const constraintWords = constraint.trim().split(/\s+/).filter(word => word.length > 0);
+        if (constraintWords.length < 3) {
+            setError('Be more specific to get better scenarios. Your limitation should be at least 3 words.');
+            return;
+        }
+
+        setError('');
+        onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox, apiKey.trim());
     };
 
     return (

@@ -1,8 +1,8 @@
 export const generateGeminiQuestions = async (scenario, selectedText, apiKey, isParadoxMode, paradoxConstraint) => {
     let targetModel = "gemini-2.5-flash";
 
-    let scenarioText = typeof scenario === 'object' ? `Subject: ${scenario.subject}\nPersona: ${scenario.persona}\nConstraint: ${scenario.constraint}` : scenario;
-    let selectedTextLocal = typeof selectedText === 'object' ? `Subject: ${selectedText.subject}\nPersona: ${selectedText.persona}\nConstraint: ${selectedText.constraint}` : selectedText;
+    let scenarioText = typeof scenario === 'object' ? `How can ${scenario.persona} achieve ${scenario.subject} given the hard reality of ${scenario.constraint}?` : scenario;
+    let selectedTextLocal = typeof selectedText === 'object' ? `How can ${selectedText.persona} achieve ${selectedText.subject} given the hard reality of ${selectedText.constraint}?` : selectedText;
     let isInitialGeneration = scenarioText === selectedTextLocal;
 
     let systemPrompt = `SYSTEM ROLE: You are a Tier-1 Non-Profit Strategist and Philanthropic Consultant. You possess deep, systemic knowledge of the global charities sector. You understand the complex, real-world frictions NGOs face: the 'overhead myth', donor reporting fatigue, restricted vs. unrestricted funding challenges, the difficulty of Monitoring & Evaluation (M&E) for long-term systemic change, and shifting philanthropic trends. Filter every user input through this highly realistic, expert worldview. Do not generate scenarios that are naive or ignore the operational realities of running a modern charity.`;
