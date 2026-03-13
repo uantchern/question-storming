@@ -449,6 +449,10 @@ button:disabled {
   animation: slideIn 0.3s ease-out forwards;
 }
 
+.question-card:nth-child(3n + 1) { border-left-color: #B08968; }
+.question-card:nth-child(3n + 2) { border-left-color: #2D423F; }
+.question-card:nth-child(3n + 3) { border-left-color: #8B7355; }
+
 .question-number {
   color: var(--text-muted);
   font-family: monospace;
