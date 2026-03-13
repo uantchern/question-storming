@@ -14,47 +14,9 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const urlPrompt = urlParams.get('prompt');
 
-        if (urlParams.has('reset')) {
-            localStorage.removeItem(APP_STATE_KEY);
-            return {
-                phase: 'SETUP',
-                scenario: { subject: urlPrompt || '', persona: '', constraint: '' },
-                questions: [],
-                isParadoxMode: false,
-                targetCount: 10,
-            };
-        }
-
-        const saved = localStorage.getItem(APP_STATE_KEY);
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                // Invalidate old state if it uses the legacy string scenario format
-                if (parsed && typeof parsed.scenario === 'string' && parsed.scenario !== '') {
-                    localStorage.removeItem(APP_STATE_KEY);
-                    console.warn("Invalidated legacy string-based scenario state.");
-                    return {
-                        phase: 'SETUP',
-                        scenario: { subject: '', persona: '', constraint: '' },
-                        questions: [],
-                        isParadoxMode: false,
-                        targetCount: 10,
-                        apiKey: ''
-                    };
-                }
-
-                // Ensure targetCount is set if old saved state
-                if (parsed && parsed.targetCount === undefined) {
-                    parsed.targetCount = 10;
-                }
-                return parsed;
-            } catch (e) {
-                console.error("Failed to parse saved session", e);
-            }
-        }
         return {
             phase: 'SETUP', // SETUP, STORMING, REVIEW, HISTORY
-            scenario: { subject: '', persona: '', constraint: '' },
+            scenario: { subject: urlPrompt || '', persona: '', constraint: '' },
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
