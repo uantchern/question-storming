@@ -4,7 +4,6 @@ import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import SessionAnalysis from './components/SessionAnalysis';
 import { getRandomQuestions } from './questionPool';
-import { generateGeminiQuestions } from './geminiApi';
 import { Layout, ClipboardCheck, X, ExternalLink, Home, RefreshCw, MessageCircle } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState_v2';
@@ -59,7 +58,6 @@ function App() {
             questions: [],
             isParadoxMode: false,
             targetCount: 10,
-            apiKey: '',
             reasoning: ''
         };
     });
@@ -78,25 +76,10 @@ function App() {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
     }, [session]);
 
-    const handleStartStorm = async (scenario, isParadoxMode, apiKey = '') => {
+    const handleStartStorm = async (scenario, isParadoxMode) => {
         setIsStarting(true);
-        const activeApiKey = apiKey || (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY ? import.meta.env.VITE_GEMINI_API_KEY : '');
-        let randomQuestions = [];
-        let generatedReasoning = '';
-
-        if (activeApiKey) {
-            const geminiQs = await generateGeminiQuestions(scenario, scenario, activeApiKey, isParadoxMode, null);
-            if (geminiQs && geminiQs.items) {
-                 randomQuestions = geminiQs.items;
-                 generatedReasoning = geminiQs.reasoning;
-            } else if (geminiQs) {
-                 randomQuestions = geminiQs;
-            }
-        }
-        if (randomQuestions.length === 0) {
-            randomQuestions = getRandomQuestions(3, [], scenario);
-            generatedReasoning = "Used static offline fallbacks, no live AI reasoning available.";
-        }
+        let randomQuestions = getRandomQuestions(3, [], scenario);
+        let generatedReasoning = "Local Offline Generator via CharityOps Engine.";
 
         const initialQuestions = randomQuestions.map((text, index) => ({
             id: Date.now().toString() + '-' + index,
@@ -105,7 +88,7 @@ function App() {
             paradoxConstraint: null
         }));
 
-        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, apiKey: activeApiKey, targetCount: 10, reasoning: generatedReasoning });
+        setSession({ phase: 'STORMING', scenario, questions: initialQuestions, isParadoxMode, targetCount: 10, reasoning: generatedReasoning });
         setIsStarting(false);
     };
 
@@ -176,7 +159,6 @@ function App() {
                                 scenario={session.scenario}
                                 isParadoxMode={session.isParadoxMode}
                                 initialQuestions={session.questions}
-                                apiKey={session.apiKey}
                                 reasoning={session.reasoning}
                                 onTimeUp={handleTimerEnd}
                                 onUpdateQuestions={(qs) => setSession(prev => ({ ...prev, questions: qs }))}
