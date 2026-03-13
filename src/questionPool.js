@@ -25,7 +25,10 @@ export const CHARITY_REALITIES = [
 const charityLexiconFilter = (str) => {
     return str
         .replace(/\bsolve(s)?\b/gi, 'address$1')
-        .replace(/\blegacy\s+mindset(s)?\b/gi, 'old habit$1');
+        .replace(/\blegacy\s+mindset(s)?\b/gi, 'old habit$1')
+        .replace(/\boptics\b/gi, 'how it looks to others')
+        .replace(/\bquantum\b/gi, 'amount / level')
+        .replace(/\bcomplacency\b/gi, 'lack of action');
 };
 
 const formatText = (text) => text.charAt(0).toUpperCase() + text.slice(1);
@@ -49,7 +52,7 @@ export const generateScenarios = async (subject, persona, constraint) => {
     const collision = `When the ${per} ${verbAttempt} to address ${sub}, they immediately clash with the hard wall of ${con}.`;
 
     // Scenario B: The Quiet Failure
-    const quietFailure = `Terrified of ${con}, the ${per} quietly ${verbIgnore} the reality of ${sub}, accelerating ${realities[0]}.`;
+    const quietFailure = `Terrified of ${con}, the ${per} quietly ${verbIgnore} the reality of ${sub}, leading to ${realities[0]}.`;
 
     // Scenario C: The External Pressure
     const externalPressure = `A major donor explicitly asks about ${sub}, but the ${per} ${verbAre} forced to provide vague excuses because of ${con}.`;

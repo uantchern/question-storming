@@ -180,8 +180,8 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                         <span style={{ fontSize: '1.2rem' }}>⚡</span> {isGenerating ? "Storming..." : (initialQuestions.length <= 3 ? "Storm Questions" : "Storm Again")}
                     </button>
                     {initialQuestions.length <= 3 && (
-                        <button onClick={() => onTimeUp([])} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid transparent', backgroundColor: 'transparent', color: '#5E5A4B', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease' }} onMouseOver={e => { e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.05)'; e.currentTarget.style.color = '#1B2B28'; }} onMouseOut={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#5E5A4B'; }}>
-                            Back to Menu / Regenerate
+                        <button onClick={() => onTimeUp([])} style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', backgroundColor: 'rgba(210, 180, 140, 0.1)', color: '#1B2B28', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease', marginTop: '0.5rem' }} onMouseOver={e => { e.currentTarget.style.backgroundColor = 'rgba(210, 180, 140, 0.2)'; }} onMouseOut={e => { e.currentTarget.style.backgroundColor = 'rgba(210, 180, 140, 0.1)'; }}>
+                            🏠 Back to Start
                         </button>
                     )}
                     {initialQuestions.length > 3 && (
