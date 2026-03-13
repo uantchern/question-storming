@@ -145,7 +145,12 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                         }}
                     >
                         <div className="question-number">{String(i + 1).padStart(2, '0')}</div>
-                        <div className="question-content">{q.text}</div>
+                        <div 
+                            className="question-content" 
+                            style={{ fontSize: q.text.length > 120 ? '0.95rem' : '1.125rem', transition: 'font-size 0.2s' }}
+                        >
+                            {q.text}
+                        </div>
                     </div>
                 ))}
             </div>
