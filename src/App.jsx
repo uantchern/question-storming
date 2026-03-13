@@ -6,7 +6,7 @@ import SessionAnalysis from './components/SessionAnalysis';
 import { getRandomQuestions } from './questionPool';
 import { Layout, ClipboardCheck, X, ExternalLink, Home, RefreshCw, MessageCircle } from 'lucide-react';
 
-const APP_STATE_KEY = 'questionStormingState_v2';
+const APP_STATE_KEY = 'questionStormingState_v3';
 
 function App() {
     const [isStarting, setIsStarting] = useState(false);
