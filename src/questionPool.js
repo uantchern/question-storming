@@ -62,10 +62,10 @@ export const generateDeepDiveQuestions = async (primaryContext, scenario) => {
     let sub = scenario?.subject ? charityLexiconFilter(scenario.subject.toLowerCase()) : "the issue";
     let con = scenario?.constraint ? charityLexiconFilter(scenario.constraint.toLowerCase()) : "the limitation";
     
-    // Round 2 Pivot: bypassing limitation without permission
+    // Round 2 Pivot: Micro-Action framework
     return [
-        `What is the one thing the ${per} can do without permission to bypass ${con}?`,
-        `If nobody was looking, who could physically start improving ${sub} today despite ${con}?`,
-        `Why do the ${per} sincerely believe they need authorization to outsmart ${con}?`
-    ].map(formatText);
+        `If you had only 5 minutes to address this, what would you say?`,
+        `What is the smallest thing you can change without asking for permission?`,
+        `Who is the one person you are avoiding talking to about this?`
+    ];
 };
