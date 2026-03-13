@@ -165,10 +165,7 @@ function App() {
                                 }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(37, 211, 102, 0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Share to WhatsApp">
                                     <MessageCircle size={20} />
                                 </button>
-                                <button onClick={handleReset} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(255,255,255,0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Restart Session">
-                                    <RefreshCw size={20} />
-                                </button>
-                                <button onClick={() => window.location.href = 'https://charityops.org'} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(255,255,255,0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Home">
+                                <button onClick={handleReset} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(255,255,255,0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Back to Setup Form">
                                     <Home size={20} />
                                 </button>
                             </div>
