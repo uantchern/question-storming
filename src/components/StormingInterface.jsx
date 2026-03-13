@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, AlertCircle, Clock, Brain, MessageCircle } from 'lucide-react';
-import { getRandomQuestions } from '../questionPool';
+import { generateDeepDiveQuestions } from '../questionPool';
 
 const PARADOX_CONSTRAINTS = [
     "Casualty Shift: How would this succeed if the effect happened before the cause?",
@@ -71,12 +71,18 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
             setWarning(`Please select the most relevant ${isInitialPhase ? 'scenario' : 'question'} above first!`);
             return;
         }
+
+        const apiKey = localStorage.getItem('geminiApiKey');
+        if (!apiKey) {
+            setWarning('Please return to Start and enter your API Key in Settings first!');
+            return;
+        }
+
         setWarning('');
         setIsGenerating(true);
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || (typeof scenario === 'object' ? scenario.subject : scenario);
 
-        const existingTexts = initialQuestions.map(q => q.text);
-        let newQuestionsText = getRandomQuestions(3, existingTexts, scenario, selectedText);
+        let newQuestionsText = await generateDeepDiveQuestions(selectedText, apiKey);
         let newReasoning = "Analyzing selection against static CharityOps heuristic matrix...";
 
         const newQuestions = newQuestionsText.map((text, idx) => ({

@@ -3,7 +3,7 @@ import SessionSetup from './components/SessionSetup';
 import StormingInterface from './components/StormingInterface';
 import ReviewMode from './components/ReviewMode';
 import SessionAnalysis from './components/SessionAnalysis';
-import { getRandomQuestions } from './questionPool';
+import { generateScenarios } from './questionPool';
 import { Layout, ClipboardCheck, X, ExternalLink, Home, RefreshCw, MessageCircle } from 'lucide-react';
 
 const APP_STATE_KEY = 'questionStormingState_v3';
@@ -40,8 +40,9 @@ function App() {
 
     const handleStartStorm = async (scenario, isParadoxMode) => {
         setIsStarting(true);
-        let randomQuestions = getRandomQuestions(3, [], scenario);
-        let generatedReasoning = "Local Offline Generator via CharityOps Engine.";
+        const apiKey = localStorage.getItem('geminiApiKey');
+        let randomQuestions = await generateScenarios(scenario.subject, scenario.persona, scenario.constraint, apiKey);
+        let generatedReasoning = "Powered by Google Gemini AI.";
 
         const initialQuestions = randomQuestions.map((text, index) => ({
             id: Date.now().toString() + '-' + index,
@@ -110,8 +111,8 @@ function App() {
                                 }} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(37, 211, 102, 0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Share to WhatsApp">
                                     <MessageCircle size={20} />
                                 </button>
-                                <button onClick={handleReset} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', borderRadius: '8px', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(255,255,255,0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Back to Setup Form">
-                                    <Home size={20} />
+                                <button onClick={handleReset} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '8px 12px', borderRadius: '8px', transition: 'background-color 0.2s', fontWeight: 600, fontSize: '13px' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='rgba(255,255,255,0.1)'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'} title="Back to Setup Form">
+                                    <Home size={18} /> Back to Start
                                 </button>
                             </div>
                         </div>

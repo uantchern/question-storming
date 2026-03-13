@@ -40,6 +40,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [constraint, setConstraint] = useState(initialScenario?.constraint || '');
     const [selectedPreset, setSelectedPreset] = useState('');
     const [isParadox, setIsParadox] = useState(false);
+    const [apiKey, setApiKey] = useState(() => localStorage.getItem('geminiApiKey') || '');
     const [error, setError] = useState('');
 
     const handleTopicSelect = (e) => {
@@ -85,6 +86,11 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
         if (!subject.trim() || !persona.trim() || !constraint.trim()) {
             setError('Please fill in Subject, Persona, and Constraint.');
+            return;
+        }
+
+        if (!apiKey.trim()) {
+            setError('Please enter your API Key in the Settings input.');
             return;
         }
 
@@ -178,8 +184,26 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                             onChange={(e) => { setConstraint(e.target.value); setSelectedPreset(''); }}
                             placeholder="e.g., Budget, Bureaucracy, Time"
                             required
-                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '24px' }}
                         />
+
+                        <div style={{ padding: '16px', backgroundColor: 'rgba(210, 180, 140, 0.1)', borderRadius: '8px', marginBottom: '8px', border: '1px dashed #D2B48C' }}>
+                            <label htmlFor="apiKey" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                                ⚙️ Settings (API Key)
+                            </label>
+                            <input
+                                type="password"
+                                id="apiKey"
+                                value={apiKey}
+                                onChange={(e) => {
+                                    setApiKey(e.target.value);
+                                    localStorage.setItem('geminiApiKey', e.target.value);
+                                }}
+                                placeholder="Enter API Key to enable AI Storming..."
+                                required
+                                style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #D2B48C', fontSize: '13px', color: '#1B2B28', backgroundColor: 'white' }}
+                            />
+                        </div>
 
                         {error && (
                             <div className="validation-msg" style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ef4444', fontSize: '0.875rem' }}>
