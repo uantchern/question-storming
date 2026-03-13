@@ -170,7 +170,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                     <div
                         key={q.id}
                         className={`question-card ${selectedId === q.id ? 'selected' : ''}`}
-                        onClick={() => setSelectedId(q.id)}
+                        onClick={() => { setSelectedId(q.id); window.selectedQuestionId = q.id; }}
                         style={{
                             cursor: 'pointer',
                             border: selectedId === q.id ? '2px solid #D2B48C' : '',
