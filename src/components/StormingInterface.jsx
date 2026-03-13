@@ -72,14 +72,11 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
             return;
         }
 
-        const apiKey = localStorage.getItem('geminiApiKey');
-
-
         setWarning('');
         setIsGenerating(true);
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || (typeof scenario === 'object' ? scenario.subject : scenario);
 
-        let newQuestionsText = await generateDeepDiveQuestions(selectedText, apiKey);
+        let newQuestionsText = await generateDeepDiveQuestions(selectedText, scenario);
         let newReasoning = "Analyzing selection against static CharityOps heuristic matrix...";
 
         const newQuestions = newQuestionsText.map((text, idx) => ({

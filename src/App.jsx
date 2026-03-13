@@ -40,9 +40,8 @@ function App() {
 
     const handleStartStorm = async (scenario, isParadoxMode) => {
         setIsStarting(true);
-        const apiKey = localStorage.getItem('geminiApiKey');
-        let randomQuestions = await generateScenarios(scenario.subject, scenario.persona, scenario.constraint, apiKey);
-        let generatedReasoning = "Powered by Google Gemini AI.";
+        let randomQuestions = await generateScenarios(scenario.subject, scenario.persona, scenario.constraint);
+        let generatedReasoning = "Powered by CharityOps Synthetic Logic Engine.";
 
         const initialQuestions = randomQuestions.map((text, index) => ({
             id: Date.now().toString() + '-' + index,
