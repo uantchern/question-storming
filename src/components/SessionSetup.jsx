@@ -38,6 +38,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
     const [subject, setSubject] = useState(initialScenario?.subject || '');
     const [persona, setPersona] = useState(initialScenario?.persona || '');
     const [constraint, setConstraint] = useState(initialScenario?.constraint || '');
+    const [apiKey, setApiKey] = useState('');
     const [selectedPreset, setSelectedPreset] = useState('');
     const [isParadox, setIsParadox] = useState(false);
     const [error, setError] = useState('');
@@ -82,11 +83,11 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (subject.trim() && persona.trim() && constraint.trim()) {
+        if (subject.trim() && persona.trim() && constraint.trim() && apiKey.trim()) {
             setError('');
-            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox);
+            onStart({ subject: subject.trim(), persona: persona.trim(), constraint: constraint.trim() }, isParadox, apiKey.trim());
         } else {
-            setError('Please fill in Subject, Persona, and Constraint.');
+            setError('Please fill in Subject, Persona, Constraint, and a secure Gemini API Key.');
         }
     };
 
@@ -159,6 +160,19 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                             onChange={(e) => { setConstraint(e.target.value); setSelectedPreset(''); }}
                             placeholder="e.g., Budget, Bureaucracy, Time"
                             required
+                            style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white', marginBottom: '20px' }}
+                        />
+
+                        <label htmlFor="apiKey" className="field-label" style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', color: '#8B7355', textTransform: 'uppercase', marginBottom: '8px' }}>
+                            Gemini API Key (Required for live AI generation)
+                        </label>
+                        <input
+                            type="password"
+                            id="apiKey"
+                            value={apiKey}
+                            onChange={(e) => setApiKey(e.target.value)}
+                            placeholder="AIza..."
+                            required
                             style={{ width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #D2B48C', fontSize: '15px', color: '#1B2B28', backgroundColor: 'white' }}
                         />
 
@@ -173,7 +187,7 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                     <button
                         type="submit"
                         className="primary-btn"
-                        disabled={!subject.trim() || !persona.trim() || !constraint.trim()}
+                        disabled={!subject.trim() || !persona.trim() || !constraint.trim() || !apiKey.trim()}
                         style={{ backgroundColor: '#1B2B28', color: 'white', border: 'none', padding: '16px', fontSize: '16px', fontWeight: 600, borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxShadow: '0 4px 12px rgba(27, 43, 40, 0.2)', transition: 'transform 0.2s ease, background-color 0.2s ease' }}
                     >
                         <Play size={20} />

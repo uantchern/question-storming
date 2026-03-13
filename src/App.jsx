@@ -78,9 +78,9 @@ function App() {
         localStorage.setItem(APP_STATE_KEY, JSON.stringify(session));
     }, [session]);
 
-    const handleStartStorm = async (scenario, isParadoxMode) => {
+    const handleStartStorm = async (scenario, isParadoxMode, apiKey = '') => {
         setIsStarting(true);
-        const activeApiKey = import.meta.env ? import.meta.env.VITE_GEMINI_API_KEY : '';
+        const activeApiKey = apiKey || (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY ? import.meta.env.VITE_GEMINI_API_KEY : '');
         let randomQuestions = [];
         let generatedReasoning = '';
 
