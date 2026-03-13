@@ -200,7 +200,6 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                                     localStorage.setItem('geminiApiKey', e.target.value);
                                 }}
                                 placeholder="Enter API Key to enable AI Storming..."
-                                required
                                 style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #D2B48C', fontSize: '13px', color: '#1B2B28', backgroundColor: 'white' }}
                             />
                         </div>
