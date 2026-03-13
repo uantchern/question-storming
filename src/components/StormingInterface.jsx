@@ -131,23 +131,7 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                 </div>
             )}
 
-            <div className="storming-header">
-                <div className="scenario-display">
-                    <div className="scenario-label">Challenge</div>
-                    <div className="scenario-text" style={{ color: 'var(--text-color)' }}>
-                        {typeof scenario === 'object' ? (
-                            <>
-                                <span style={{ fontWeight: 600, color: '#D2B48C' }}>{scenario.subject}</span><br />
-                                <span style={{ fontSize: '0.9em', color: '#94a3b8' }}>Target: {scenario.persona} | Constraint: {scenario.constraint}</span>
-                            </>
-                        ) : scenario}
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div className="questions-list">
+            <div className="questions-list" style={{ marginTop: 0 }}>
                 {initialQuestions.slice(-3).map((q, i) => (
                     <div
                         key={q.id}

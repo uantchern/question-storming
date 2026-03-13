@@ -104,13 +104,24 @@ function SessionSetup({ onStart, initialScenario, isStarted }) {
                 <div style={{ fontSize: '12px', fontWeight: 800, color: '#8B7355', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <Zap size={14} /> RUT: A Really Useful Thing
                 </div>
-                <h1 style={{ fontSize: '28px', fontFamily: 'Georgia, serif', fontWeight: 900, color: '#1B2B28', margin: '0 0 16px 0', lineHeight: 1.2 }}>
+                <h1 style={{ fontSize: '28px', fontFamily: 'Georgia, serif', fontWeight: 900, color: '#1B2B28', margin: '0', lineHeight: 1.2 }}>
                     The Question Stormer
                 </h1>
-                <p style={{ fontSize: '14px', color: '#5E5A4B', lineHeight: '1.6', margin: 0 }}>
-                    Challenge entrenched mindsets and spark new ideas. Enter your core subject, target persona, and a constraint, and our AI will force a breakthrough.
-                </p>
             </div>
+
+            {isStarted && initialScenario && (
+                <div style={{ marginTop: '16px', padding: '24px', backgroundColor: 'rgba(210, 180, 140, 0.15)', borderRadius: '12px', borderLeft: '4px solid #D2B48C' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 800, color: '#8B7355', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>Active Challenge</div>
+                    <div style={{ fontSize: '18px', fontWeight: 600, color: '#1B2B28', marginBottom: '8px', lineHeight: 1.3 }}>
+                        {typeof initialScenario === 'object' ? initialScenario.subject : initialScenario}
+                    </div>
+                    {typeof initialScenario === 'object' && (
+                        <div style={{ fontSize: '13px', color: '#5E5A4B' }}>
+                            Target: <span style={{ fontWeight: 600 }}>{initialScenario.persona}</span> | Constraint: <span style={{ fontWeight: 600 }}>{initialScenario.constraint}</span>
+                        </div>
+                    )}
+                </div>
+            )}
 
             {!isStarted && (
                 <form onSubmit={handleSubmit} className="input-group setup-form">
