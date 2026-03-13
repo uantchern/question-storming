@@ -52,9 +52,15 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
     }, []);
 
 
-    // Scroll to bottom on new question
+    // Scroll to bottom only when new questions are generated
     useEffect(() => {
-        endOfListRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (initialQuestions.length > 3) {
+            endOfListRef.current?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // On fresh start, make sure we are at the top
+            const chatWindow = document.querySelector('.chat-window');
+            if (chatWindow) chatWindow.scrollTop = 0;
+        }
     }, [initialQuestions.length]);
 
     // Time formatter removed
