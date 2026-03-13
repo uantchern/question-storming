@@ -60,24 +60,55 @@ export const generateScenarios = async (subject, persona, constraint) => {
     return [collision, quietFailure, externalPressure].map(formatText);
 };
 
-export const generateDeepDiveQuestions = async (primaryContext, scenario, roundCounter) => {
+export const generateDeepDiveQuestions = async (primaryContext, scenario, roundCounter, existingQuestions = []) => {
     let per = scenario?.persona ? charityLexiconFilter(scenario.persona.toLowerCase()) : "the persona";
     let sub = scenario?.subject ? charityLexiconFilter(scenario.subject.toLowerCase()) : "the issue";
     let con = scenario?.constraint ? charityLexiconFilter(scenario.constraint.toLowerCase()) : "the limitation";
     
-    // Round 3 Pivot: Micro-Moves framework
-    if (roundCounter === 2) {
-        return [
+    let pool = [];
+
+    // Round 3 Pivot: Micro-Moves framework (Actionable imperative commands)
+    if (roundCounter >= 2) {
+        pool = [
             `Draft the one-sentence email addressing: "${primaryContext}"`,
             `Schedule a specific 15-minute meeting about this for tomorrow.`,
-            `Execute the smallest visible change without asking for permission.`
+            `Execute the smallest visible change without asking for permission.`,
+            `Write down the worst possible outcome and share it with a trusted peer.`,
+            `Cancel one recurring meeting and use that time to attack this problem.`,
+            `Send a direct message to the biggest blocker asking for a 5-minute call.`,
+            `Delete the current project plan and write a 3-step action list.`,
+            `Publicly commit to a deadline for the first step by the end of today.`,
+            `Ask the people most affected by this for one piece of brutal feedback.`,
+            `Remove one step from the process immediately and see what breaks.`,
+            `Map out your exact next step on a sticky note and put it on your screen.`,
+            `Identify the one person who can approve this today and call them directly.`,
+            `Cut the current budget for this idea in half and write down the new plan.`
+        ];
+    } else {
+        // Round 2 Pivot: Micro-Action framework (Interrogations)
+        pool = [
+            `If you had only 5 minutes to address this, what would you say?`,
+            `What is the smallest thing you can change without asking for permission?`,
+            `Who is the one person you are avoiding talking to about this?`,
+            `What is the most obvious first step that everyone is ignoring?`,
+            `If you had zero budget, how would you start solving this today?`,
+            `What is the one rule you can purposefully break right now?`,
+            `Who would be the most angry if you fixed this, and why?`,
+            `If you were guaranteed not to fail, what would be your next move?`,
+            `What happens if you do absolutely nothing about this for a month?`,
+            `What is the most uncomfortable conversation you need to schedule?`,
+            `How would a brand new hire tackle this problem on their first day?`,
+            `What would happen if you did the exact opposite of your current approach?`,
+            `Who is the one person that already knows how to fix this?`
         ];
     }
+
+    let filtered = pool.filter(q => !existingQuestions.includes(q));
     
-    // Round 2 Pivot: Micro-Action framework
-    return [
-        `If you had only 5 minutes to address this, what would you say?`,
-        `What is the smallest thing you can change without asking for permission?`,
-        `Who is the one person you are avoiding talking to about this?`
-    ];
+    // Fallback if the user somehow exhausts the entire unique logical array
+    if (filtered.length < 3) {
+        filtered = pool;
+    }
+
+    return filtered.sort(() => 0.5 - Math.random()).slice(0, 3);
 };

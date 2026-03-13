@@ -76,8 +76,9 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
         setIsGenerating(true);
         const selectedText = initialQuestions.find(q => q.id === selectedId)?.text || (typeof scenario === 'object' ? scenario.subject : scenario);
         const roundCounter = Math.floor(initialQuestions.length / 3);
+        const existingTexts = initialQuestions.map(q => q.text);
 
-        let newQuestionsText = await generateDeepDiveQuestions(selectedText, scenario, roundCounter);
+        let newQuestionsText = await generateDeepDiveQuestions(selectedText, scenario, roundCounter, existingTexts);
         let newReasoning = "Analyzing selection against static CharityOps heuristic matrix...";
 
         const newQuestions = newQuestionsText.map((text, idx) => ({
