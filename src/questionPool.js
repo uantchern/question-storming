@@ -94,38 +94,38 @@ export const getRandomQuestions = (count = 3, excludeTexts = [], scenarioData = 
     // "Each question must contain the Constraint as a non-negotiable factor."
     // "Use 5 Whys and Inversion for this persona."
     const rawTemplates = [
-        // 5 Whys Strategy
-        `Why is it that whenever we attempt to improve ${subject}, the immovable reality of ${constraint} forces ${persona} to immediately compromise their standards?`,
-        `Given the absolute blockade of ${constraint}, why does ${persona} stubbornly continue with strategic approaches to ${subject} that are virtually guaranteed to fail?`,
-        `Why do we systematically allow ${constraint} to dictate exactly how ${persona} must operate, rather than completely reinventing our assumptions about ${subject}?`,
-        `What is the deeply held, unspoken assumption about ${constraint} that currently prevents ${persona} from radically altering their approach to ${subject}?`,
-        `Why hasn't ${persona} admitted that their day-to-day efforts toward ${subject} are just cowardly ways of avoiding the direct friction of ${constraint}?`,
+        // 5 Whys Strategy (Simplified)
+        `Why do we let ${constraint} stop us from fixing ${subject}?`,
+        `How does our fear of ${constraint} make things worse for ${persona}?`,
+        `If we completely ignored ${constraint}, what is the first thing we would change about ${subject}?`,
+        `Why do we pretend that ${constraint} is the only way to manage ${subject}?`,
+        `What small step can we take on ${subject} without touching ${constraint}?`,
         
-        // Inversion Strategy
-        `If ${persona} actively wanted to completely sabotage ${subject} without getting caught, how would they weaponize ${constraint} to justify their lack of progress?`,
-        `What is the most administratively efficient way for ${persona} to permanently guarantee failure in ${subject} by intentionally leaning into ${constraint}?`,
-        `If the existence of ${constraint} was exactly what we secretly wanted, how would ${persona} confidently explain away their current performance regarding ${subject}?`,
-        `To ensure that a breakthrough in ${subject} never occurs, how could ${persona} use ${constraint} as the ultimate, unquestionable excuse to the board?`,
+        // Inversion Strategy (Simplified)
+        `How would we use ${constraint} if we wanted to ruin ${subject} for ${persona}?`,
+        `If ${constraint} was our main goal, how would ${persona} react to ${subject}?`,
+        `What happens when we stop trying to fix ${subject} because of ${constraint}?`,
+        `If ${persona} had full control, how quickly would they destroy ${constraint} to save ${subject}?`,
         
-        // Radical Utility (RUT) Strategy
-        `How incredibly can ${persona} aggressively advance ${subject} starting tomorrow morning without requiring a single concession regarding the severe friction of ${constraint}?`,
-        `What is the most uncomfortable, devastating truth that ${persona} actively refuses to confront regarding how ${constraint} fundamentally neuters ${subject}?`,
-        `If the severity of ${constraint} were to instantly double tomorrow, what drastic, unprecedented shift must ${persona} immediately make to salvage ${subject}?`,
-        `What highly cherished element of our work in ${subject} must ${persona} ruthlessly assassinate in order to functionally survive the pressure of ${constraint}?`
+        // Radical Utility (RUT) Strategy (Simplified)
+        `How can ${persona} improve ${subject} today without breaking ${constraint}?`,
+        `What uncomfortable truth are we avoiding about ${subject} because of ${constraint}?`,
+        `If ${constraint} doubled tomorrow, what must we do to save ${subject}?`,
+        `What old rule about ${subject} must we drop to survive ${constraint}?`
     ];
 
     const formatSentence = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 
-    // Density Check: Reject generic fluff under 10 words per the prompt checklist
+    // Filter length: maximum 15 words.
     let denseQuestions = rawTemplates
         .map(t => formatSentence(t))
-        .filter(text => text.split(' ').length >= 10);
+        .filter(text => text.split(' ').length <= 15);
 
-    // If they generated questions from a previous selection, add a purely context-aware meta-probe
+    // If they generated questions from a previous selection
     if (selectedText && typeof selectedText === 'string') {
         const metaTemplates = [
-            `You just chose to focus on that specific angle. If an absolute cynic analyzed your choice, would they say you are using ${constraint} to excuse poor management of ${persona}?`,
-            `Does agonizing over your previous selection actually solve ${subject}, or does it just make ${persona} look remarkably busy while ${constraint} steadily destroys us?`
+            `What if agonizing over this choice is just an excuse to stay stagnant?`,
+            `How does focusing on this detail help us avoid the real problem?`
         ];
         denseQuestions.push(...metaTemplates);
     }

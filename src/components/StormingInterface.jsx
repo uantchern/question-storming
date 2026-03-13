@@ -150,6 +150,14 @@ function StormingInterface({ scenario, isParadoxMode, onTimeUp, initialQuestions
                 ))}
             </div>
 
+            {initialQuestions.length > 3 && (
+                <div style={{ marginTop: '1.5rem', textAlign: 'center', backgroundColor: 'rgba(210, 180, 140, 0.1)', padding: '12px', borderRadius: '8px', borderLeft: '4px solid #D2B48C', animation: 'fadeIn 0.5s ease-out' }}>
+                    <p style={{ fontSize: '0.9rem', color: '#5E5A4B', margin: 0 }}>
+                        <strong style={{ color: '#8B7355', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.05em', marginRight: '6px' }}>Tip:</strong>Pick the one that makes you feel the most uncomfortable—that's where the work is.
+                    </p>
+                </div>
+            )}
+
             {!isFinished ? (
                 <div className="storm-again-prompt" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem', width: '100%' }}>
 
