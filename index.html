@@ -197,11 +197,6 @@
         .glow-trigger-2 { animation: sequentialBlueGlow 2.5s infinite 1.0s; }
         .glow-trigger-3 { animation: sequentialBlueGlow 2.5s infinite 1.5s; }
         .glow-trigger-4 { animation: sequentialBlueGlow 2.5s infinite 2.0s; }
-
-        .star-button.active {
-            color: #fbbf24 !important;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 
@@ -226,7 +221,7 @@
             </div>
 
             <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">1. TOPICS</span>
+                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">1. TOPIC SELECTION</span>
             </div>
             <div class="category-pills" id="categoryPills">
                 <button class="pill glow-trigger-0" onclick="selectArea('FUND RAISING', this)">FUND RAISING</button>
@@ -237,26 +232,26 @@
             </div>
 
             <div style="margin-bottom: 12px; display: none; align-items: center; gap: 8px;" id="stepTwoHeader">
-                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">2. QS SCENARIOS</span>
+                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">2. CHOOSE A SCENARIO TO QS</span>
             </div>
             <div id="impactTilesContainer" class="flex flex-col gap-1 mb-6" style="max-height: 480px; overflow-y: auto; padding-right: 8px;">
             </div>
 
              <div id="mobileUserGuide" style="padding: 12px 0; background: transparent; box-sizing: border-box; width: 100%;" class="mobile-only">
                  <div style="max-width: 480px; margin: 0 auto; border: 2px dashed #EAE5D8; padding: 20px; border-radius: 12px; background: #FFFBF7;">
-                     <p style="font-size: 13px; color: #5E5A4B; margin-bottom: 20px; line-height: 1.5;">Question Storming is a powerful brainstorming technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
+                     <p style="font-size: 13px; color: #5E5A4B; margin-bottom: 20px; line-height: 1.5;">Question Storming is a powerful technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
                      
                      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                          <div style="width: 24px; height: 24px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">1</div>
                          <div style="display: flex; align-items: center;">
-                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">SELECT A TOPIC AREA</strong>
+                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">TOPIC SELECTION</strong>
                          </div>
                      </div>
 
                      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                          <div style="width: 24px; height: 24px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">2</div>
                          <div style="display: flex; align-items: center;">
-                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO</strong>
+                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO TO QS</strong>
                          </div>
                      </div>
 
@@ -289,19 +284,19 @@
             <div class="chat-window" id="chatWindow">
                 <div class="empty-state" id="emptyStatePlaceholder" style="align-items: flex-start; text-align: left; padding: 40px 24px; background: transparent; box-sizing: border-box; width: 100%;">
                     <div style="max-width: 480px; margin: 0 auto;">
-                        <p style="font-size: 15px; color: #5E5A4B; margin-bottom: 32px; line-height: 1.5;">Question Storming is a powerful brainstorming technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
+                        <p style="font-size: 15px; color: #5E5A4B; margin-bottom: 32px; line-height: 1.5;">Question Storming is a powerful technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
                         
                         <div style="display: flex; gap: 16px; margin-bottom: 24px;">
                             <div style="width: 28px; height: 28px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">1</div>
                             <div style="display: flex; align-items: center;">
-                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">SELECT A TOPIC AREA</strong>
+                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">TOPIC SELECTION</strong>
                             </div>
                         </div>
 
                         <div style="display: flex; gap: 16px; margin-bottom: 24px;">
                             <div style="width: 28px; height: 28px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">2</div>
                             <div style="display: flex; align-items: center;">
-                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO</strong>
+                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO TO QS</strong>
                             </div>
                         </div>
 
@@ -313,7 +308,7 @@
                         </div>
 
                         <div style="margin-top: 32px; padding-top: 16px; border-top: 1px dashed #EAE5D8; font-size: 11px; color: #A09D94; font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase; text-align: left;">
-                            App Version: V6.0 | Built on Walk TOC UX UI
+                            APP VERSION: V6.0 | LAST UPDATED: <span id="currentDateDisplay"></span>
                         </div>
                     </div>
                 </div>
@@ -322,31 +317,38 @@
     </div>
 
     <script>
+        document.getElementById('currentDateDisplay').textContent = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
+
         const scenarioDB = {
             "FUND RAISING": [
-                { type: "Donor Retention", title: "First-Time Donors", desc: "We are struggling to retain our first-time donors beyond their initial gift." },
-                { type: "Campaign Fatigue", title: "Annual Dinner", desc: "Our annual fundraising dinner is losing attendance year-over-year." },
-                { type: "Corporate Engagement", title: "Sponsorships", desc: "Corporate sponsors find our engagement packages unappealing." }
+                { type: "Attitude (Mindset)", title: "Donor Fatigue", desc: "Our regular donors feel that their subsequent contributions do not make a significant difference." },
+                { type: "Ability (Skills)", title: "Digital Campaigning", desc: "The fundraising team lacks the technical proficiency to manage digital campaign platforms effectively." },
+                { type: "Access (Environment)", title: "Complex Workflows", desc: "Potential corporate sponsors find it difficult to navigate our complex donation portal." },
+                { type: "Action (Behavior)", title: "One-Off Giving", desc: "Many one-time donors do not commit to recurring monthly giving plans despite our outreach efforts." }
             ],
             "GOVERNANCE": [
-                { type: "Compliance", title: "Audit Delays", desc: "Our internal processes are too slow to meet audit requirements on time." },
-                { type: "Risk Management", title: "Cybersecurity", desc: "Staff are consistently failing to follow data protection protocols." },
-                { type: "Policy Usage", title: "SOP Ignorance", desc: "Newly created operational policies are being ignored on the ground."}
+                { type: "Attitude (Mindset)", title: "Administrative Burden", desc: "Staff members view the new compliance requirements as an unnecessary administrative burden." },
+                { type: "Ability (Skills)", title: "Risk Identification", desc: "Team leaders are unsure of how to properly execute the updated risk assessment procedures." },
+                { type: "Access (Environment)", title: "SOP Repository", desc: "Employees face difficulties accessing the centralized repository for standard operating procedures." },
+                { type: "Action (Behavior)", title: "Late Submissions", desc: "Departments consistently fail to submit their internal audit reports before the stipulated deadlines." }
             ],
             "BOARD MATTERS": [
-                { type: "Engagement", title: "Meeting Apathy", desc: "Board members are disengaged and quiet during quarterly meetings." },
-                { type: "Succession", title: "Leadership Gap", desc: "We have no clear pipeline to replace retiring board members." },
-                { type: "Strategic Vision", title: "Innovation", desc: "The board is hesitant to approve new, innovative programs." }
+                { type: "Attitude (Mindset)", title: "Strategic Reluctance", desc: "Board members are hesitant to embrace innovative, non-traditional strategies for the organisation." },
+                { type: "Ability (Skills)", title: "Data Privacy Nuances", desc: "A portion of the Board is not well-versed in the latest developments concerning data privacy laws." },
+                { type: "Access (Environment)", title: "Ground Detachment", desc: "Board members lack a direct, transparent channel to understand the realities faced by ground staff." },
+                { type: "Action (Behavior)", title: "Meeting Apathy", desc: "Attendance and active participation during quarterly board meetings remain consistently low." }
             ],
             "PROGRAMMES": [
-                { type: "Impact Measurement", title: "Data Collection", desc: "Beneficiaries are refusing to fill out post-program evaluation forms." },
-                { type: "Attrition", title: "Drop-outs", desc: "Participants are leaving the flagship program halfway through." },
-                { type: "Reach", title: "Underserved Groups", desc: "We are struggling to reach the most vulnerable profile in our target demographic." }
+                { type: "Attitude (Mindset)", title: "Sustained Resilience", desc: "Beneficiaries lack the confidence to sustain the positive habits they develop during our workshops." },
+                { type: "Ability (Skills)", title: "Practical Application", desc: "Participants are struggling to apply the financial literacy concepts taught in the sessions to their daily lives." },
+                { type: "Access (Environment)", title: "Logistical Hurdles", desc: "Vulnerable seniors are unable to attend our centre-based activities due to limited transport options." },
+                { type: "Action (Behavior)", title: "Early Attrition", desc: "A significant number of youths are dropping out of the mentorship programme before completion." }
             ],
             "STAFF": [
-                { type: "Burnout", title: "Overwork", desc: "Key staff members are showing severe signs of burnout and exhaustion." },
-                { type: "Communication", title: "Siloed Teams", desc: "Departments are working in isolation and not sharing critical information." },
-                { type: "Onboarding", title: "Early Turnover", desc: "New hires are leaving within their first three months." }
+                { type: "Attitude (Mindset)", title: "Ground Exhaustion", desc: "There is a prevailing sense of fatigue and low morale among ground-level social workers." },
+                { type: "Ability (Skills)", title: "Software Competency", desc: "New hires find it challenging to master the requisite case management software efficiently." },
+                { type: "Access (Environment)", title: "Siloed Divisions", desc: "Staff members from different departments are working in silos without adequate platforms for collaboration." },
+                { type: "Action (Behavior)", title: "First-Year Turnover", desc: "There is a high rate of staff turnover within the first year of employment." }
             ]
         };
 
@@ -433,26 +435,25 @@
                         <span style="background: #1B2B28; color: white; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.05em;">${appState.area}</span>
                         <strong style="color: #3B82F6; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">${appState.scenarioObj.type}</strong>
                     </div>
-                    <div style="color: #1E3A8A; font-weight: bold; font-size: 16px; margin-top: 8px;">${appState.scenarioObj.title}: ${appState.scenarioObj.desc}</div>
+                    <div style="color: #1E3A8A; font-weight: bold; font-size: 15px; margin-top: 8px;">${appState.scenarioObj.title}: ${appState.scenarioObj.desc}</div>
                 </div>
 
                 <form id="qsForm" onsubmit="handleQuestionSubmit(event)" style="display: flex; gap: 8px; margin-bottom: 4px; flex-shrink: 0;">
-                    <input type="text" id="questionInput" placeholder="Type your alternative question..." autocomplete="off" style="flex-grow: 1; padding: 12px 16px; border: 1px solid #D2B48C; border-radius: 8px; outline: none; font-family: inherit; font-size: 14px; background: #FDFBF7;" />
+                    <input type="text" id="questionInput" placeholder="Enter Question 1 of 3..." autocomplete="off" style="flex-grow: 1; padding: 12px 16px; border: 1px solid #D2B48C; border-radius: 8px; outline: none; font-family: inherit; font-size: 14px; background: #FDFBF7;" />
                     <button type="submit" id="qsSubmitBtn" style="background-color: #2D423F; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s;"><i class="fas fa-paper-plane"></i></button>
                 </form>
                 <div id="validationError" style="color: #EF4444; font-size: 11px; margin-bottom: 12px; min-height: 16px; padding-left: 4px;"></div>
 
                 <div id="questionsContainer" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-                    <!-- Questions appear here -->
-                    <div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Start storming!</div>
+                    <div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Storm 3 questions to complete the session!</div>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
-                    <button onclick="shareViaWhatsApp()" class="w-full py-4 px-6 rounded-xl text-white font-bold tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:-translate-y-0.5" style="background-color: #25D366; border: none; cursor: pointer; display: flex;">
-                        <i class="fab fa-whatsapp text-lg"></i> SHARE STARRED Qs
+                    <button id="whatsappBtn" onclick="shareViaWhatsApp()" class="w-full py-4 px-6 rounded-xl text-white font-bold tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:-translate-y-0.5 opacity-50 cursor-not-allowed" disabled style="background-color: #25D366; border: none; display: flex;">
+                        <i class="fab fa-whatsapp text-lg"></i> SHARE OUTCOMES
                     </button>
                     <div style="text-align: center; color: #8B7355; font-size: 11px; font-style: italic; line-height: 1.3;">
-                        Star your top 3 favorite questions to share them to your team's WhatsApp group.
+                        Complete exactly 3 questions to unlock sharing and finalise the session.
                     </div>
                 </div>
             </div>`;
@@ -468,10 +469,12 @@
                 
                 if (appState.timeLeft <= 0) {
                     clearInterval(appState.timerInterval);
-                    document.getElementById('questionInput').disabled = true;
-                    document.getElementById('qsSubmitBtn').disabled = true;
-                    document.getElementById('questionInput').placeholder = "Time's up! Review and share your favorites.";
-                    document.getElementById('qsTimerDisplay').style.color = '#EF4444';
+                    if (appState.questions.length < 3) {
+                        document.getElementById('questionInput').disabled = true;
+                        document.getElementById('qsSubmitBtn').disabled = true;
+                        document.getElementById('questionInput').placeholder = "Time's up! Unfinished session.";
+                        document.getElementById('qsTimerDisplay').style.color = '#EF4444';
+                    }
                 }
             }, 1000);
             
@@ -487,8 +490,22 @@
             return questionWords.some(word => lower.startsWith(word));
         }
 
+        function endSession() {
+            clearInterval(appState.timerInterval);
+            document.getElementById('questionInput').disabled = true;
+            document.getElementById('qsSubmitBtn').disabled = true;
+            document.getElementById('questionInput').placeholder = "Storming complete. Share your insights!";
+            document.getElementById('qsTimerDisplay').style.color = '#10B981'; // Green
+            
+            const waBtn = document.getElementById('whatsappBtn');
+            waBtn.disabled = false;
+            waBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
         function handleQuestionSubmit(e) {
             e.preventDefault();
+            if (appState.questions.length >= 3) return; // Hard stop at 3
+
             const input = document.getElementById('questionInput');
             const validationError = document.getElementById('validationError');
             const text = input.value;
@@ -504,74 +521,58 @@
             
             appState.questions.push({
                 id: Date.now(),
-                text: text.trim(),
-                starred: false
+                text: text.trim()
             });
             
             input.value = '';
+            
+            if (appState.questions.length < 3) {
+                input.placeholder = `Enter Question ${appState.questions.length + 1} of 3...`;
+            }
+            
             renderQuestions();
             
             // scroll to bottom
             const container = document.getElementById('questionsContainer');
             container.scrollTop = container.scrollHeight;
-        }
 
-        function toggleStar(id) {
-            const numStarred = appState.questions.filter(q => q.starred).length;
-            const qIndex = appState.questions.findIndex(q => q.id === id);
-            if (qIndex > -1) {
-                if (!appState.questions[qIndex].starred && numStarred >= 3) {
-                    return; // Max 3 stars
-                }
-                appState.questions[qIndex].starred = !appState.questions[qIndex].starred;
-                renderQuestions();
+            if (appState.questions.length >= 3) {
+                endSession();
             }
         }
 
         function renderQuestions() {
             const container = document.getElementById('questionsContainer');
-            if (appState.questions.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Start storming!</div>';
-                return;
-            }
+            if (appState.questions.length === 0) return;
             
             container.innerHTML = '';
             appState.questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = `background: ${q.starred ? '#FEF3C7' : '#F4F1ED'}; padding: 12px 16px; border-radius: 8px; border-left: 3px solid ${q.starred ? '#F59E0B' : '#D2B48C'}; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; transition: background 0.2s;`;
+                div.style.cssText = `background: #F4F1ED; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #D2B48C; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;`;
                 
                 div.innerHTML = `
                     <div style="flex-grow: 1;">
                         <span style="font-family: monospace; color: #8B7355; margin-right: 8px; font-size: 12px;">${String(idx+1).padStart(2,'0')}.</span>
                         <span style="color: #1B2B28;">${q.text}</span>
                     </div>
-                    <button onclick="toggleStar(${q.id})" class="star-button ${q.starred ? 'active' : ''}" style="background: none; border: none; cursor: pointer; color: #A09D94; flex-shrink: 0; padding: 4px; transition: transform 0.2s, color 0.2s;">
-                        <i class="fas fa-star"></i>
-                    </button>
                 `;
                 container.appendChild(div);
             });
         }
 
         function shareViaWhatsApp() {
-            if (!appState.area || !appState.scenarioObj) return;
-            
-            const starredQs = appState.questions.filter(q => q.starred);
+            if (!appState.area || !appState.scenarioObj || appState.questions.length < 3) return;
             
             let message = `*🌩️ Question Storm Outcomes*\n\n`;
             message += `*Area:* ${appState.area}\n`;
             message += `*Challenge:* ${appState.scenarioObj.title}\n`;
             message += `_${appState.scenarioObj.desc}_\n\n`;
             
-            message += `*Top Alternative Questions:*\n`;
-            if (starredQs.length === 0) {
-                message += `(No questions were starred)\n\n`;
-            } else {
-                starredQs.forEach((q, i) => {
-                    message += `${i+1}. ${q.text}\n`;
-                });
-                message += `\n`;
-            }
+            message += `*Alternative Questions:*\n`;
+            appState.questions.forEach((q, i) => {
+                message += `${i+1}. ${q.text}\n`;
+            });
+            message += `\n`;
 
             message += `_Generated using CharityOps Question Stormer_`;
 
