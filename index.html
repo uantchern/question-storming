@@ -308,7 +308,7 @@
                         </div>
 
                         <div style="margin-top: 32px; padding-top: 16px; border-top: 1px dashed #EAE5D8; font-size: 11px; color: #A09D94; font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase; text-align: left;">
-                            APP VERSION: V6.0 | LAST UPDATED: <span id="currentDateDisplay"></span>
+                            APP VERSION: V6.1 | LAST UPDATED: <span id="currentDateDisplay"></span>
                         </div>
                     </div>
                 </div>
@@ -321,41 +321,102 @@
 
         const scenarioDB = {
             "FUND RAISING": [
-                { type: "Attitude (Mindset)", title: "Donor Fatigue", desc: "Our regular donors feel that their subsequent contributions do not make a significant difference." },
-                { type: "Ability (Skills)", title: "Digital Campaigning", desc: "The fundraising team lacks the technical proficiency to manage digital campaign platforms effectively." },
-                { type: "Access (Environment)", title: "Complex Workflows", desc: "Potential corporate sponsors find it difficult to navigate our complex donation portal." },
-                { type: "Action (Behavior)", title: "One-Off Giving", desc: "Many one-time donors do not commit to recurring monthly giving plans despite our outreach efforts." }
+                { 
+                  type: "Attitude (Mindset)", title: "Donor Fatigue", desc: "Our regular donors feel that their subsequent contributions do not make a significant difference.",
+                  systemQs: ["What if we stopped asking for money and asked for advice instead?", "How might we invisibly show them the daily outcomes of their past gifts?", "Why do we assume donors want to give repeatedly to the same cause?"]
+                },
+                { 
+                  type: "Ability (Skills)", title: "Digital Campaigning", desc: "The fundraising team lacks the technical proficiency to manage digital campaign platforms effectively.",
+                  systemQs: ["What if the campaign platform was as simple as sending a WhatsApp message?", "How might we partner with digital natives rather than training existing staff?", "Why are we using complex platforms when our donors might prefer simpler channels?"]
+                },
+                {   
+                  type: "Access (Environment)", title: "Complex Workflows", desc: "Potential corporate sponsors find it difficult to navigate our complex donation portal.",
+                  systemQs: ["What if corporate sponsorships required zero forms to initiate?", "How might we bring the donation experience directly into their corporate intranet?", "Why do we force corporate entities through the same portal as individuals?"]
+                },
+                { 
+                  type: "Action (Behavior)", title: "One-Off Giving", desc: "Many one-time donors do not commit to recurring monthly giving plans despite our outreach efforts.",
+                  systemQs: ["What if we automatically opted them into a micro-recurring model upon their first gift?", "How might we celebrate the exact anniversary of their first donation?", "Why do we assume recurring giving is the only valuable form of retention?"]
+                }
             ],
             "GOVERNANCE": [
-                { type: "Attitude (Mindset)", title: "Administrative Burden", desc: "Staff members view the new compliance requirements as an unnecessary administrative burden." },
-                { type: "Ability (Skills)", title: "Risk Identification", desc: "Team leaders are unsure of how to properly execute the updated risk assessment procedures." },
-                { type: "Access (Environment)", title: "SOP Repository", desc: "Employees face difficulties accessing the centralized repository for standard operating procedures." },
-                { type: "Action (Behavior)", title: "Late Submissions", desc: "Departments consistently fail to submit their internal audit reports before the stipulated deadlines." }
+                { 
+                  type: "Attitude (Mindset)", title: "Administrative Burden", desc: "Staff members view the new compliance requirements as an unnecessary administrative burden.",
+                  systemQs: ["What if compliance felt like unlocking a personal achievement?", "How might we remove the word 'compliance' from our internal vocabulary entirely?", "Why are we designing processes for the auditors instead of our ground staff?"]
+                },
+                { 
+                  type: "Ability (Skills)", title: "Risk Identification", desc: "Team leaders are unsure of how to properly execute the updated risk assessment procedures.",
+                  systemQs: ["What if risk assessment was treated like a team storytelling exercise?", "How might we simplify the assessment into a three-question checklist?", "Why do we expect team leaders to inherently understand enterprise risk models?"]
+                },
+                { 
+                  type: "Access (Environment)", title: "SOP Repository", desc: "Employees face difficulties accessing the centralized repository for standard operating procedures.",
+                  systemQs: ["What if the SOPs were embedded directly within the tools they use every day?", "How might we convert rigid documents into an interactive, voice-searchable guide?", "Why do we rely on a centralized repository instead of context-specific prompts?"]
+                },
+                { 
+                  type: "Action (Behavior)", title: "Late Submissions", desc: "Departments consistently fail to submit their internal audit reports before the stipulated deadlines.",
+                  systemQs: ["What if the deadline was tied to the release of department operational budgets?", "How might we automate the data collection so the report generates itself?", "Why are deadlines arbitrarily set at the end of the busiest operational month?"]
+                }
             ],
             "BOARD MATTERS": [
-                { type: "Attitude (Mindset)", title: "Strategic Reluctance", desc: "Board members are hesitant to embrace innovative, non-traditional strategies for the organisation." },
-                { type: "Ability (Skills)", title: "Data Privacy Nuances", desc: "A portion of the Board is not well-versed in the latest developments concerning data privacy laws." },
-                { type: "Access (Environment)", title: "Ground Detachment", desc: "Board members lack a direct, transparent channel to understand the realities faced by ground staff." },
-                { type: "Action (Behavior)", title: "Meeting Apathy", desc: "Attendance and active participation during quarterly board meetings remain consistently low." }
+                { 
+                  type: "Attitude (Mindset)", title: "Strategic Reluctance", desc: "Board members are hesitant to embrace innovative, non-traditional strategies for the organisation.",
+                  systemQs: ["What if we presented the 'cost of doing nothing' alongside every new proposal?", "How might we simulate the failure of our traditional strategies for them?", "Why do we assume hesitation is rooted in age rather than risk management?"]
+                },
+                { 
+                  type: "Ability (Skills)", title: "Data Privacy Nuances", desc: "A portion of the Board is not well-versed in the latest developments concerning data privacy laws.",
+                  systemQs: ["What if we conducted a mock 'data breach' drill during a board meeting?", "How might we translate complex legal jargon into relatable, everyday risks?", "Why do we expect voluntary board members to self-educate on regulatory shifts?"]
+                },
+                { 
+                  type: "Access (Environment)", title: "Ground Detachment", desc: "Board members lack a direct, transparent channel to understand the realities faced by ground staff.",
+                  systemQs: ["What if every board meeting began with a five-minute unfiltered voice note from a social worker?", "How might we pair each board member with a frontline staff 'buddy'?", "Why do we filter all ground narratives through the lens of senior management?"]
+                },
+                { 
+                  type: "Action (Behavior)", title: "Meeting Apathy", desc: "Attendance and active participation during quarterly board meetings remain consistently low.",
+                  systemQs: ["What if we banned passive reporting and only used meeting time for difficult decisions?", "How might we restructure meetings to be asynchronous across the quarter?", "Why do we hold quarterly meetings if the operational pace is daily?"]
+                }
             ],
             "PROGRAMMES": [
-                { type: "Attitude (Mindset)", title: "Sustained Resilience", desc: "Beneficiaries lack the confidence to sustain the positive habits they develop during our workshops." },
-                { type: "Ability (Skills)", title: "Practical Application", desc: "Participants are struggling to apply the financial literacy concepts taught in the sessions to their daily lives." },
-                { type: "Access (Environment)", title: "Logistical Hurdles", desc: "Vulnerable seniors are unable to attend our centre-based activities due to limited transport options." },
-                { type: "Action (Behavior)", title: "Early Attrition", desc: "A significant number of youths are dropping out of the mentorship programme before completion." }
+                { 
+                  type: "Attitude (Mindset)", title: "Sustained Resilience", desc: "Beneficiaries lack the confidence to sustain the positive habits they develop during our workshops.",
+                  systemQs: ["What if the environment around them was redesigned to make the old habits impossible?", "How might we introduce a peer-accountability system that doesn't involve our staff?", "Why do we expect a time-bound workshop to override a lifetime of conditioning?"]
+                },
+                { 
+                  type: "Ability (Skills)", title: "Practical Application", desc: "Participants are struggling to apply the financial literacy concepts taught in the sessions to their daily lives.",
+                  systemQs: ["What if we tracked their real grocery receipts instead of hypothetical worksheets?", "How might we gamify their daily savings using simple mobile nudges?", "Why are we teaching abstract concepts to people in survival mode?"]
+                },
+                { 
+                  type: "Access (Environment)", title: "Logistical Hurdles", desc: "Vulnerable seniors are unable to attend our centre-based activities due to limited transport options.",
+                  systemQs: ["What if the activities travelled to the void decks of their housing blocks instead?", "How might we partner with neighborhood delivery drivers to provide informal transport?", "Why do we centralize activities in a demographic that struggles with mobility?"]
+                },
+                { 
+                  type: "Action (Behavior)", title: "Early Attrition", desc: "A significant number of youths are dropping out of the mentorship programme before completion.",
+                  systemQs: ["What if the mentors were legally forbidden from giving direct advice?", "How might we allow youths to fire and re-hire mentors anonymously?", "Why do we define 'completion' as staying for the full duration rather than achieving a milestone?"]
+                }
             ],
             "STAFF": [
-                { type: "Attitude (Mindset)", title: "Ground Exhaustion", desc: "There is a prevailing sense of fatigue and low morale among ground-level social workers." },
-                { type: "Ability (Skills)", title: "Software Competency", desc: "New hires find it challenging to master the requisite case management software efficiently." },
-                { type: "Access (Environment)", title: "Siloed Divisions", desc: "Staff members from different departments are working in silos without adequate platforms for collaboration." },
-                { type: "Action (Behavior)", title: "First-Year Turnover", desc: "There is a high rate of staff turnover within the first year of employment." }
+                { 
+                  type: "Attitude (Mindset)", title: "Ground Exhaustion", desc: "There is a prevailing sense of fatigue and low morale among ground-level social workers.",
+                  systemQs: ["What if we enforced a mandatory 'unreachable' day once a month for all frontline staff?", "How might we shift the measurement of success from 'cases closed' to 'staff wellness'?", "Why do we glorify self-sacrifice as a core requirement for social sector work?"]
+                },
+                { 
+                  type: "Ability (Skills)", title: "Software Competency", desc: "New hires find it challenging to master the requisite case management software efficiently.",
+                  systemQs: ["What if the software operated entirely through a conversational chatbot interface?", "How might we strip the software down to only the absolute legal minimum required fields?", "Why do we purchase enterprise software designed for administrators, not practitioners?"]
+                },
+                { 
+                  type: "Access (Environment)", title: "Siloed Divisions", desc: "Staff members from different departments are working in silos without adequate platforms for collaboration.",
+                  systemQs: ["What if budgets were solely allocated to projects that required cross-departmental teams?", "How might we physically redesign the office space to force informal collisions?", "Why do we continue to structure KPIs departmentally rather than universally?"]
+                },
+                { 
+                  type: "Action (Behavior)", title: "First-Year Turnover", desc: "There is a high rate of staff turnover within the first year of employment.",
+                  systemQs: ["What if the onboarding process explicitly focused on the worst parts of the job first?", "How might we assign 'culture guides' who have absolutely no supervisory authority?", "Why do we assume turnover is a problem of selection rather than a failure of support?"]
+                }
             ]
         };
 
         let appState = {
             area: '',
             scenarioObj: null,
-            questions: [],
+            drawnQuestions: [],
+            remainingSystemQs: [],
             timerInterval: null,
             timeLeft: 12 * 60
         };
@@ -398,7 +459,8 @@
                     btn.classList.add('bg-[#F2EFE9]');
 
                     appState.scenarioObj = item;
-                    appState.questions = [];
+                    appState.drawnQuestions = [];
+                    appState.remainingSystemQs = [...item.systemQs];
                     appState.timeLeft = 12 * 60;
                     if(appState.timerInterval) clearInterval(appState.timerInterval);
                     
@@ -438,22 +500,27 @@
                     <div style="color: #1E3A8A; font-weight: bold; font-size: 15px; margin-top: 8px;">${appState.scenarioObj.title}: ${appState.scenarioObj.desc}</div>
                 </div>
 
-                <form id="qsForm" onsubmit="handleQuestionSubmit(event)" style="display: flex; gap: 8px; margin-bottom: 4px; flex-shrink: 0;">
-                    <input type="text" id="questionInput" placeholder="Enter Question 1 of 3..." autocomplete="off" style="flex-grow: 1; padding: 12px 16px; border: 1px solid #D2B48C; border-radius: 8px; outline: none; font-family: inherit; font-size: 14px; background: #FDFBF7;" />
-                    <button type="submit" id="qsSubmitBtn" style="background-color: #2D423F; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s;"><i class="fas fa-paper-plane"></i></button>
-                </form>
-                <div id="validationError" style="color: #EF4444; font-size: 11px; margin-bottom: 12px; min-height: 16px; padding-left: 4px;"></div>
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+                    <div id="questionsContainer" style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+                        <div id="emptyQuestionsMsg" style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 10px; font-style: italic;">Draw a systemic query to challenge your assumptions. You can do this up to 3 times.</div>
+                    </div>
+                    
+                    <button id="stormBtn" onclick="stormSystemQuestion()" style="background-color: #2D423F; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s; font-weight: bold; letter-spacing: 0.05em; font-size: 13px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-shrink: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <i class="fas fa-bolt text-yellow-400"></i> <span id="btnText">DRAW A QUESTION (0/3)</span>
+                    </button>
 
-                <div id="questionsContainer" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-                    <div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Storm 3 questions to complete the session!</div>
+                    <div style="margin-top: auto; padding-bottom: 4px; flex-shrink: 0;">
+                        <label style="display: block; font-size: 11px; font-weight: bold; color: #8B7355; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">Your Reflections</label>
+                        <textarea id="userComment" oninput="checkShareStatus()" placeholder="Type your commentary or reflections to the above questions here..." rows="3" style="width: 100%; border: 1px solid #D2B48C; border-radius: 8px; padding: 12px; font-size: 13px; outline: none; resize: none; background: #FDFBF7; font-family: inherit; font-style: italic;"></textarea>
+                    </div>
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
-                    <button id="whatsappBtn" onclick="shareViaWhatsApp()" class="w-full py-4 px-6 rounded-xl text-white font-bold tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:-translate-y-0.5 opacity-50 cursor-not-allowed" disabled style="background-color: #25D366; border: none; display: flex;">
-                        <i class="fab fa-whatsapp text-lg"></i> SHARE OUTCOMES
+                <div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; margin-top: 12px;">
+                    <button id="whatsappBtn" onclick="shareViaWhatsApp()" class="w-full py-3 px-6 rounded-xl text-white font-bold tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-3 shadow-md opacity-50 cursor-not-allowed" disabled style="background-color: #25D366; border: none; display: flex;">
+                        <i class="fab fa-whatsapp text-lg"></i> SHARE SESSION
                     </button>
                     <div style="text-align: center; color: #8B7355; font-size: 11px; font-style: italic; line-height: 1.3;">
-                        Complete exactly 3 questions to unlock sharing and finalise the session.
+                        Read the generated questions and reflect before sharing.
                     </div>
                 </div>
             </div>`;
@@ -469,110 +536,93 @@
                 
                 if (appState.timeLeft <= 0) {
                     clearInterval(appState.timerInterval);
-                    if (appState.questions.length < 3) {
-                        document.getElementById('questionInput').disabled = true;
-                        document.getElementById('qsSubmitBtn').disabled = true;
-                        document.getElementById('questionInput').placeholder = "Time's up! Unfinished session.";
-                        document.getElementById('qsTimerDisplay').style.color = '#EF4444';
-                    }
+                    document.getElementById('stormBtn').disabled = true;
+                    document.getElementById('stormBtn').style.opacity = '0.5';
+                    document.getElementById('stormBtn').style.cursor = 'not-allowed';
+                    document.getElementById('qsTimerDisplay').style.color = '#EF4444';
                 }
             }, 1000);
-            
-            document.getElementById('questionInput').focus();
         }
 
-        function validateQuestion(text) {
-            const trimmed = text.trim();
-            if (!trimmed) return false;
-            if (trimmed.endsWith('?')) return true;
-            const questionWords = ['who', 'what', 'where', 'when', 'why', 'how'];
-            const lower = trimmed.toLowerCase();
-            return questionWords.some(word => lower.startsWith(word));
-        }
-
-        function endSession() {
-            clearInterval(appState.timerInterval);
-            document.getElementById('questionInput').disabled = true;
-            document.getElementById('qsSubmitBtn').disabled = true;
-            document.getElementById('questionInput').placeholder = "Storming complete. Share your insights!";
-            document.getElementById('qsTimerDisplay').style.color = '#10B981'; // Green
+        function stormSystemQuestion() {
+            if (appState.remainingSystemQs.length === 0) return;
             
-            const waBtn = document.getElementById('whatsappBtn');
-            waBtn.disabled = false;
-            waBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-
-        function handleQuestionSubmit(e) {
-            e.preventDefault();
-            if (appState.questions.length >= 3) return; // Hard stop at 3
-
-            const input = document.getElementById('questionInput');
-            const validationError = document.getElementById('validationError');
-            const text = input.value;
+            const qText = appState.remainingSystemQs.shift();
+            appState.drawnQuestions.push(qText);
             
-            if (!text.trim()) return;
+            document.getElementById('emptyQuestionsMsg').style.display = 'none';
+            renderDrawnQuestions();
             
-            if (!validateQuestion(text)) {
-                validationError.innerText = 'Must start with a question word (Who, What, Where...) or end with "?"';
-                return;
+            const btn = document.getElementById('stormBtn');
+            const totalDrawn = appState.drawnQuestions.length;
+            document.getElementById('btnText').innerText = `DRAW A QUESTION (${totalDrawn}/3)`;
+            
+            if (appState.remainingSystemQs.length === 0) {
+                btn.style.display = 'none';
             }
             
-            validationError.innerText = '';
-            
-            appState.questions.push({
-                id: Date.now(),
-                text: text.trim()
+            checkShareStatus();
+        }
+
+        function renderDrawnQuestions() {
+            const container = document.getElementById('questionsContainer');
+            // Retain the empty message just hidden, but clear previously rendered questions
+            Array.from(container.children).forEach(child => {
+                if(child.id !== 'emptyQuestionsMsg') {
+                    child.remove();
+                }
             });
             
-            input.value = '';
-            
-            if (appState.questions.length < 3) {
-                input.placeholder = `Enter Question ${appState.questions.length + 1} of 3...`;
-            }
-            
-            renderQuestions();
-            
-            // scroll to bottom
-            const container = document.getElementById('questionsContainer');
-            container.scrollTop = container.scrollHeight;
-
-            if (appState.questions.length >= 3) {
-                endSession();
-            }
-        }
-
-        function renderQuestions() {
-            const container = document.getElementById('questionsContainer');
-            if (appState.questions.length === 0) return;
-            
-            container.innerHTML = '';
-            appState.questions.forEach((q, idx) => {
+            appState.drawnQuestions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = `background: #F4F1ED; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #D2B48C; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;`;
+                div.style.cssText = `background: #F4F1ED; padding: 12px 16px; border-radius: 8px; border-left: 3px solid #ffcc00; display: flex; justify-content: flex-start; align-items: flex-start; gap: 12px;`;
                 
                 div.innerHTML = `
                     <div style="flex-grow: 1;">
-                        <span style="font-family: monospace; color: #8B7355; margin-right: 8px; font-size: 12px;">${String(idx+1).padStart(2,'0')}.</span>
-                        <span style="color: #1B2B28;">${q.text}</span>
+                        <span style="font-family: monospace; color: #8B7355; margin-right: 8px; font-size: 12px;">Q${idx+1}.</span>
+                        <span style="color: #1B2B28; font-weight: 500;">${q}</span>
                     </div>
                 `;
                 container.appendChild(div);
             });
+            
+            // scroll down slightly if needed
+            container.parentElement.scrollTop = container.parentElement.scrollHeight;
+        }
+
+        function checkShareStatus() {
+            const waBtn = document.getElementById('whatsappBtn');
+            const commentVal = document.getElementById('userComment').value.trim();
+            
+            if (appState.drawnQuestions.length > 0) {
+                waBtn.disabled = false;
+                waBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                waBtn.classList.add('hover:shadow-lg', 'hover:-translate-y-0.5');
+            } else {
+                waBtn.disabled = true;
+                waBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                waBtn.classList.remove('hover:shadow-lg', 'hover:-translate-y-0.5');
+            }
         }
 
         function shareViaWhatsApp() {
-            if (!appState.area || !appState.scenarioObj || appState.questions.length < 3) return;
+            if (!appState.area || !appState.scenarioObj || appState.drawnQuestions.length === 0) return;
             
-            let message = `*🌩️ Question Storm Outcomes*\n\n`;
+            let message = `*🌩️ Question Storm Session*\n\n`;
             message += `*Area:* ${appState.area}\n`;
             message += `*Challenge:* ${appState.scenarioObj.title}\n`;
             message += `_${appState.scenarioObj.desc}_\n\n`;
             
-            message += `*Alternative Questions:*\n`;
-            appState.questions.forEach((q, i) => {
-                message += `${i+1}. ${q.text}\n`;
+            message += `*System Generated Questions:*\n`;
+            appState.drawnQuestions.forEach((q, i) => {
+                message += `Q${i+1}: ${q}\n`;
             });
             message += `\n`;
+
+            const comment = document.getElementById('userComment').value.trim();
+            if (comment) {
+                message += `*My Reflections:*\n"${comment}"\n\n`;
+            }
 
             message += `_Generated using CharityOps Question Stormer_`;
 
