@@ -1,44 +1,584 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Question Storming - Problem Exploration Engine</title>
-  <meta name="description"
-    content="A powerful brainstorming tool focused on generating better questions to solve complex challenges. Phase through Standard or Paradox modes to fracture stagnant assumptions." />
-  <meta name="theme-color" content="#0f172a" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Storming | CharityOps</title>
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="Question Storming | CharityOps" />
+    <meta property="og:description" content="A powerful brainstorming tool focused on generating better questions to solve complex challenges." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #F2EFE9;
+            color: #1B2B28;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            gap: 40px;
+        }
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://uantchern.github.io/question-storming/" />
-  <meta property="og:title" content="Question Storming - Problem Exploration Engine" />
-  <meta property="og:description"
-    content="A powerful brainstorming tool focused on generating better questions to solve complex challenges. Phase through Standard or Paradox modes to fracture stagnant assumptions." />
-  <meta property="og:image"
-    content="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&h=630&auto=format&fit=crop" />
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1024px;
+            height: 90vh;
+            max-height: 850px;
+            min-height: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://uantchern.github.io/question-storming/" />
-  <meta property="twitter:title" content="Question Storming - Problem Exploration Engine" />
-  <meta property="twitter:description"
-    content="A powerful brainstorming tool focused on generating better questions to solve complex challenges." />
-  <meta property="twitter:image"
-    content="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&h=630&auto=format&fit=crop" />
+        /* Setup / Instructions Pane */
+        .setup-pane {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 40px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(210, 180, 140, 0.3);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
 
-  <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect><line x1='3' y1='9' x2='21' y2='9'></line><line x1='9' y1='21' x2='9' y2='9'></line></svg>" />
+        .setup-pane h1 {
+            font-size: 28px;
+            color: #1B2B28;
+            font-weight: 900;
+            margin-bottom: 8px;
+            font-family: Georgia, serif;
+            line-height: 1.2;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+        .setup-pane p.tagline {
+            color: #8B7355;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .pill {
+            background-color: transparent;
+            border: 2px solid #EAE5D8;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #8B7355;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .pill.active {
+            background-color: #8B7355;
+            color: #FDFBF7;
+            border-color: #8B7355;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            transform: scale(0.95);
+        }
+
+        .pill:hover:not(.active) {
+            border-color: #D2B48C;
+            background-color: #FDFBF7;
+        }
+
+        /* Chat Pane */
+        .chat-pane {
+            background-color: rgba(255, 255, 255, 0.5);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-pane:not(.started) .chat-header { display: none; }
+
+        .chat-header {
+            background-color: #1B2B28;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            color: white;
+            gap: 12px;
+        }
+
+        .chat-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            flex-grow: 1;
+            font-family: Georgia, serif;
+        }
+
+        .chat-window {
+            background-color: transparent;
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bubble {
+            width: 100%;
+            border-radius: 16px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-only { display: none; }
+        @media (max-width: 850px) {
+            .mobile-only { display: block; }
+        }
+
+        /* Responsiveness */
+        @media (max-width: 850px) {
+            .app-container { flex-direction: column; height: 100dvh; max-height: none; margin: 0; padding: 0; border: none; border-radius: 0; }
+            body { padding: 0; background: #ffffff; }
+            .setup-pane { width: 100%; padding: 24px; flex: 1; border-radius: 0; border: none; box-shadow: none; }
+            .chat-pane { display: none; border-radius: 0; box-shadow: none; border: none; border-top: 1px solid #EAE5D8; }
+            .chat-pane.started { display: flex; height: 100%; }
+            .setup-pane.started { display: none; }
+        }
+
+        @keyframes pulseBlueGlow {
+            0%, 100% { box-shadow: 0 0 6px rgba(59, 130, 246, 0.4); border-color: rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 16px rgba(59, 130, 246, 0.85); border-color: #3B82F6; }
+        }
+        .urgent-pulse-glow {
+            animation: pulseBlueGlow 2.5s infinite;
+        }
+
+        @keyframes sequentialBlueGlow {
+            0%, 100% { box-shadow: none; border-color: #EAE5D8; }
+            50% { box-shadow: 0 0 16px rgba(59, 130, 246, 0.6); border-color: #3B82F6; }
+        }
+        .glow-trigger-0 { animation: sequentialBlueGlow 2.5s infinite 0s; }
+        .glow-trigger-1 { animation: sequentialBlueGlow 2.5s infinite 0.5s; }
+        .glow-trigger-2 { animation: sequentialBlueGlow 2.5s infinite 1.0s; }
+        .glow-trigger-3 { animation: sequentialBlueGlow 2.5s infinite 1.5s; }
+        .glow-trigger-4 { animation: sequentialBlueGlow 2.5s infinite 2.0s; }
+
+        .star-button.active {
+            color: #fbbf24 !important;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+
+    <div class="app-container">
+        <!-- Setup Pane -->
+        <div class="setup-pane" id="setupDrawer">
+            <a href="https://www.charityops.org" target="_blank" rel="noopener noreferrer" class="font-serif text-3xl leading-none cursor-pointer select-none group"
+                style="font-family: Georgia, serif; margin-bottom: 2rem; display:flex; justify-content:space-between; align-items:center; text-decoration: none;">
+                <div>
+                    <span class="relative inline-block" style="position: relative; display: inline-block;">
+                        <span class="italic relative z-10" style="color: #103020; font-weight: 500; padding-right: 0.25rem; position: relative; z-index: 10; font-style: italic;">Charity</span>
+                        <span style="position: absolute; left:-0.2em; right:0; bottom:12%; height:2px; background:#B08968; z-index:0;"></span>
+                    </span><span class="relative z-10 tracking-tight" style="color: #B08968; position: relative; z-index: 10; font-weight: 400; letter-spacing: -0.025em; margin-left: -0.05em;">Ops</span>
+                </div>
+            </a>
+
+            <div style="margin-bottom: 24px;">
+                <p class="tagline">A Really Useful Thing for Charities</p>
+                <h1>Question Storming</h1>
+            </div>
+
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">1. TOPICS</span>
+            </div>
+            <div class="category-pills" id="categoryPills">
+                <button class="pill glow-trigger-0" onclick="selectArea('FUND RAISING', this)">FUND RAISING</button>
+                <button class="pill glow-trigger-1" onclick="selectArea('GOVERNANCE', this)">GOVERNANCE</button>
+                <button class="pill glow-trigger-2" onclick="selectArea('BOARD MATTERS', this)">BOARD MATTERS</button>
+                <button class="pill glow-trigger-3" onclick="selectArea('PROGRAMMES', this)">PROGRAMMES</button>
+                <button class="pill glow-trigger-4" onclick="selectArea('STAFF', this)">STAFF</button>
+            </div>
+
+            <div style="margin-bottom: 12px; display: none; align-items: center; gap: 8px;" id="stepTwoHeader">
+                <span style="font-size: 12px; font-weight: 700; color: #8B7355; text-transform: uppercase; letter-spacing: 0.1em;">2. QS SCENARIOS</span>
+            </div>
+            <div id="impactTilesContainer" class="flex flex-col gap-1 mb-6" style="max-height: 480px; overflow-y: auto; padding-right: 8px;">
+            </div>
+
+             <div id="mobileUserGuide" style="padding: 12px 0; background: transparent; box-sizing: border-box; width: 100%;" class="mobile-only">
+                 <div style="max-width: 480px; margin: 0 auto; border: 2px dashed #EAE5D8; padding: 20px; border-radius: 12px; background: #FFFBF7;">
+                     <p style="font-size: 13px; color: #5E5A4B; margin-bottom: 20px; line-height: 1.5;">Question Storming is a powerful brainstorming technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
+                     
+                     <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                         <div style="width: 24px; height: 24px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">1</div>
+                         <div style="display: flex; align-items: center;">
+                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">SELECT A TOPIC AREA</strong>
+                         </div>
+                     </div>
+
+                     <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                         <div style="width: 24px; height: 24px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">2</div>
+                         <div style="display: flex; align-items: center;">
+                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO</strong>
+                         </div>
+                     </div>
+
+                     <div style="display: flex; gap: 12px;">
+                         <div style="width: 24px; height: 24px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">3</div>
+                         <div style="display: flex; align-items: center;">
+                             <strong style="color: #1B2B28; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">BEGIN STORMING</strong>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Chat Pane -->
+        <div class="chat-pane" id="chatContainer">
+            <div class="chat-header">
+                <button onclick="goBackToSetup()" class="md:hidden text-white hover:text-[#D2B48C] mr-2"
+                    style="background:transparent; border:none; cursor:pointer;" title="Back">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </button>
+
+                <div class="flex-grow"></div>
+                <button onclick="location.reload()" class="text-white hover:text-[#D2B48C] transition-colors"
+                    title="Restart"
+                    style="background:transparent; border:none; cursor:pointer; font-size: 14px; display: flex; align-items: center; gap: 6px; font-weight: 500;">
+                    <i class="fas fa-redo text-lg"></i> Reset
+                </button>
+            </div>
+
+            <div class="chat-window" id="chatWindow">
+                <div class="empty-state" id="emptyStatePlaceholder" style="align-items: flex-start; text-align: left; padding: 40px 24px; background: transparent; box-sizing: border-box; width: 100%;">
+                    <div style="max-width: 480px; margin: 0 auto;">
+                        <p style="font-size: 15px; color: #5E5A4B; margin-bottom: 32px; line-height: 1.5;">Question Storming is a powerful brainstorming technique focused on generating better questions rather than immediate solutions. Phase through scenarios to fracture stagnant assumptions and discover new ways to solve complex problems.</p>
+                        
+                        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                            <div style="width: 28px; height: 28px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">1</div>
+                            <div style="display: flex; align-items: center;">
+                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">SELECT A TOPIC AREA</strong>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+                            <div style="width: 28px; height: 28px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">2</div>
+                            <div style="display: flex; align-items: center;">
+                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">CHOOSE A SCENARIO</strong>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 16px;">
+                            <div style="width: 28px; height: 28px; border-radius: 50%; background: #F2EFE9; color: #8B7355; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px;">3</div>
+                            <div style="display: flex; align-items: center;">
+                                <strong style="color: #1B2B28; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">BEGIN STORMING</strong>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 32px; padding-top: 16px; border-top: 1px dashed #EAE5D8; font-size: 11px; color: #A09D94; font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase; text-align: left;">
+                            App Version: V6.0 | Built on Walk TOC UX UI
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const scenarioDB = {
+            "FUND RAISING": [
+                { type: "Donor Retention", title: "First-Time Donors", desc: "We are struggling to retain our first-time donors beyond their initial gift." },
+                { type: "Campaign Fatigue", title: "Annual Dinner", desc: "Our annual fundraising dinner is losing attendance year-over-year." },
+                { type: "Corporate Engagement", title: "Sponsorships", desc: "Corporate sponsors find our engagement packages unappealing." }
+            ],
+            "GOVERNANCE": [
+                { type: "Compliance", title: "Audit Delays", desc: "Our internal processes are too slow to meet audit requirements on time." },
+                { type: "Risk Management", title: "Cybersecurity", desc: "Staff are consistently failing to follow data protection protocols." },
+                { type: "Policy Usage", title: "SOP Ignorance", desc: "Newly created operational policies are being ignored on the ground."}
+            ],
+            "BOARD MATTERS": [
+                { type: "Engagement", title: "Meeting Apathy", desc: "Board members are disengaged and quiet during quarterly meetings." },
+                { type: "Succession", title: "Leadership Gap", desc: "We have no clear pipeline to replace retiring board members." },
+                { type: "Strategic Vision", title: "Innovation", desc: "The board is hesitant to approve new, innovative programs." }
+            ],
+            "PROGRAMMES": [
+                { type: "Impact Measurement", title: "Data Collection", desc: "Beneficiaries are refusing to fill out post-program evaluation forms." },
+                { type: "Attrition", title: "Drop-outs", desc: "Participants are leaving the flagship program halfway through." },
+                { type: "Reach", title: "Underserved Groups", desc: "We are struggling to reach the most vulnerable profile in our target demographic." }
+            ],
+            "STAFF": [
+                { type: "Burnout", title: "Overwork", desc: "Key staff members are showing severe signs of burnout and exhaustion." },
+                { type: "Communication", title: "Siloed Teams", desc: "Departments are working in isolation and not sharing critical information." },
+                { type: "Onboarding", title: "Early Turnover", desc: "New hires are leaving within their first three months." }
+            ]
+        };
+
+        let appState = {
+            area: '',
+            scenarioObj: null,
+            questions: [],
+            timerInterval: null,
+            timeLeft: 12 * 60
+        };
+
+        function selectArea(areaKey, btn) {
+            document.querySelectorAll('.pill').forEach(el => {
+                el.classList.remove('active', 'glow-trigger-0', 'glow-trigger-1', 'glow-trigger-2', 'glow-trigger-3', 'glow-trigger-4');
+            });
+            if(btn) btn.classList.add('active');
+            
+            document.getElementById('stepTwoHeader').style.display = 'flex';
+            if (document.getElementById('mobileUserGuide')) {
+                document.getElementById('mobileUserGuide').style.display = 'none';
+            }
+            appState.area = areaKey;
+            
+            drawImpactTiles();
+        }
+
+        function drawImpactTiles() {
+            const container = document.getElementById('impactTilesContainer');
+            container.innerHTML = '';
+            
+            if (!appState.area) return;
+
+            const scenarios = scenarioDB[appState.area];
+            
+            scenarios.forEach((item, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'text-left cursor-pointer transition-colors duration-200 leading-relaxed py-3 px-3 rounded-xl flex gap-3 items-start group hover:bg-[#F2EFE9]';
+                
+                btn.innerHTML = `<div style="font-size: 12px; color: #3B82F6; margin-top: 4px;">●</div> 
+                                 <div style="flex-grow: 1;">
+                                    <strong style="color: #1B2B28;">${item.type}</strong><br>
+                                    <span class="group-hover:text-[#3B82F6] transition-colors" style="color: #4A463B; font-size: 15px;">${item.title}: ${item.desc}</span>
+                                 </div>`;
+                
+                btn.onclick = () => {
+                    Array.from(container.children).forEach(child => child.classList.remove('bg-[#F2EFE9]'));
+                    btn.classList.add('bg-[#F2EFE9]');
+
+                    appState.scenarioObj = item;
+                    appState.questions = [];
+                    appState.timeLeft = 12 * 60;
+                    if(appState.timerInterval) clearInterval(appState.timerInterval);
+                    
+                    document.getElementById('setupDrawer').classList.add('started');
+                    document.getElementById('chatContainer').classList.add('started');
+                    document.getElementById('emptyStatePlaceholder').style.display = 'none';
+
+                    presentStormingPane();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function goBackToSetup() {
+            document.getElementById('setupDrawer').classList.remove('started');
+            document.getElementById('chatContainer').classList.remove('started');
+            if(appState.timerInterval) clearInterval(appState.timerInterval);
+        }
+
+        function presentStormingPane() {
+            const chatWindow = document.getElementById('chatWindow');
+            document.querySelectorAll('.bubble').forEach(b => b.remove());
+
+            const content = `
+            <div class='bubble' style='font-size: 14px; line-height: 1.5; color: #1B2B28; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid #EAE5D8; display: flex; flex-direction: column; height: 100%;'>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F2EFE9; padding-bottom: 8px; margin-bottom: 12px;">
+                    <h3 style="font-family: Georgia, serif; font-size: 15px; font-weight: bold; color: #8B7355; margin: 0; text-transform: uppercase; letter-spacing: 0.1em;">3. Question Storming</h3>
+                    <div id="qsTimerDisplay" style="font-size: 20px; font-weight: bold; color: #3B82F6; font-family: monospace;">12:00</div>
+                </div>
+
+                <div class="urgent-pulse-glow" style="margin-bottom: 16px; padding: 16px; border: 2px solid #3B82F6; border-radius: 8px; background-color: #EFF6FF; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); flex-shrink: 0;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+                        <span style="background: #1B2B28; color: white; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.05em;">${appState.area}</span>
+                        <strong style="color: #3B82F6; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">${appState.scenarioObj.type}</strong>
+                    </div>
+                    <div style="color: #1E3A8A; font-weight: bold; font-size: 16px; margin-top: 8px;">${appState.scenarioObj.title}: ${appState.scenarioObj.desc}</div>
+                </div>
+
+                <form id="qsForm" onsubmit="handleQuestionSubmit(event)" style="display: flex; gap: 8px; margin-bottom: 4px; flex-shrink: 0;">
+                    <input type="text" id="questionInput" placeholder="Type your alternative question..." autocomplete="off" style="flex-grow: 1; padding: 12px 16px; border: 1px solid #D2B48C; border-radius: 8px; outline: none; font-family: inherit; font-size: 14px; background: #FDFBF7;" />
+                    <button type="submit" id="qsSubmitBtn" style="background-color: #2D423F; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s;"><i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div id="validationError" style="color: #EF4444; font-size: 11px; margin-bottom: 12px; min-height: 16px; padding-left: 4px;"></div>
+
+                <div id="questionsContainer" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                    <!-- Questions appear here -->
+                    <div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Start storming!</div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+                    <button onclick="shareViaWhatsApp()" class="w-full py-4 px-6 rounded-xl text-white font-bold tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:-translate-y-0.5" style="background-color: #25D366; border: none; cursor: pointer; display: flex;">
+                        <i class="fab fa-whatsapp text-lg"></i> SHARE STARRED Qs
+                    </button>
+                    <div style="text-align: center; color: #8B7355; font-size: 11px; font-style: italic; line-height: 1.3;">
+                        Star your top 3 favorite questions to share them to your team's WhatsApp group.
+                    </div>
+                </div>
+            </div>`;
+
+            chatWindow.insertAdjacentHTML('beforeend', content);
+
+            // Start timer
+            appState.timerInterval = setInterval(() => {
+                appState.timeLeft--;
+                const mins = Math.floor(appState.timeLeft / 60);
+                const secs = appState.timeLeft % 60;
+                document.getElementById('qsTimerDisplay').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                if (appState.timeLeft <= 0) {
+                    clearInterval(appState.timerInterval);
+                    document.getElementById('questionInput').disabled = true;
+                    document.getElementById('qsSubmitBtn').disabled = true;
+                    document.getElementById('questionInput').placeholder = "Time's up! Review and share your favorites.";
+                    document.getElementById('qsTimerDisplay').style.color = '#EF4444';
+                }
+            }, 1000);
+            
+            document.getElementById('questionInput').focus();
+        }
+
+        function validateQuestion(text) {
+            const trimmed = text.trim();
+            if (!trimmed) return false;
+            if (trimmed.endsWith('?')) return true;
+            const questionWords = ['who', 'what', 'where', 'when', 'why', 'how'];
+            const lower = trimmed.toLowerCase();
+            return questionWords.some(word => lower.startsWith(word));
+        }
+
+        function handleQuestionSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('questionInput');
+            const validationError = document.getElementById('validationError');
+            const text = input.value;
+            
+            if (!text.trim()) return;
+            
+            if (!validateQuestion(text)) {
+                validationError.innerText = 'Must start with a question word (Who, What, Where...) or end with "?"';
+                return;
+            }
+            
+            validationError.innerText = '';
+            
+            appState.questions.push({
+                id: Date.now(),
+                text: text.trim(),
+                starred: false
+            });
+            
+            input.value = '';
+            renderQuestions();
+            
+            // scroll to bottom
+            const container = document.getElementById('questionsContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function toggleStar(id) {
+            const numStarred = appState.questions.filter(q => q.starred).length;
+            const qIndex = appState.questions.findIndex(q => q.id === id);
+            if (qIndex > -1) {
+                if (!appState.questions[qIndex].starred && numStarred >= 3) {
+                    return; // Max 3 stars
+                }
+                appState.questions[qIndex].starred = !appState.questions[qIndex].starred;
+                renderQuestions();
+            }
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            if (appState.questions.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #A09D94; font-size: 12px; margin-top: 20px; font-style: italic;">No questions yet. Start storming!</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            appState.questions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.style.cssText = `background: ${q.starred ? '#FEF3C7' : '#F4F1ED'}; padding: 12px 16px; border-radius: 8px; border-left: 3px solid ${q.starred ? '#F59E0B' : '#D2B48C'}; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; transition: background 0.2s;`;
+                
+                div.innerHTML = `
+                    <div style="flex-grow: 1;">
+                        <span style="font-family: monospace; color: #8B7355; margin-right: 8px; font-size: 12px;">${String(idx+1).padStart(2,'0')}.</span>
+                        <span style="color: #1B2B28;">${q.text}</span>
+                    </div>
+                    <button onclick="toggleStar(${q.id})" class="star-button ${q.starred ? 'active' : ''}" style="background: none; border: none; cursor: pointer; color: #A09D94; flex-shrink: 0; padding: 4px; transition: transform 0.2s, color 0.2s;">
+                        <i class="fas fa-star"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function shareViaWhatsApp() {
+            if (!appState.area || !appState.scenarioObj) return;
+            
+            const starredQs = appState.questions.filter(q => q.starred);
+            
+            let message = `*🌩️ Question Storm Outcomes*\n\n`;
+            message += `*Area:* ${appState.area}\n`;
+            message += `*Challenge:* ${appState.scenarioObj.title}\n`;
+            message += `_${appState.scenarioObj.desc}_\n\n`;
+            
+            message += `*Top Alternative Questions:*\n`;
+            if (starredQs.length === 0) {
+                message += `(No questions were starred)\n\n`;
+            } else {
+                starredQs.forEach((q, i) => {
+                    message += `${i+1}. ${q.text}\n`;
+                });
+                message += `\n`;
+            }
+
+            message += `_Generated using CharityOps Question Stormer_`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.location.assign(`https://api.whatsapp.com/send?text=${encodedMessage}`);
+        }
+    </script>
 </body>
 
 </html>
