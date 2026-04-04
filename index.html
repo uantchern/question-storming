@@ -511,9 +511,7 @@
             const content = `
             <div class='bubble' style='font-size: 14px; line-height: 1.5; color: #1B2B28; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid #EAE5D8; display: flex; flex-direction: column; height: 100%;'>
 
-                <div style="display: flex; justify-content: flex-end; border-bottom: 2px solid #F2EFE9; padding-bottom: 8px; margin-bottom: 12px;">
-                    <div id="qsTimerDisplay" style="font-size: 20px; font-weight: bold; color: #22c55e; font-family: monospace;">12:00</div>
-                </div>
+
 
                 <div class="urgent-pulse-glow" style="margin-bottom: 16px; padding: 16px; border: 2px solid #22c55e; border-radius: 8px; background-color: #f0fdf4; box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); flex-shrink: 0;">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
@@ -529,7 +527,7 @@
 
                 <div style="display: flex; gap: 8px; margin-top: 12px; flex-shrink: 0;">
                     <button id="whatsappBtn" onclick="shareViaWhatsApp()" style="flex:1; padding: 12px 4px; border-radius: 8px; background: #25D366; color: white; border: none; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 12px; box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);">
-                        <i class="fab fa-whatsapp text-lg"></i> 3. WA
+                        <i class="fab fa-whatsapp text-lg"></i> 3. Share via WA
                     </button>
                     
                     <button onclick="location.reload()" style="flex:1; padding: 12px 4px; border-radius: 8px; background: white; color: #8B7355; border: 1px solid #D2B48C; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; text-align: center; text-transform: uppercase; line-height: 1.3;">
@@ -540,18 +538,6 @@
 
             chatWindow.insertAdjacentHTML('beforeend', content);
 
-            // Start timer
-            appState.timerInterval = setInterval(() => {
-                appState.timeLeft--;
-                const mins = Math.floor(appState.timeLeft / 60);
-                const secs = appState.timeLeft % 60;
-                document.getElementById('qsTimerDisplay').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
-                
-                if (appState.timeLeft <= 0) {
-                    clearInterval(appState.timerInterval);
-                    document.getElementById('qsTimerDisplay').style.color = '#EF4444';
-                }
-            }, 1000);
         }
 
         function shareViaWhatsApp() {
